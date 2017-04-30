@@ -1,4 +1,12 @@
+
+const jwt = require('jwt-simple');
 const User = require('../models/user');
+const config = require('../config');
+
+function tokenForUser(user) {
+    const timestamp = new Date().getTime();
+    return jwt.encode({ sub: user.id }, config.secret);
+}
 
 exports.signup = function(req, res, next) {
     const email = req.body.email;
@@ -26,7 +34,7 @@ exports.signup = function(req, res, next) {
             if(err) return next(err);
             
             //Respond to request indication the user was created    
-            res.json(user);
+            res.json({ token: tokenForUser(user) });
         });
     });
 } 
