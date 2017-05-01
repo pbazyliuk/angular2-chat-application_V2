@@ -12,13 +12,13 @@ import { LoginService } from './login.service'
 export class LoginComponent implements OnInit {
 
   private user: User = {
-    login: '',
+    email: '',
     password: ''
   }
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone,) {}
+  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone) {}
 
   private signInSubmit(form: any) {
      

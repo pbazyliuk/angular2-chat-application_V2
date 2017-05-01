@@ -19,6 +19,7 @@ export class LoginService {
 
   public setUserState(state: any): void {
     this._authenticated = true;
+    localStorage.setItem('token', state.token);
     this._state.next(state);
   }
 
