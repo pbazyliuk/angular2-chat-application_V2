@@ -1,0 +1,40 @@
+<p>
+  login works!
+</p>
+<div class="form__wrapper">
+
+    <form #formSignIn="ngForm" novalidate class="form-sign-in" (ngSubmit)="signInSubmit(formSignIn.value)">
+        
+        <h4 class="form-sign-in__header" >Sign In</h4>
+        
+        <div class="form-sign-in__container">
+            <label class="form-sign-in__label" for="emailId"
+           
+            >Email</label>
+            <input class="form-sign-in__input-field" id="emailId" type="text" name="email" placeholder="Email Address (required)" 
+            #email="ngModel"
+            required
+            [ngModel]="user.login"
+            >
+            <!--<div *ngIf="email.invalid && email.touched"  class="text-has-error">
+                Email is required
+            </div>-->
+        </div>
+
+        <div class="form-sign-in__container">
+            <label class="form-sign-in__label" for="passwordId"
+            >Password</label>
+            <input class="form-sign-in__input-field" id="passwordId" type="password" name="password" placeholder="Password (required)"
+            #password="ngModel"
+            required
+            pattern=".{6,}"
+            [ngModel]="user.password"
+            >
+            <!--<div *ngIf="password.invalid && password.touched"  class="text-has-error">
+                Password is required (min 6 characters)
+            </div>-->
+        </div>
+        <button class="form-sign-in__btn-login" type="submit">Login</button>
+    </form>
+    
+</div>
