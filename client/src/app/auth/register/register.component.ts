@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
-
+import { Profile } from './profile.model';
+import { Subscription } from "rxjs";
+import { Router } from '@angular/router';
+import { LoginService } from '../shared/login.service'
 
 
 
@@ -24,14 +27,58 @@ function dateCompare(c: AbstractControl):
 })
 
 
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+
+  private profile: Profile = {
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmpassword: ''
+  };
+
+
+  private subscriptions: Subscription[] = [];
 
   signUpForm: FormGroup;
-  
 
-  constructor( private fb: FormBuilder) {
+  constructor( private fb: FormBuilder, private LoginService: LoginService, private router: Router, private zone: NgZone) {
   }
 
+  private signUpSubmit(form: any) {
+     
+     const data = {
+      firstname: this.signUpForm.value.firstname,
+      lastname: this.signUpForm.value.lastname,
+      email: this.signUpForm.value.email,
+      password: this.signUpForm.value.passwords.password
+      // confirmpassword: this.signUpForm.value.passwords.confirmpassword
+     };
+
+     console.log(data);
+
+     this.subscriptions.push(
+       this.LoginService
+         .register(data)
+         .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
+      )
+   }
+
+  onLoginError (err){
+    console.error(err);
+    alert('Something goes wrong')
+  }
+
+  onLoginSuccess (res: any): void {
+     console.log(res);
+     this.LoginService.setUserState(res);
+     this.router.navigate(['chat']);
+  }
+
+  // save() {
+  //   console.log(this.signUpForm.value)
+  // }
+  
   // save() {
   //   console.log(this.signUpForm);
   //   console.log('Saved: ' + JSON.stringify(this.signUpForm.value));
@@ -50,6 +97,10 @@ export class RegisterComponent implements OnInit {
           confirmpassword: ['', [Validators.required]]
         }, {validator: dateCompare})
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
   }

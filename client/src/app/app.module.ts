@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing';
 import { PageNotFoundComponent } from './page-not-found';
 // import { RegisterComponent } from './auth/register';
-import { LoginService } from "./auth/login";
+import { LoginService } from "./auth/shared/login.service";
 import { ChatsComponent } from './chats';
 
 import { CoreModule } from './core';

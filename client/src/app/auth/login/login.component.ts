@@ -1,24 +1,26 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { User } from './user.model';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { User } from './login.model';
 import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
-import { LoginService } from './login.service'
+import { LoginService } from '../shared/login.service'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent implements OnInit, OnDestroy {
+  
   private user: User = {
     email: '',
     password: ''
-  }
+  };
+
 
   private subscriptions: Subscription[] = [];
-
-  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone) {}
+  
+  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone) {
+  }
 
   private signInSubmit(form: any) {
      
@@ -34,9 +36,6 @@ export class LoginComponent implements OnInit {
          .login(data)
          .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
       )
- 
-    //  this.userService
-    //      .login(data)
    }
 
    onLoginError (err){
@@ -46,11 +45,16 @@ export class LoginComponent implements OnInit {
 
   onLoginSuccess (res: any): void {
      console.log(res);
+     
      this.LoginService.setUserState(res);
-     this.router.navigate(['home']);
+     this.router.navigate(['chat']);
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
 }

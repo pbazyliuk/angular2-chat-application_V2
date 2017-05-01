@@ -24,7 +24,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
     {
-    path: 'chats',
+    path: 'chat',
     component: ChatsComponent    
   },
   // {

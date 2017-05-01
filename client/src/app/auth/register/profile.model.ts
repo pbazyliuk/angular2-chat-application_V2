@@ -3,5 +3,5 @@ export interface Profile {
     lastname: string,
     email: string,
     password: string,
-    confirmPassword: string
+    confirmpassword?: string
 }
