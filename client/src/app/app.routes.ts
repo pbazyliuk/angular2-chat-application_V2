@@ -7,6 +7,7 @@ import { LoginComponent } from "app/login/login.component";
 import { HomeComponent } from "app/home/home.component";
 import { PageNotFoundComponent } from "app/page-not-found/page-not-found.component";
 import { RegisterComponent } from "app/register/register.component";
+import { ChatsComponent } from "app/chats/chats.component";
 
 //Service
 // import { AuthGuard } from "./auth/auth.guard.service";
@@ -25,6 +26,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'chats',
+    component: ChatsComponent
   },
   {
     path: 'register',
