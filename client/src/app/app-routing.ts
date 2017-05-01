@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 //Components
-import { LoginComponent } from "app/login/login.component";
-import { HomeComponent } from "app/home/home.component";
-import { PageNotFoundComponent } from "app/page-not-found/page-not-found.component";
-import { RegisterComponent } from "app/register/register.component";
-import { ChatsComponent } from "app/chats/chats.component";
+// import { LoginComponent } from "./auth/login";
+import { HomeComponent } from "./home";
+import { PageNotFoundComponent } from "./page-not-found";
+// import { RegisterComponent } from "./auth/register";
+import { ChatsComponent } from "./chats";
 
 //Service
 // import { AuthGuard } from "./auth/auth.guard.service";
@@ -23,18 +23,23 @@ const appRoutes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
+    {
     path: 'chats',
-    component: ChatsComponent
+    component: ChatsComponent    
   },
+  // {
+  //   path: 'login',
+  //   component: LoginComponent
+  // },
   {
-    path: 'register',
-    component: RegisterComponent
+    path: 'auth',
+    loadChildren: 'app/auth/auth.module#AuthModule'
+    
   },
+  // {
+  //   path: 'register',
+  //   component: RegisterComponent
+  // },
   {
     path: '**',
     component: PageNotFoundComponent

@@ -117,7 +117,7 @@
 .social-icons-content__g-icon,
 .social-icons-content__tw-icon-active,
 .social-icons-content__tw-icon {
-    background: url('../../assets/img/icon-sprite.png') no-repeat;
+    background: url('../../../assets/img/icon-sprite.png') no-repeat;
     display: inline-block;
     overflow: hidden;
     text-align: left;

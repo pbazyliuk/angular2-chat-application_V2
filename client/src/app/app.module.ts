@@ -7,13 +7,13 @@ import { AppComponent } from './app.component';
 // import { NavbarComponent } from './navbar/navbar.component';
 // import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home';
-import { LoginComponent } from './login';
+// import { LoginComponent } from './auth/login';
 
 import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app.routes';
+import { AppRoutingModule } from './app-routing';
 import { PageNotFoundComponent } from './page-not-found';
-import { RegisterComponent } from './register';
-import { LoginService } from "./login";
+// import { RegisterComponent } from './auth/register';
+import { LoginService } from "./auth/login";
 import { ChatsComponent } from './chats';
 
 import { CoreModule } from './core';
@@ -26,9 +26,9 @@ import { CoreModule } from './core';
     // NavbarComponent,
     // HeaderComponent,
     HomeComponent,
-    LoginComponent,
+    // LoginComponent,
     PageNotFoundComponent,
-    RegisterComponent,
+    // RegisterComponent,
     ChatsComponent
   ],
   imports: [

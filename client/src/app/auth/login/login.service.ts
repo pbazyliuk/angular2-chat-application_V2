@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { API_CONFIG } from '../app.constants';
+import { API_CONFIG } from '../../app.constants';
 
 @Injectable()
 export class LoginService {
