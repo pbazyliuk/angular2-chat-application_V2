@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatsComponent } from './chats.component';
+import { ChatsComponent } from './chat.component';
 
 describe('ChatsComponent', () => {
   let component: ChatsComponent;

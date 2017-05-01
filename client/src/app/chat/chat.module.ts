@@ -5,7 +5,7 @@ import { ChatListComponent } from './chat-list';
 import { ChatDetailsComponent } from './chat-details';
 // import { ChatNewComponent } from './chat-new';
 // import { ChatHolderComponent } from './chat-holder';
-// import { ChatsRoutingModule } from './chats-routing.module';
+// import { ChatRoutingModule } from './chat-routing.module';
 // import { MessagesSharedModule } from '../messages';
 // import { ChatService } from './shared/chats.service';
 // import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
@@ -30,7 +30,7 @@ import { ChatDetailsComponent } from './chat-details';
   imports: [
     // SharedModule,
     // MessagesSharedModule,
-    // ChatsRoutingModule
+    // ChatRoutingModule
   ],
   providers: [] //ChatService
 })
