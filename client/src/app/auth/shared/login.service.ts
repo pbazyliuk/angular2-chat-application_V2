@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { API_CONFIG } from '../../app.constants';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class LoginService {
@@ -9,7 +10,7 @@ export class LoginService {
   private _authenticated: boolean = false;
   private _state: BehaviorSubject<any> = new BehaviorSubject<any>({});
     
-  constructor(private http: Http){}
+  constructor(private http: Http, private router: Router){}
   
   public setUserState(state: any): void {
     this._authenticated = true;
@@ -37,6 +38,7 @@ export class LoginService {
     this._authenticated = false;
     this._state.next({});
     localStorage.removeItem('token');
+    // this.router.navigate(['home']);
     console.log('user logged out');
   }
 }

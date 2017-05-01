@@ -7,11 +7,11 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from "./home";
 import { PageNotFoundComponent } from "./page-not-found";
 // import { RegisterComponent } from "./auth/register";
-import { ChatsComponent } from "./chats";
+import { ChatComponent } from "./chat";
 
 //Service
-// import { AuthGuard } from "./auth/auth.guard.service";
-// import { ChatGuard } from "./chats/chat.guard.service";
+import { AuthGuard } from "./auth";
+import { ChatGuard } from "./chat";
 
 const appRoutes: Routes = [
   {
@@ -23,18 +23,23 @@ const appRoutes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-    {
+  {
     path: 'chat',
-    component: ChatsComponent    
+    component: ChatComponent,
+    canActivate: [AuthGuard]
   },
+  //   {
+  //   path: 'chat',
+  //   component: ChatComponent    
+  // },
   // {
   //   path: 'login',
   //   component: LoginComponent
   // },
   {
     path: 'auth',
-    loadChildren: 'app/auth/auth.module#AuthModule'
-    
+    loadChildren: 'app/auth/auth.module#AuthModule',
+    canActivate: [ChatGuard]
   },
   // {
   //   path: 'register',

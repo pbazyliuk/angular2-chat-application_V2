@@ -14,9 +14,18 @@ import { AppRoutingModule } from './app-routing';
 import { PageNotFoundComponent } from './page-not-found';
 // import { RegisterComponent } from './auth/register';
 import { LoginService } from "./auth/shared/login.service";
-import { ChatsComponent } from './chats';
+// import { ChatComponent } from './chat';
 
 import { CoreModule } from './core';
+import { ChatModule } from './chat';
+
+import { AuthGuard } from './auth/';
+import { ChatGuard } from './chat/';
+import { AuthService } from './core/';
+
+
+// import { ChatListComponent } from './chat/chat-list/chat-list.component';
+// import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
 
 
 
@@ -29,7 +38,9 @@ import { CoreModule } from './core';
     // LoginComponent,
     PageNotFoundComponent,
     // RegisterComponent,
-    ChatsComponent
+    // ChatComponent,
+    // ChatListComponent,
+    // ChatDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +48,10 @@ import { CoreModule } from './core';
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    ChatModule
   ],
-  providers: [LoginService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
