@@ -25,11 +25,36 @@ import { AuthService } from './core/';
 import { ThreadsService } from './core/';
 
 import { StoreModule } from '@ngrx/store';
-import { INITIAL_APPLICATION_STATE } from "app/store/application-state";
+import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
+import { Action } from "@ngrx/store";
+import { LOAD_USER_THREADS_ACTION, LoadUserThreadsAction } from "app/store/actions";
+
+import * as _ from 'lodash';
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
 
+function storeReducer(state: ApplicationState, action: Action): ApplicationState {
+  switch(action.type) {
+    case LOAD_USER_THREADS_ACTION:
+      return handleLoadUserThreadsAction(state, action);
+  default: 
+    return state;
+  }
+}
 
+function handleLoadUserThreadsAction(state: ApplicationState, action: LoadUserThreadsAction): ApplicationState {
+  const userData = action.payload;
+
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData = {
+    participants: _.keyBy(action.payload.participants, 'id'),
+    threads: _.keyBy(action.payload.threads, 'id'),
+    messages: _.keyBy(action.payload.messages, 'id')
+  }
+
+  return newState;
+}
 
 @NgModule({
   declarations: [
@@ -52,7 +77,7 @@ import { INITIAL_APPLICATION_STATE } from "app/store/application-state";
     AppRoutingModule,
     CoreModule,
     ChatModule,
-      StoreModule.provideStore({}, INITIAL_APPLICATION_STATE)
+      StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, ThreadsService],
   bootstrap: [AppComponent]
