@@ -37,6 +37,32 @@ export class ThreadSectionComponent implements OnInit {
        this.unreadMessagesCounter$ = store
         .skip(1)
         .map(mapStateToUnreadMessagesCounter);
+
+      this.threadSummaries$ = store
+        .select(
+          state => {
+            const threads = _.values<Thread>(state.storeData.threads);
+
+            return threads.map(
+              thread => {
+
+                const names = _.keys(thread.participants).map(
+                  participantId => state.storeData.participants[participantId].name
+                  );
+                
+                const lastMessageText = _.last(thread.messageIds);
+                const lastMessage = state.storeData.messages[lastMessageText];
+
+                return {
+                  id: thread.id,
+                  participantNames: _.join(names, ","),
+                  lastMessageText: lastMessage.text,
+                  timestamp: lastMessage.timestamp
+                }
+              }
+            );
+          }
+        )
     }
 
   ngOnInit() {
@@ -47,7 +73,5 @@ export class ThreadSectionComponent implements OnInit {
           new LoadUserThreadsAction(allUserData)
         )
       );
-  
   }
-
 }
