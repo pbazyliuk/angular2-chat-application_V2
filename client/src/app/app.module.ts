@@ -22,6 +22,7 @@ import { ChatModule } from './chat';
 import { AuthGuard } from './auth/';
 import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
+import { ThreadsService } from './core/';
 
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
@@ -51,7 +52,7 @@ import { AuthService } from './core/';
     CoreModule,
     ChatModule
   ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ThreadsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

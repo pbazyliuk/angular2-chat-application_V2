@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ts-user-selection',
+  selector: 'ct-user-selection',
   templateUrl: './user-selection.component.html',
   styleUrls: ['./user-selection.component.css']
 })
