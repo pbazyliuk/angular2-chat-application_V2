@@ -24,7 +24,8 @@ import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
 import { ThreadsService } from './core/';
 
-
+import { StoreModule } from '@ngrx/store';
+import { INITIAL_APPLICATION_STATE } from "app/store/application-state";
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
 
@@ -50,7 +51,8 @@ import { ThreadsService } from './core/';
     HttpModule,
     AppRoutingModule,
     CoreModule,
-    ChatModule
+    ChatModule,
+      StoreModule.provideStore({}, INITIAL_APPLICATION_STATE)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, ThreadsService],
   bootstrap: [AppComponent]
