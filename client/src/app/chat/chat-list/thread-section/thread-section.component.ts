@@ -7,6 +7,7 @@ import { LoadUserThreadsAction } from "app/store/actions";
 import { Observable } from "rxjs/Observable";
 import * as _ from "lodash";
 import { Thread } from "app/shared/model/thread";
+import { ThreadSummaryVM } from "app/chat/chat-list/thread-section/thread-summary.vw";
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ThreadSectionComponent implements OnInit {
 
   userName$: Observable<string>;
   unreadMessagesCounter$: Observable<number>;
-
+  threadSummaries$: Observable<ThreadSummaryVM>
  
 
   constructor(

@@ -7,6 +7,7 @@ import { UserSelectionComponent } from './chat-list/user-selection/user-selectio
 import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
 import { CommonModule } from '@angular/common';
+import { ThreadListComponent } from './chat-list/thread-list/thread-list.component';
 // import { ChatNewComponent } from './chat-new';
 // import { ChatHolderComponent } from './chat-holder';
 // import { ChatRoutingModule } from './chat-routing.module';
@@ -27,6 +28,7 @@ import { CommonModule } from '@angular/common';
     UserSelectionComponent,
     ThreadSectionComponent,
     MessageSectionComponent,
+    ThreadListComponent,
     // ChatNewComponent,
     // ChatHolderComponent,
     // ChatNavbarComponent,
