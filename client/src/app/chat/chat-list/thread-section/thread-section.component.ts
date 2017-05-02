@@ -8,7 +8,7 @@ import { Observable } from "rxjs/Observable";
 import * as _ from "lodash";
 import { Thread } from "app/shared/model/thread";
 import { ThreadSummaryVM } from "app/chat/chat-list/thread-section/thread-summary.vw";
-import { mapStateToUserName } from "app/chat/chat-list/thread-section/mapStateToUserName";
+import { userNameSelector } from "app/chat/chat-list/thread-section/userNameSelector";
 import { mapStateToUnreadMessagesCounter } from "app/chat/chat-list/thread-section/mapStateToUnreadMessagesCounter";
 import { stateToThreadSummariesSelector } from "app/chat/chat-list/thread-section/stateToThreadSummariesSelector";
 
@@ -31,8 +31,7 @@ export class ThreadSectionComponent implements OnInit {
     ) {
 
       this.userName$ = store
-        .skip(1)
-        .map(mapStateToUserName)
+        .select(userNameSelector)
          
 
        this.unreadMessagesCounter$ = store

@@ -12,7 +12,7 @@ export function mapStateToUnreadMessagesCounter(state: ApplicationState): number
       .reduce(
         (acc, thread) => {
           //thread is current item of array which we are looping 
-          return acc + thread.participants[currentUserId];
+          return acc + (thread.participants[currentUserId] || 0);
         } 
       ,0)
   }
