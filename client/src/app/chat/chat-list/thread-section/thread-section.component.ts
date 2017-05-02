@@ -8,6 +8,8 @@ import { Observable } from "rxjs/Observable";
 import * as _ from "lodash";
 import { Thread } from "app/shared/model/thread";
 import { ThreadSummaryVM } from "app/chat/chat-list/thread-section/thread-summary.vw";
+import { mapStateToUserName } from "app/chat/chat-list/thread-section/mapStateToUserName";
+import { mapStateToUnreadMessagesCounter } from "app/chat/chat-list/thread-section/mapStateToUnreadMessagesCounter";
 
 
 @Component({
@@ -19,7 +21,7 @@ export class ThreadSectionComponent implements OnInit {
 
   userName$: Observable<string>;
   unreadMessagesCounter$: Observable<number>;
-  threadSummaries$: Observable<ThreadSummaryVM>
+  threadSummaries$: Observable<ThreadSummaryVM[]>
  
 
   constructor(
@@ -29,30 +31,13 @@ export class ThreadSectionComponent implements OnInit {
 
       this.userName$ = store
         .skip(1)
-        .map(this.mapStateToUserName)
+        .map(mapStateToUserName)
          
 
        this.unreadMessagesCounter$ = store
         .skip(1)
-        .map(this.mapStateToUnreadMessagesCounter);
+        .map(mapStateToUnreadMessagesCounter);
     }
-
-  mapStateToUserName(state: ApplicationState):string {
-    return state.storeData.participants[state.uiState.userId].name;
-  }
-
-  mapStateToUnreadMessagesCounter(state: ApplicationState):number {
-
-    const currentUserId = state.uiState.userId;
-
-    return _.values<Thread>(state.storeData.threads) //take values from object and return an array of Threads
-      .reduce(
-        (acc, thread) => {
-          //thread is current item of array which we are looping 
-          return acc + thread.participants[currentUserId];
-        } 
-      ,0)
-  }
 
   ngOnInit() {
 
