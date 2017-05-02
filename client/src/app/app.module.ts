@@ -33,7 +33,7 @@ import * as _ from 'lodash';
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
 
-function storeReducer(state: ApplicationState, action: Action): ApplicationState {
+function storeReducer(state: ApplicationState = INITIAL_APPLICATION_STATE, action: Action): ApplicationState {
   switch(action.type) {
     case LOAD_USER_THREADS_ACTION:
       return handleLoadUserThreadsAction(state, action);
@@ -77,7 +77,7 @@ function handleLoadUserThreadsAction(state: ApplicationState, action: LoadUserTh
     AppRoutingModule,
     CoreModule,
     ChatModule,
-      StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
+      StoreModule.provideStore(storeReducer)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, ThreadsService],
   bootstrap: [AppComponent]

@@ -6,6 +6,7 @@ import { ChatDetailsComponent } from './chat-details';
 import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
+import { CommonModule } from '@angular/common';
 // import { ChatNewComponent } from './chat-new';
 // import { ChatHolderComponent } from './chat-holder';
 // import { ChatRoutingModule } from './chat-routing.module';
@@ -37,6 +38,7 @@ import { MessageSectionComponent } from './chat-details/message-section/message-
     // SharedModule,
     // MessagesSharedModule,
     // ChatRoutingModule
+    CommonModule
   ],
   providers: [] //ChatService
 })
