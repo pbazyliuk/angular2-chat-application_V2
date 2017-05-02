@@ -10,6 +10,7 @@ import { Thread } from "app/shared/model/thread";
 import { ThreadSummaryVM } from "app/chat/chat-list/thread-section/thread-summary.vw";
 import { mapStateToUserName } from "app/chat/chat-list/thread-section/mapStateToUserName";
 import { mapStateToUnreadMessagesCounter } from "app/chat/chat-list/thread-section/mapStateToUnreadMessagesCounter";
+import { stateToThreadSummariesSelector } from "app/chat/chat-list/thread-section/stateToThreadSummariesSelector";
 
 
 @Component({
@@ -39,31 +40,9 @@ export class ThreadSectionComponent implements OnInit {
         .map(mapStateToUnreadMessagesCounter);
 
       this.threadSummaries$ = store
-        .select(
-          state => {
-            const threads = _.values<Thread>(state.storeData.threads);
-
-            return threads.map(
-              thread => {
-
-                const names = _.keys(thread.participants).map(
-                  participantId => state.storeData.participants[participantId].name
-                  );
-                
-                const lastMessageText = _.last(thread.messageIds);
-                const lastMessage = state.storeData.messages[lastMessageText];
-
-                return {
-                  id: thread.id,
-                  participantNames: _.join(names, ","),
-                  lastMessageText: lastMessage.text,
-                  timestamp: lastMessage.timestamp
-                }
-              }
-            );
-          }
-        )
+        .select(stateToThreadSummariesSelector);
     }
+    
 
   ngOnInit() {
 
