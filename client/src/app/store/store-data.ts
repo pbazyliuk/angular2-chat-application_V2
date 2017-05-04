@@ -8,3 +8,9 @@ export interface StoreData {
     messages: Message[];
     chats: Chat[];
 }
+
+export const INITIAL_STORE_DATA: StoreData = {
+    users: [],
+    messages: [],
+    chats: []
+}

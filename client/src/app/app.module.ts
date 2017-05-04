@@ -25,12 +25,37 @@ import { AuthService } from './core/';
 import { ProfileComponent } from './profile/profile.component';
 import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
-
+import { StoreModule, Action } from "@ngrx/store";
+import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions } from "app/store/actions";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
 
+function storeReducer(state: ApplicationState, action: Action): ApplicationState {
+  switch (action.type) {
+    case LOAD_CHAT_LIST_ACTION:
+      return handleLoadChatListsAction(state, action);
+  }
+  return state;
+}
 
+function handleLoadChatListsAction(state: ApplicationState, action: LoadChatListActions): ApplicationState {
+  const userData = action.payload;
+
+  console.error('userData', userData);
+
+  const newState: ApplicationState = Object.assign({}, state);
+
+
+  newState.storeData = {
+    users: action.payload.users,
+    chats: [],
+    messages: []
+  }
+
+  return newState;
+}
 
 @NgModule({
   declarations: [
@@ -54,7 +79,8 @@ import { CommonModule } from "@angular/common";
     HttpModule,
     AppRoutingModule,
     CoreModule,
-    ChatModule
+    ChatModule,
+      StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService],
   bootstrap: [AppComponent]
