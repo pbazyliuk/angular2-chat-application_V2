@@ -22,14 +22,16 @@ module.exports = function(app) {
       email: null
     }
     User.find({}, function(err, users) {
-      let userMap = [];
-      
+      let userMap = {};
+      userMap.users = [];
       users.forEach(function(user) {
         let result = Object.keys(userModel).reduce(function(obj, key) {
           obj[key] = user[key];
           return obj;
         }, {});
-          userMap.push(result);
+        console.log(result);
+          
+          userMap.users.push(result);
       })
       res.send(userMap);  
     });
