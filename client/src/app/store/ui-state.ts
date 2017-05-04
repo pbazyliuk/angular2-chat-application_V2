@@ -1,6 +1,8 @@
 
+import { User } from "app/core/models/user";
+
 export interface UiState {
-    user: object;
+    user: User; //object
     authenticated: boolean;
 }
 

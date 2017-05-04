@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     alert('User not found')
   }
 
-  onLoginSuccess (res: any): void {
-     console.log(res);
+  // onLoginSuccess (res: any): void {
+  //    console.log(res);
      
-     this.LoginService.setUserState(res);
-     this.router.navigate(['chat']);
-  }
+  //    this.LoginService.setUserState(res);
+  //    this.router.navigate(['chat']);
+  // }
 
   ngOnInit() {
   }

@@ -9,7 +9,7 @@
             <a class="navbar__menu-link" routerLink="/home" routerLinkActive="active" >Home</a>
         </li>
         <li class="navbar__menu-item">
-            <a class="navbar__menu-link" routerLink="/chat" routerLinkActive="active" [hidden]="!isLogged()">Chat</a>
+            <a class="navbar__menu-link" routerLink="/chat" routerLinkActive="active" [hidden]="!authenticated">Chat</a>
         </li>
         <!--<li class="navbar__menu-item">
             <a class="navbar__menu-link" routerLink="/auth/login" routerLinkActive="active" [hidden]="isLogged()">Sign In</a>
@@ -18,9 +18,9 @@
             <a class="navbar__menu-link" routerLink="/auth/register" routerLinkActive="active" [hidden]="isLogged()">Sign Up</a>
         </li>-->
 
-        <ng-container *ngIf="!isLoggedIn">
-            <a class="navbar__menu-link" routerLink="/auth/login" routerLinkActive="active" [hidden]="isLogged()">Login</a>
-            <a class="navbar__menu-link" routerLink="/auth/register" routerLinkActive="active" [hidden]="isLogged()">Register</a>
+        <ng-container *ngIf="!authenticated">
+            <a class="navbar__menu-link" routerLink="/auth/login" routerLinkActive="active" [hidden]="authenticated">Login</a>
+            <a class="navbar__menu-link" routerLink="/auth/register" routerLinkActive="active" [hidden]="authenticated">Register</a>
         </ng-container>
         <!--<li class="navbar__menu-item">    
              <a class="navbar__menu-link">
@@ -29,17 +29,17 @@
         </li>-->
 
         <li class="navbar__menu-item">
-            <a href="" class="navbar__menu-link" routerLink="/profile" [hidden]="!isLogged()">Profile</a>
-            <a href="" class="navbar__menu-link" routerLink="/home" [hidden]="!isLogged()" (click)="logoutAction()">{{email}} Logout</a>
+            <a href="" class="navbar__menu-link" routerLink="/profile" [hidden]="!authenticated">Profile</a>
+            <a href="" class="navbar__menu-link" routerLink="/home" [hidden]="!authenticated" (click)="logoutAction()">{{email}} Logout</a>
         </li>
     </ul>
 
 </nav>
 
-<div class="user-profile" *ngIf="isLoggedIn">
+<!--<div class="user-profile" *ngIf="isLoggedIn">
     <a class="user-profile-link">
       <span class="user-profile-link__name">{{username}}</span>
       <div class="user-profile-link__photo" style="background-image: url(assets/img/avatar__1.jpg)"></div>
     </a>
     <button class="log-out  chat-icon-sign-out" (click)="logout()"></button>
-  </div>
+  </div>-->

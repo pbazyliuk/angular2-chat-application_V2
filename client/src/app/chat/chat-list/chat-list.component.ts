@@ -23,10 +23,10 @@ export class ChatListComponent implements OnInit {
 
   ngOnInit() {
     this.chatlistservice.getAllUsers()
-    .subscribe(
-      allUserData => this.store.dispatch(
-        new LoadChatListActions(allUserData)
-      )
+      .subscribe(
+        allUserData => this.store.dispatch(
+          new LoadChatListActions(allUserData)
+        )
     )
       // .getAllUsers()
       // .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)

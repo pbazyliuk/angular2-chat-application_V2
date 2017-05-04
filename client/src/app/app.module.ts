@@ -46,8 +46,6 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
 function handleLoadChatListsAction(state: ApplicationState, action: LoadChatListActions): ApplicationState {
   const userData = action.payload;
 
-  console.error('userData', userData);
-
   const newState: ApplicationState = Object.assign({}, state);
 
 
