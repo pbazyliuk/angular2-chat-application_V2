@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
-import { Profile } from './profile.model';
+import { Register } from './register.model';
 import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
 import { LoginService } from '../shared/login.service'
@@ -29,7 +29,7 @@ function dateCompare(c: AbstractControl):
 
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  private profile: Profile = {
+  private profile: Register = {
     firstname: '',
     lastname: '',
     email: '',

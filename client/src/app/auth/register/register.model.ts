@@ -1,4 +1,4 @@
-export interface Profile {
+export interface Register {
     firstname: string,
     lastname: string,
     email: string,

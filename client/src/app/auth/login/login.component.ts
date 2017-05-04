@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { User } from './login.model';
+import { Login } from './login.model';
 import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
 import { LoginService } from '../shared/login.service'
@@ -11,7 +11,7 @@ import { LoginService } from '../shared/login.service'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   
-  private user: User = {
+  private user: Login = {
     email: '',
     password: ''
   };
