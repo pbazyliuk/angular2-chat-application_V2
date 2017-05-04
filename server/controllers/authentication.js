@@ -10,7 +10,24 @@ function tokenForUser(user) {
 exports.signin = function(req, res, next) {
   // User has already had their email and password auth'd
   // We just need to give them a token
-  res.send({ token: tokenForUser(req.user), email: req.user.email });
+  //res.send({ token: tokenForUser(req.user), email: req.user.email });
+  const userModel = {
+      _id: null,
+      firstname: null,
+      lastname: null,
+      email: null
+  }
+  User.findOne({'email': req.user.email}, function(err, user) {
+    if (err) { return next(err); }
+
+    if (user) {
+    let result = Object.keys(userModel).reduce(function(obj, key) {
+        obj[key] = user[key];
+        return obj;
+      }, {});
+     res.send({ token: tokenForUser(req.user), user: result });
+    }
+   });
 }
 
 exports.signup = function(req, res, next) {
@@ -40,11 +57,24 @@ exports.signup = function(req, res, next) {
       password: password,
     });
 
+     const userModel = {
+        _id: null,
+        firstname: null,
+        lastname: null,
+        email: null
+    }
+
+    let result = Object.keys(userModel).reduce(function(obj, key) {
+        obj[key] = user[key];
+        return obj;
+      }, {});
+
     user.save(function(err) {
       if (err) { return next(err); }
-
-      // Repond to request indicating the user was created
-      res.json({ token: tokenForUser(user) });
+      
+      console.log(user)
+      // Respond to request indicating the user was created
+      res.json({ token: tokenForUser(user), user: result});
     });
   });
 }

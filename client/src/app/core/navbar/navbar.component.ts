@@ -19,7 +19,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
      this.subscriptions.push(
        this.loginService
          .getUserState()
-         .subscribe(state => { this.email = state.email; console.log(state.email) })
+         .subscribe(state => { 
+           if(state.user) {
+            this.email = state.user.email; console.log(state.user.email)
+           }
+           else {
+             return {}
+           }
+          })
      )
   }
 
