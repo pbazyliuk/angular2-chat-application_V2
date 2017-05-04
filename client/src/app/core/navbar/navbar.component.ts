@@ -4,6 +4,7 @@ import { LoginService } from '../../auth/shared';
 import { Subscription } from 'rxjs';
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
+import { LogoutSuccessActions } from "app/store/actions";
 
 @Component({
   selector: 'ct-navbar',
@@ -37,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     //  )
      this.store.subscribe(
       state => {
-        console.log("LoginComponent section received state", state)
+        console.log("Login Component section received state", state)
         if(state.uiState.user) {
           this.email = state.uiState.user.email;
           this.authenticated = state.uiState.authenticated;
@@ -72,7 +73,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // };
   
   logoutAction() {
-    this.loginService.logout();
+    
+    this.loginService.logout()
+
+      .subscribe(
+              () => {
+                this.store.dispatch(
+                new LogoutSuccessActions()
+              )
+              //this.router.navigate(['home']);
+            }
+          )
     //this.router.navigate(['auth/login']);
   }
 }

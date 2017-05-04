@@ -27,7 +27,7 @@ import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION } from "app/store/actions";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -39,8 +39,30 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
   
   case LOGIN_SUCCESS_ACTION:
       return handleLoginSuccessAction(state, action);
+
+  case LOGOUT_SUCCESS_ACTION:
+      return handleLogoutSuccessAction(state, action);
   }
   return state;
+}
+
+function handleLogoutSuccessAction(state: ApplicationState, action: LoadChatListActions): ApplicationState {
+  // const userData = action.payload;
+
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData = {
+    users: [],
+    chats: [],
+    messages: []
+  };
+
+  newState.uiState = {
+    authenticated: undefined,
+    user: undefined
+  }
+
+  return newState;
 }
 
 function handleLoadChatListsAction(state: ApplicationState, action: LoadChatListActions): ApplicationState {

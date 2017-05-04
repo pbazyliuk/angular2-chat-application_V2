@@ -34,9 +34,9 @@ export class LoginService {
     return this.http.post('http://localhost:8090/signup', user).map(res => res.json());
   }
 
-  public logout(): void {
-    this._authenticated = false;
-    this._state.next({});
+  public logout(): any {
+    // this._authenticated = false;
+    // this._state.next({});
     localStorage.removeItem('token');
     // this.router.navigate(['home']);
     console.log('user logged out');

@@ -21,3 +21,10 @@ export class LoginSuccessActions implements Action {
         console.log(payload)
     }
 }
+
+export const LOGOUT_SUCCESS_ACTION = 'LOGOUT_SUCCESS_ACTION';
+
+export class LogoutSuccessActions implements Action {
+     type = LOGOUT_SUCCESS_ACTION;
+     
+}

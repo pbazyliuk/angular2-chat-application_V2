@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   };
 
 
-  private subscriptions: Subscription[] = [];
+  //private subscriptions: Subscription[] = [];
   
   constructor(private LoginService: LoginService, private router: Router, private zone: NgZone,
     private store: Store<ApplicationState>
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
      console.log(data);
 
-     this.subscriptions.push(
+    //  this.subscriptions.push(
        this.LoginService
          .login(data)
          //.subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             },
             this.onLoginError
           )
-      )
+      // )
    }
 
    onLoginError (err){
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(subscription => subscription.unsubscribe());
+    // this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
 }
