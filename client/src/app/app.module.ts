@@ -23,6 +23,8 @@ import { AuthGuard } from './auth/';
 import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
 import { ProfileComponent } from './profile/profile.component';
+import { ChatListService } from "app/chat/chat-list";
+import { CommonModule } from "@angular/common";
 
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
@@ -47,13 +49,14 @@ import { ProfileComponent } from './profile/profile.component';
   imports: [
     BrowserModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     CoreModule,
     ChatModule
   ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
