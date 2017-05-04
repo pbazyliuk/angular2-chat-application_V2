@@ -4,6 +4,9 @@ import { Register } from './register.model';
 import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
 import { LoginService } from '../shared/login.service'
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "app/store/application-state";
+import { RegisterSuccessActions } from "app/store/actions";
 
 
 
@@ -29,25 +32,26 @@ function dateCompare(c: AbstractControl):
 
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  private profile: Register = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmpassword: ''
-  };
+  // private profile: Register = {
+  //   firstname: '',
+  //   lastname: '',
+  //   email: '',
+  //   password: '',
+  //   confirmpassword: ''
+  // };
 
 
-  private subscriptions: Subscription[] = [];
+  //private subscriptions: Subscription[] = [];
 
-  signUpForm: FormGroup;
+  private signUpForm: FormGroup;
 
-  constructor( private fb: FormBuilder, private LoginService: LoginService, private router: Router, private zone: NgZone) {
+  constructor( private fb: FormBuilder, private LoginService: LoginService, private router: Router, private zone: NgZone,
+  private store: Store<ApplicationState>) {
   }
 
   private signUpSubmit(form: any) {
      
-     const data = {
+     const data: Register = {
       firstname: this.signUpForm.value.firstname,
       lastname: this.signUpForm.value.lastname,
       email: this.signUpForm.value.email,
@@ -57,23 +61,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
      console.log(data);
 
-     this.subscriptions.push(
-       this.LoginService
+     this.LoginService
          .register(data)
-         .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
-      )
-   }
+         .subscribe(userInfo => {
+           //console.error(userInfo)
+                this.store.dispatch(
+                new RegisterSuccessActions(userInfo)
+              )
+              this.router.navigate(['chat']);}, 
+              this.onLoginError)
+    }
 
   onLoginError (err){
     console.error(err);
     alert('Something goes wrong')
   }
 
-  onLoginSuccess (res: any): void {
-     console.log(res);
-     this.LoginService.setUserState(res);
-     this.router.navigate(['chat']);
-  }
+  // onLoginSuccess (res: any): void {
+  //    console.log(res);
+  //    this.LoginService.setUserState(res);
+  //    this.router.navigate(['chat']);
+  // }
 
   // save() {
   //   console.log(this.signUpForm.value)
@@ -100,7 +108,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(subscription => subscription.unsubscribe());
+    //this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
   }

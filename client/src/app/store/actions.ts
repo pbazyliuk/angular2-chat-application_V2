@@ -28,3 +28,14 @@ export class LogoutSuccessActions implements Action {
      type = LOGOUT_SUCCESS_ACTION;
      
 }
+
+
+export const REGISTER_SUCCESS_ACTION = 'REGISTER_SUCCESS_ACTION';
+
+export class RegisterSuccessActions implements Action {
+     type = REGISTER_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
