@@ -12,6 +12,7 @@ import { ChatComponent } from "./chat";
 //Service
 import { AuthGuard } from "./auth";
 import { ChatGuard } from "./chat";
+import { ProfileComponent } from "app/profile/profile.component";
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,11 @@ const appRoutes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   //   {

@@ -22,6 +22,7 @@ import { ChatModule } from './chat';
 import { AuthGuard } from './auth/';
 import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
+import { ProfileComponent } from './profile/profile.component';
 
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
@@ -37,6 +38,7 @@ import { AuthService } from './core/';
     HomeComponent,
     // LoginComponent,
     PageNotFoundComponent,
+    ProfileComponent,
     // RegisterComponent,
     // ChatComponent,
     // ChatListComponent,
