@@ -2,6 +2,8 @@ const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
 const passport = require('passport');
 
+const User = require('./models/user');
+
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
@@ -11,4 +13,25 @@ module.exports = function(app) {
   });
   app.post('/signin', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
+
+  app.get('/api/users', function(req, res) {
+    const userModel = {
+      _id: null,
+      firstname: null,
+      lastname: null,
+      email: null
+    }
+    User.find({}, function(err, users) {
+      let userMap = [];
+      
+      users.forEach(function(user) {
+        let result = Object.keys(userModel).reduce(function(obj, key) {
+          obj[key] = user[key];
+          return obj;
+        }, {});
+          userMap.push(result);
+      })
+      res.send(userMap);  
+    });
+  });
 }
