@@ -3,6 +3,9 @@ import { Login } from './login.model';
 import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
 import { LoginService } from '../shared/login.service'
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "app/store/application-state";
+import { LoginSuccessActions } from "app/store/actions";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +22,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   
-  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone) {
+  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone,
+    private store: Store<ApplicationState>
+  ) {
+    store.subscribe(
+      state => console.log("LoginComponent section received state", state)
+    )
   }
 
   private signInSubmit(form: any) {
@@ -34,7 +42,16 @@ export class LoginComponent implements OnInit, OnDestroy {
      this.subscriptions.push(
        this.LoginService
          .login(data)
-         .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
+         //.subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
+           .subscribe(
+              userInfo => {
+                this.store.dispatch(
+                new LoginSuccessActions(userInfo)
+              )
+              this.router.navigate(['chat']);
+            },
+            this.onLoginError
+          )
       )
    }
 

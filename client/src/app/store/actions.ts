@@ -11,3 +11,13 @@ export class LoadChatListActions implements Action {
         
     }
 }
+
+export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS_ACTION';
+
+export class LoginSuccessActions implements Action {
+    type = LOGIN_SUCCESS_ACTION;
+
+    constructor(public payload) {
+        console.log(payload)
+    }
+}

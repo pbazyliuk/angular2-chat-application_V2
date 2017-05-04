@@ -27,12 +27,12 @@ const appRoutes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   //   {
   //   path: 'chat',
@@ -45,7 +45,7 @@ const appRoutes: Routes = [
   {
     path: 'auth',
     loadChildren: 'app/auth/auth.module#AuthModule',
-    canActivate: [ChatGuard]
+    //canActivate: [ChatGuard]
   },
   // {
   //   path: 'register',
