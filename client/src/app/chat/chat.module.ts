@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 // import { SharedModule }  from '../shared';
 import { ChatComponent } from './chat.component';
+import { CommonModule } from '@angular/common'
 import { ChatListComponent } from './chat-list';
 import { ChatDetailsComponent } from './chat-details';
-import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
-import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
-import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
+// import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
+// import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
+// import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
 // import { ChatNewComponent } from './chat-new';
 // import { ChatHolderComponent } from './chat-holder';
 // import { ChatRoutingModule } from './chat-routing.module';
@@ -23,9 +24,9 @@ import { MessageSectionComponent } from './chat-details/message-section/message-
     ChatComponent,
     ChatListComponent,
     ChatDetailsComponent,
-    UserSelectionComponent,
-    ThreadSectionComponent,
-    MessageSectionComponent,
+    // UserSelectionComponent,
+    // ThreadSectionComponent,
+    // MessageSectionComponent,
     // ChatNewComponent,
     // ChatHolderComponent,
     // ChatNavbarComponent,
@@ -34,6 +35,7 @@ import { MessageSectionComponent } from './chat-details/message-section/message-
     // FilterChatByNamePipe
   ],
   imports: [
+    CommonModule
     // SharedModule,
     // MessagesSharedModule,
     // ChatRoutingModule
