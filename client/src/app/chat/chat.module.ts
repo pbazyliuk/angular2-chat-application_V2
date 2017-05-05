@@ -4,6 +4,7 @@ import { ChatComponent } from './chat.component';
 import { CommonModule } from '@angular/common'
 import { ChatListComponent } from './chat-list';
 import { ChatDetailsComponent } from './chat-details';
+import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
 // import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 // import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 // import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
@@ -24,6 +25,7 @@ import { ChatDetailsComponent } from './chat-details';
     ChatComponent,
     ChatListComponent,
     ChatDetailsComponent,
+    ChatNavbarComponent,
     // UserSelectionComponent,
     // ThreadSectionComponent,
     // MessageSectionComponent,

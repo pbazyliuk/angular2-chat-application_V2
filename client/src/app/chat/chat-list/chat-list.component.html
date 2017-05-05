@@ -1,8 +1,27 @@
 
-      <ul>
+      <!--<ul>
         <li *ngFor="let user of users$ | async">
-          <span>{{user.email}}</span>
+          <span>{{user.firstname}}</span>
         </li>
-      </ul>
+      </ul>-->
  
+<ul class="chat-list">
+  <li class="chat-list__item" *ngFor='let user of users$ | async' 
+ 
+  >
+    <div class="avatar" >
+        <img class="avatar__img" src="http://placehold.it/60x60" alt="avatar-image">
+    </div>
+
+    <div class="chat-info" >
+        <h4 class="chat-name__heading">{{user.firstname}}</h4>
+    </div>
+
+    <div class="chat-last-activity"  >
+        2 h
+    </div>
+    
+   
+  </li>
+</ul>
 
