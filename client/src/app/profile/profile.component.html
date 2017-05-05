@@ -63,23 +63,64 @@
                         </span>
                      </div>
 
-                    <!--<div>
+                    <div formGroupName="passwords">
                         <div class="form-profile__container">
-                            <label for="passwordId" class="form-sign-in__label"
-                            >Password</label>
-                            <input id="passwordId" class="form-profile__input-field" type="password" placeholder="Password (required)"
-                             
-                             >
+                            <label for="currentpasswordId" class="form-profile__label"
+                            [class.header-has-error]="
+                            (profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+                            profileForm.get('passwords.currentpassword').errors"
+                            >Current Password</label>
+                            <input id="currentpasswordId" class="form-profile__input-field" type="password" placeholder="Current Password"
+                            formControlName="currentpassword"
+                            [class.input-has-error]="
+                            (profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+                            (profileForm.get('passwords.currentpassword').errors || profileForm.get('passwords').errors) && !profileForm.get('passwords.currentpassword').errors?.required"
+                            >
+                            <span
+                            *ngIf="
+                            (profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+                            profileForm.get('passwords.currentpassword').errors"
+                            [class.text-has-error]="
+                            (profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+                            profileForm.get('passwords.currentpassword').errors
+                            "
+                            >   
+                                <span *ngIf="profileForm.get('passwords.currentpassword').errors.required">Password is required</span>
+                                <span *ngIf="!!profileForm.get('passwords.currentpassword').errors.minlength || !!profileForm.get('passwords.currentpassword').errors.maxlength">Password should contain from 6 to 14 characters</span>
+                            </span>
                         </div>
 
                         <div class="form-profile__container">
-                            <label for="confirmpasswordId" class="form-profile__label"
-                            >Confirm Password</label>
-                            <input id="confirmpasswordId" class="form-profile__input-field" type="password" placeholder="Confirm Password (required)"
-                            
+                            <label for="newpasswordId" class="form-profile__label"
+                            [class.header-has-error]="
+                            (profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+                            profileForm.get('passwords.newpassword').errors
+                            "
+                            >New Password</label>
+                            <input id="newpasswordId" class="form-profile__input-field" type="password" placeholder="New Password"
+                            formControlName="newpassword"
+                             [class.input-has-error]="
+                             (profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+                            profileForm.get('passwords').errors
+                             "
                             >
+                            
+                            <span *ngIf="
+                            (profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+                            (profileForm.get('passwords.newpassword').invalid || profileForm.get('passwords').errors)"
+                             [class.text-has-error]="
+                              (profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+                            (profileForm.get('passwords.newpassword').invalid || profileForm.get('passwords').errors)
+                            "
+                            >   
+                                <span *ngIf="profileForm.get('passwords.newpassword').errors?.required">New password is required</span>
+                                <span *ngIf="!!profileForm.get('passwords.newpassword').errors?.minlength || !!profileForm.get('passwords.newpassword').errors?.maxlength">Password should contain from 6 to 14 characters</span>
+                                <span *ngIf="(profileForm.get('passwords').errors?.match && !profileForm.get('passwords.newpassword').errors?.required)">Password mustn't match</span>
+                            </span>
                         </div>
-                      </div>-->
-                 <button class="form-profile__btn-register" type="submit" >SAVE</button>
+                  </div>
+                 <button class="form-profile__btn-register" type="submit" [disabled]="profileForm.invalid">SAVE</button>
+                 <!--{{profileForm.value | json}}
+                 {{profileForm.invalid}}-->
                  </form>
 </div>
