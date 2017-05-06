@@ -3,7 +3,7 @@
     <form action="" class="form-profile"
     [formGroup]="profileForm"
     novalidate
-    (ngSubmit)="profileSubmit(profileForm)"
+    (ngSubmit)="profileSubmit(profileForm.value)"
     >
                     
                     <h3 class="form-profile__header">Profile</h3>
@@ -120,7 +120,7 @@
                         </div>
                   </div>
                  <button class="form-profile__btn-register" type="submit" [disabled]="profileForm.invalid">SAVE</button>
-                 <!--{{profileForm.value | json}}
-                 {{profileForm.invalid}}-->
+                 {{profileForm.value | json}}
+                 {{profileForm.invalid}}
                  </form>
 </div>

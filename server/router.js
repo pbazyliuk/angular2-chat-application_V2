@@ -29,11 +29,16 @@ module.exports = function(app) {
           obj[key] = user[key];
           return obj;
         }, {});
-        console.log(result);
+        // console.log(result);
           
           userMap.users.push(result);
       })
       res.send(userMap);  
     });
   });
+
+  app.get('/api/users', function(req, res) {
+    // console.log(req);
+    res.send('Super secret code is ABC123');
+  })
 }
