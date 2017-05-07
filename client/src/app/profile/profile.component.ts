@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/fo
 import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
-import { LoginService } from "app/auth/shared";
+import { ProfileService } from "app/profile/profile.service";
+import { UpdateProfileSuccessActions } from "app/store/actions";
+import { Router } from "@angular/router";
 
 function dateCompare(c: AbstractControl):
           {[key: string]: boolean} | null {
@@ -29,9 +31,10 @@ export class ProfileComponent implements OnInit {
   private userInfo$: Observable<object>;
   private userInfoCurrent;
   private userInfoNew;
-  private userInfoComplex;
+ // private userInfoComplex;
 
-   constructor(private store: Store<ApplicationState>, private LoginService: LoginService, private fb: FormBuilder) {
+   constructor(private store: Store<ApplicationState>, private profileservice: ProfileService, private router: Router,
+   private fb: FormBuilder) {
       this.userInfo$ = store
         .map(this.mapStatetoUserInfo.bind(this))
    }
@@ -49,10 +52,26 @@ export class ProfileComponent implements OnInit {
       console.log(value);
       console.log(this.userInfoCurrent);
 
-      this.userInfoComplex = Object.assign(this.userInfoCurrent, this.userInfoNew, this.userInfoNew.passwords );
-        console.log(this.userInfoComplex)
+      const userInfoComplex = Object.assign(this.userInfoCurrent, this.userInfoNew, this.userInfoNew.passwords );
+        console.log(userInfoComplex)
       
+        this.profileservice
+          .updateProfile(userInfoComplex)
+              .subscribe(newUserInfo => {
+              //console.error(userInfo)
+                    this.store.dispatch(
+                    new UpdateProfileSuccessActions(newUserInfo)
+                  )
+                  this.router.navigate(['chat'])
+                  //this.router.navigate(['chat']);}, 
+              },
+                  this.onLoginError)
+        }
 
+      onLoginError (err){
+        // console.error(err);
+        alert('Something goes wrong')
+      }
       // this.LoginService
       //    .profileUpdate()
       //   //  .subscribe(userInfo => {
@@ -64,11 +83,8 @@ export class ProfileComponent implements OnInit {
       //   //       this.onLoginError)
     
 
-   }
+   
 
-   onLoginSuccess (res) {
-    
-  }
 
    mapStatetoUserInfo(state: ApplicationState): object {
      this.userInfoCurrent = state.uiState.user;

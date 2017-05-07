@@ -78,3 +78,20 @@ exports.signup = function(req, res, next) {
     });
   });
 }
+
+
+exports.updateProfile = function(req, res, next) {
+  // User has already had their email and password auth'd
+  // We just need to give them a token
+  //res.send({ token: tokenForUser(req.user), email: req.user.email });
+  console.log('updateprofile', req)
+
+  User.update({_id: req.body._id}, obj, function(err, user) {
+    if (err) { return err; }
+    console.log('USER SUM', user)
+    
+    res.json({ token: tokenForUser(obj), user: user});
+
+  })
+
+}

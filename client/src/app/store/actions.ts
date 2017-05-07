@@ -39,3 +39,15 @@ export class RegisterSuccessActions implements Action {
         console.log(payload)
     }
 }
+
+
+
+export const UPDATE_PROFILE_SUCCESS_ACTION = 'UPDATE_PROFILE_SUCCESS_ACTION';
+
+export class UpdateProfileSuccessActions implements Action {
+     type = UPDATE_PROFILE_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}

@@ -27,7 +27,8 @@ import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION } from "app/store/actions";
+import { ProfileService } from "app/profile/profile.service";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -45,8 +46,16 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
 
    case REGISTER_SUCCESS_ACTION:
       return handleRegisterSuccessAction(state, action);
+
+  case UPDATE_PROFILE_SUCCESS_ACTION:
+    return handleUpdateProfileSuccessAction(state, action);
   }
   return state;
+}
+
+function handleUpdateProfileSuccessAction(state, action) {
+  console.log("profile working")
+   return state;
 }
 
 function handleRegisterSuccessAction(state, action) {
@@ -138,7 +147,7 @@ function handleLoginSuccessAction(state, action) {
     ChatModule,
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService, ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
