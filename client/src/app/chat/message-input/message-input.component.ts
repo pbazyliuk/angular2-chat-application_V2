@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "app/store/application-state";
 
 @Component({
   selector: 'ct-message-input',
@@ -10,11 +12,19 @@ export class MessageInputComponent implements OnInit {
   messages = [];
   connection;
   message;
+  author;
   
-  constructor(private messageinputservice: MessageInputService) {}
+  constructor(private messageinputservice: MessageInputService, private store: Store<ApplicationState>) {
+    store.subscribe(
+      state => {
+        console.log("Message-Input component received state", state)
+        this.author = state.uiState.user.firstname;
+      }
+    )
+  }
 
   sendMessage(){
-    this.messageinputservice.sendMessage(this.message);
+    this.messageinputservice.sendMessage(this.message, this.author);
     this.message = '';
   }
 

@@ -6,8 +6,8 @@ export class MessageInputService {
   private url = 'http://localhost:8090';  
   private socket;
   
-  sendMessage(message){
-    this.socket.emit('add-message', message);    
+  sendMessage(message, author){
+    this.socket.emit('add-message', message, author);    
   }
   
   getMessages() {
