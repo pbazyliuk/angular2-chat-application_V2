@@ -27,7 +27,7 @@ import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION } from "app/store/actions";
 import { ProfileService } from "app/profile/profile.service";
 import { MessageInputService } from "app/chat/message-input/message-input.service";
 
@@ -50,8 +50,22 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
 
   case UPDATE_PROFILE_SUCCESS_ACTION:
     return handleUpdateProfileSuccessAction(state, action);
+  
+  case MESSAGE_ADD_SUCCESS_ACTION:
+    return handleMessageAddSuccessAction(state, action);
   }
+
   return state;
+}
+
+function handleMessageAddSuccessAction(state, action) {
+  const messageData = action.payload;
+
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData.messages.push(messageData);
+
+  return newState;
 }
 
 function handleUpdateProfileSuccessAction(state, action) {

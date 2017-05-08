@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "app/store/application-state";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'ct-messages-list',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages-list.component.css']
 })
 export class MessagesListComponent implements OnInit {
+  private messages$: Observable<object>;
 
-  constructor() { }
+  constructor(private store: Store<ApplicationState>) { 
+    this.messages$ = store
+      .map(this.mapStatetoMessages)
+  }
+
+mapStatetoMessages(state: ApplicationState) {
+  return state.storeData.messages;
+}
 
   ngOnInit() {
+    
   }
 
 }

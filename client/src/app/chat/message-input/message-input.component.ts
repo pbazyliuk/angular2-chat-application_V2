@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MessageInputService } from "app/chat/message-input/message-input.service";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
+import * as io from 'socket.io-client';
+import { Observable } from "rxjs/Observable";
+import { MessageAddSuccessActions } from "app/store/actions";
 
 @Component({
   selector: 'ct-message-input',
@@ -13,7 +16,11 @@ export class MessageInputComponent implements OnInit {
   connection;
   message;
   author;
-  
+  private socket;
+  private url = 'http://localhost:8090'; 
+  private observable; 
+  isInit = false;
+
   constructor(private messageinputservice: MessageInputService, private store: Store<ApplicationState>) {
     store.subscribe(
       state => {
@@ -24,17 +31,37 @@ export class MessageInputComponent implements OnInit {
   }
 
   sendMessage(){
-    this.messageinputservice.sendMessage(this.message, this.author);
+    //this.messageinputservice.sendMessage(this.message, this.author);
+    this.socket.emit('add-message', this.message, this.author);    
     this.message = '';
   }
 
   ngOnInit() {
-    this.connection = this.messageinputservice.getMessages().subscribe(message => {
-      this.messages.push(message);
+    this.observable = new Observable(observer => {
+      this.socket = io(this.url);
+      this.socket.on('message', (data) => {
+        observer.next(data);    
+      });
+      return () => {
+        this.socket.disconnect();
+      };  
+    })     
+    // return observable
+    .subscribe(message => {
+      this.store.dispatch(
+                new MessageAddSuccessActions(message)
+              )
     })
-  }
+  }  
+      
+    // this.connection = this.messageinputservice.getMessages()
+    //   .subscribe(
+    //     message => {
+    //     this.messages.push(message);
+    //   })
+  
   
   ngOnDestroy() {
-    this.connection.unsubscribe();
+     //this.observable.unsubscribe();
   }
 }

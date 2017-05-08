@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
   });
   
   socket.on('add-message', (message, author) => {
+      console.log('server add-message')
     io.emit('message', {type:'new-message', text: message, name: author});    
   });
 });

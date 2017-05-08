@@ -6,9 +6,9 @@ export class MessageInputService {
   private url = 'http://localhost:8090';  
   private socket;
   
-  sendMessage(message, author){
-    this.socket.emit('add-message', message, author);    
-  }
+//   sendMessage(message, author){
+//     //this.socket.emit('add-message', message, author);    
+//   }
   
   getMessages() {
     let observable = new Observable(observer => {

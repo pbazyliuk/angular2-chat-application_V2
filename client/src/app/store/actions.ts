@@ -51,3 +51,15 @@ export class UpdateProfileSuccessActions implements Action {
         console.log(payload)
     }
 }
+
+
+export const MESSAGE_ADD_SUCCESS_ACTION = 'MESSAGE_ADD_SUCCESS_ACTION';
+
+export class MessageAddSuccessActions implements Action {
+     type = MESSAGE_ADD_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
+
