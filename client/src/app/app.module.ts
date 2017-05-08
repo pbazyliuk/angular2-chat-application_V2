@@ -29,6 +29,7 @@ import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
 import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION } from "app/store/actions";
 import { ProfileService } from "app/profile/profile.service";
+import { MessageInputService } from "app/chat/message-input/message-input.service";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -147,7 +148,7 @@ function handleLoginSuccessAction(state, action) {
     ChatModule,
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService, ProfileService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService, ProfileService, MessageInputService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
