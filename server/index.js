@@ -27,8 +27,11 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
   
-  socket.on('add-message', (message) => {
-    io.emit('message', {type:'new-message', text: message});    
+  socket.on('add-message', (message, author) => {
+      console.log('message received')
+    io.emit('message', {type:'new-message', name: author, text: message});
+
+
   });
 });
 

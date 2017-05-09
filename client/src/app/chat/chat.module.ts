@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 // import { SharedModule }  from '../shared';
 import { ChatComponent } from './chat.component';
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ChatListComponent } from './chat-list';
 import { ChatDetailsComponent } from './chat-details';
 import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
@@ -43,7 +44,8 @@ import { MessageInputComponent } from './message-input/message-input.component';
     // FilterChatByNamePipe
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
     // SharedModule,
     // MessagesSharedModule,
     // ChatRoutingModule

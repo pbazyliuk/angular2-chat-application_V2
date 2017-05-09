@@ -35,6 +35,13 @@ export class ProfileComponent implements OnInit {
 
    constructor(private store: Store<ApplicationState>, private profileservice: ProfileService, private router: Router,
    private fb: FormBuilder) {
+
+
+      store.subscribe(
+      state => console.log("Profile Component section received state", state)
+    )
+
+
       this.userInfo$ = store
         .map(this.mapStatetoUserInfo.bind(this))
    }
