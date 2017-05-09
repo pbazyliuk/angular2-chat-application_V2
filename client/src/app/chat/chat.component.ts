@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from "@ngrx/store";
+import { WsService } from "app/ws.service";
+import { ApplicationState } from "app/store/application-state";
 
 @Component({
   selector: 'ct-chat',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<ApplicationState>, private ws: WsService) {}
 
   ngOnInit() {
+    console.error('NGONINT')
+  //  this.ws.initWs()
+  //   .subscribe(val => {
+  //     console.log(val)
+  //   })
   }
 
 }

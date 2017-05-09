@@ -10,6 +10,10 @@ const cors = require('cors');
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+const socketioJwt = require('socketio-jwt');
+const config = require('./config');
+const User = require('./models/user');
+
 //DB Setup
 mongoose.connect('mongodb://localhost:auth/auth');
 
@@ -20,20 +24,97 @@ app.use(bodyParser.json({ type: '*/*' })) //parser incoming request
 router(app);
 
 
-io.on('connection', (socket) => {
-  console.log('user connected');
+// io.on('connection', (socket) => {
+//   console.log('user connected');
   
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+//   socket.on('disconnect', function(){
+//     console.log('user disconnected');
+//   });
   
-  socket.on('add-message', (message, author) => {
-      console.log('message received')
-    io.emit('message', {type:'new-message', name: author, text: message});
+//   socket.on('add-message', (message, author) => {
+//       console.log('message received')
+//     io.emit('message', {type:'new-message', name: author, text: message});
 
 
-  });
-});
+//   });
+// });
+
+io.sockets
+  .on('connection', socketioJwt.authorize({
+    secret: config.secret,
+    callback: false
+  }))
+  .on('authenticated', socket => {
+       console.log('connect')
+       //console.log(socket.decoded_token.sub);
+       
+       User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
+           if (err) { return err; }
+            if(user) {
+                console.log(user)
+             io.emit('join', {
+                user: user.firstname,
+                time: Date.now()
+            })
+             return;
+            }
+       })
+       
+    
+
+    socket
+      //.on('unauthorized', unauthorizedHandler)
+      .on('add-message', chatMessageHandler)
+      .on('disconnect', disconnectHandler)
+
+    // function unauthorizedHandler(error) {
+    //   if (error.data.type == 'UnauthorizedError' || error.data.code == 'invalid_token') {
+    //     // redirect user to login page perhaps?
+    //     console.log("User's token has expired");
+    //   }
+    // }
+
+    function chatMessageHandler(message, author) {
+        io.emit('message', {type:'new-message', name: author, text: message});
+    //   console.log('message received')
+    //   const msgObj = {
+    //     msg,
+    //     user: socket.decoded_token.sub,
+    //     time: Date.now()
+    //   }
+
+    //   io.emit('message', msgObj)
+
+    //   mongoConnected.then(db => {
+    //     db
+    //       .collection('messages')
+    //       .insert(msgObj, err => {
+    //         if (err) io.emit('error', err)
+    //       })
+    //   })
+    }
+
+    function disconnectHandler() {
+      console.log('disconnect')
+        User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
+            if (err) { return err; }
+            if(user) {
+                console.log(user.firstname)
+                io.emit('leave', {
+                    user: user.firstname,
+                    time: Date.now()
+                })
+                return;
+            }
+        })
+    //   io.emit('leave', {
+    //     user: socket.decoded_token.sub,
+    //     time: Date.now()
+    //   })
+    }
+  })
+
+
 
 //Server Setup
 const port = process.env.PORT || 8090;

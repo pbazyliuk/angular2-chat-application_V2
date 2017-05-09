@@ -83,6 +83,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logoutAction() {
     
     this.loginService.logout()
+      
       // .subscribe(() => {
       //   var socket = io.connect('http://localhost:8090');
       //         // socket.on('connect', function () {
