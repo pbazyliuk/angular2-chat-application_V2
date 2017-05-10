@@ -19,7 +19,8 @@ module.exports = function(app) {
       _id: null,
       firstname: null,
       lastname: null,
-      email: null
+      email: null,
+      isLogged: false
     }
     User.find({}, function(err, users) {
       let userMap = {};

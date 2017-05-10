@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      this.LoginService
          .register(data)
          .subscribe(userInfo => {
-           //console.error(userInfo)
+           console.error(userInfo)
                 this.store.dispatch(
                 new RegisterSuccessActions(userInfo)
               )

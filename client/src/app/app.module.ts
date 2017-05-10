@@ -106,12 +106,35 @@ function handleLogoutSuccessAction(state: ApplicationState, action: LoadChatList
   return newState;
 }
 
-function handleLoadChatListsAction(state: ApplicationState, action: LoadChatListActions): ApplicationState {
+function handleLoadChatListsAction(state: ApplicationState, action: LoadChatListActions) {//: ApplicationState 
   const userData = action.payload;
+  console.log('CHATLIST SUCEESS', state);
+  console.log(userData)
 
+  userData.users
+    .forEach(function(user, index) {
+      for(var key in user) {
+        if(key === 'email' && user[key] === state.uiState.user.email) {
+          user.isLogged = true;
+          // console.log(user);
+          // console.log(index)
+        }
+      }
+    })
+ console.log('AFTER FOREACH', userData)
+userData.users = userData.users.filter(function(user) {
+    
+      if(user.isLogged === true) {
+        return true;
+      }
+      return false;
+    
+  })
+  console.log('AFTER FILTER', userData)
   const newState: ApplicationState = Object.assign({}, state);
 
 
+  
   newState.storeData.users = action.payload.users
   
   // this.Router.navigate(['chat'])
@@ -120,11 +143,14 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
 
 function handleLoginSuccessAction(state, action) {
   const userData = action.payload;
+  
+  
 
   localStorage.setItem('token', userData.token);
+  
 
   const newState: ApplicationState = Object.assign({}, state);
-
+console.log(state.storeData.users)
   newState.uiState = {
     user: action.payload.user,
     authenticated: true

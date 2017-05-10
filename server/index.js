@@ -48,18 +48,32 @@ io.sockets
        console.log('connect')
        //console.log(socket.decoded_token.sub);
        
-       User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
-           if (err) { return err; }
-            if(user) {
-                console.log(user)
-             io.emit('join', {
-                user: user.firstname,
-                time: Date.now()
-            })
-             return;
-            }
+    //    User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
+    //        if (err) { return err; }
+    //         if(user) {
+    //             console.log(user)
+    //          io.emit('join', {
+    //             user: user.firstname,
+    //             time: Date.now()
+    //         })
+    //          return;
+    //         }
+    //    })
+       var obj = {isLogged: true};
+       User.findOneAndUpdate({_id: socket.decoded_token.sub}, obj , function(err, user) {
+        return   io.emit('join', {
+                    user: user.firstname,
+                    time: Date.now()
+                }, console.log('join', user.firstname))      
+                
        })
        
+ 
+
+          
+             
+            
+    
     
 
     socket
@@ -96,17 +110,24 @@ io.sockets
 
     function disconnectHandler() {
       console.log('disconnect')
-        User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
-            if (err) { return err; }
-            if(user) {
-                console.log(user.firstname)
-                io.emit('leave', {
+       var obj = {isLogged: false};
+       User.findOneAndUpdate({_id: socket.decoded_token.sub}, obj , function(err, user) {
+        return   io.emit('leave', {
                     user: user.firstname,
                     time: Date.now()
-                })
-                return;
-            }
-        })
+                }, console.log('leave', user.firstname))      
+       })
+        // User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
+        //     if (err) { return err; }
+        //     if(user) {
+        //         console.log(user.firstname)
+        //         io.emit('leave', {
+        //             user: user.firstname,
+        //             time: Date.now()
+        //         })
+        //         return;
+        //     }
+        // })
     //   io.emit('leave', {
     //     user: socket.decoded_token.sub,
     //     time: Date.now()
