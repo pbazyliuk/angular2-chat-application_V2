@@ -81,7 +81,8 @@ function handleRegisterSuccessAction(state, action) {
 
   newState.uiState = {
     user: action.payload.user,
-    authenticated: true
+    authenticated: true,
+    usersOn: [action.payload.user]
   }
 
   return newState;
@@ -100,7 +101,8 @@ function handleLogoutSuccessAction(state: ApplicationState, action: LoadChatList
 
   newState.uiState = {
     authenticated: undefined,
-    user: undefined
+    user: undefined,
+    usersOn: []
   }
 
   return newState;
@@ -111,7 +113,9 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
   console.log('CHATLIST SUCEESS', state);
   console.log(userData)
 
-  userData.users
+  let usersOn = [...userData.users];
+
+  usersOn
     .forEach(function(user, index) {
       for(var key in user) {
         if(key === 'email' && user[key] === state.uiState.user.email) {
@@ -122,7 +126,7 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
       }
     })
  console.log('AFTER FOREACH', userData)
-  userData.users = userData.users.filter(function(user) {
+  usersOn = usersOn.filter(function(user) {
     
       if(user.isLogged === true) {
         return true;
@@ -135,8 +139,8 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
 
 
   
-  newState.storeData.users = action.payload.users
-  
+  newState.storeData.users = userData.users;
+  newState.uiState.usersOn = usersOn;
   // this.Router.navigate(['chat'])
   return newState;
 }
@@ -153,7 +157,8 @@ function handleLoginSuccessAction(state, action) {
 console.log(state.storeData.users)
   newState.uiState = {
     user: action.payload.user,
-    authenticated: true
+    authenticated: true,
+    usersOn: [action.payload.user]
   }
 
   return newState;
