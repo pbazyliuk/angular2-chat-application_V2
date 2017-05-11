@@ -16,8 +16,8 @@ export class WsService {
     
   }
 
-  sendMessage(message, author){
-    this.socket.emit('add-message', message, author);    
+  sendMessage(message){
+    this.socket.emit('add-message', message);   
   }
 
  initWs() {
@@ -51,7 +51,7 @@ let observable = new Observable(observer => {
         .emit('authenticate', {token: localStorage.getItem('token')})
         .on('join', function (val) {
             console.log('join', val.user)
-            console.log(getAllUsers)
+            //console.log(getAllUsers)
             getAllUsers
             .subscribe(
                 allUserData => store.dispatch(
@@ -59,21 +59,17 @@ let observable = new Observable(observer => {
                 )
             )
         })
-        // .on('disconnect', function () {
-        //     console.log('disconnect client')
-            
-        // })
-        
         .on('leave', function (val) {
-            console.log('leave', val.user)
+            console.log('leave', val.user);
             getAllUsers
             .subscribe(
                 allUserData => store.dispatch(
-                new LoadChatListActions(allUserData)
+                    new LoadChatListActions(allUserData)
                 )
             )
         })
         .on('message', (data) => {
+            console.log('message', data);
             observer.next(data);    
         })
 

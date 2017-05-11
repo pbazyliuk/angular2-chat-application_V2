@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 // Define our model
 const chatSchema = new Schema({
   name: String,
-  messageIds: number[],
-  usersIds: number[]
+  messageIds: String[],
+  usersIds: String[],
+  userNames: String[]
 });
 
 // Create the model class

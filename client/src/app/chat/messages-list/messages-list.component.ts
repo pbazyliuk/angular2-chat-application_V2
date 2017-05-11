@@ -10,7 +10,13 @@ import { ApplicationState } from "app/store/application-state";
 })
 export class MessagesListComponent implements OnInit {
   private messages$: Observable<object>;
+  private author: string;
   constructor(private store: Store<ApplicationState>) { 
+    
+    store.subscribe(state => {
+      return this.author = state.uiState.user.firstname
+    })
+
     this.messages$ = store
       .map(this.mapStatetoMessages)
   }

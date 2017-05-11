@@ -2,8 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WsService } from "app/ws.service";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
-import { MessageAddSuccessActions } from "app/store/actions";
+import { MessageAddSuccessActions, GetAllMessagesSuccessActions } from "app/store/actions";
 import { Observable } from "rxjs/Observable";
+import { Message } from "app/core/models/message";
+// import { Http } from "@angular/http";
+import { MessageInputService } from "app/chat/message-input/message-input.service";
 
 @Component({
   selector: 'ct-message-input',
@@ -12,17 +15,25 @@ import { Observable } from "rxjs/Observable";
 })
 export class MessageInputComponent implements OnInit, OnDestroy {
   //messages$: Observable<object>;
-  connection;
-  message;
-  just;
-  author;
+  private connection;
+  private messageText: string;
+  message: Message;
+  author: string;
+  authorId;
   
-   constructor(private ws: WsService, private store: Store<ApplicationState>) {
+   constructor(private ws: WsService, private store: Store<ApplicationState>, 
+   private MessageInputService: MessageInputService) {
       store.subscribe(
       state => {
         console.log("Message Input Component section received state", state);
-        this.just = state.storeData.messages;
+        // this.just = state.storeData.messages;
+        this.authorId = state.uiState.user._id;
         this.author = state.uiState.user.firstname;
+        // this.message = {
+        //   userId: 1,
+        //   text: 'null',
+        //   timestamp: 1
+        // }
       }
     )
       // this.messages$ = store
@@ -37,23 +48,44 @@ export class MessageInputComponent implements OnInit, OnDestroy {
 
   // }
 
-   sendMessage(){
-    this.ws.sendMessage(this.message, this.author);
-    this.message = '';
-  }
+   sendMessage () {
+     this.message = {
+       userId: this.authorId,
+       userName: this.author,
+       timestamp: Date.now(),
+       text: this.messageText
+     };
+    // this.message.userId = 1;
+    // this.message.timestamp = 123;
+    // this.message.text = this.messageText;
+    this.ws.sendMessage(this.message);
+    this.MessageInputService.sendMessage(this.message)
+      .subscribe(message => {
+            console.error('API', message)
+        }) 
+
+      this.messageText = '';
+      
+    }
 
    ngOnInit() {
      console.error('Message Input Oninit')
-     console.log(this.just.length)
+    //  console.log(this.just.length)
      
     //  if(this.just.length < 1) {
-       console.error('MESSAGES INPUT INIT')
-      this.connection = this.ws.initWs().subscribe(message => {
-      //this.messages.push(message);
-      this.store.dispatch(new MessageAddSuccessActions(message))
-    })
-    //  }
-    
+      console.error('MESSAGES INPUT INIT')
+     
+
+      this.connection = this.ws.initWs()
+        .subscribe(message => {
+          console.log(message);
+          this.store.dispatch(new MessageAddSuccessActions(message))
+        })
+        this.MessageInputService.getAllMessages()
+          .subscribe(messages => {
+                console.error(messages);
+                this.store.dispatch(new GetAllMessagesSuccessActions(messages))
+            })
   }
   
   ngOnDestroy() {

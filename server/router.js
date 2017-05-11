@@ -3,6 +3,7 @@ const passportService = require('./services/passport');
 const passport = require('passport');
 const bcrypt = require('bcrypt-nodejs');
 const User = require('./models/user');
+const Message = require('./models/message');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
@@ -73,7 +74,24 @@ module.exports = function(app) {
 
     app.post('/api/chats', function(req, res) {
       console.log(req.body);
-      res.send({message: 'ok'});
+
+      res.send({message: 'ok chat'});
+    })
+
+    app.post('/api/messages', function(req, res) {
+      console.log(req.body);
+      Message.create(req.body, function(err, doc) {
+        if (err) return err;
+        res.send(doc);
+      })
+    })
+
+     app.get('/api/messages', function(req, res) {
+      console.log(req.body);
+      Message.find({}, function(err, messages) {
+        if (err) return err;
+        res.send(messages);
+      })
     })
 }   
 

@@ -88,8 +88,8 @@ io.sockets
     //   }
     // }
 
-    function chatMessageHandler(message, author) {
-        io.emit('message', {type:'new-message', name: author, text: message});
+    function chatMessageHandler(message) {
+        io.emit('message', {userId: message.userId, text: message.text, timestamp: message.timestamp, userName: message.userName});
     //   console.log('message received')
     //   const msgObj = {
     //     msg,
