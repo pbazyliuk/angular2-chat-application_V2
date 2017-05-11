@@ -18,13 +18,13 @@ export class ChatListComponent implements OnInit {
 
  // private userName$: Observable<string>;
 
-  private users$: Observable<User[]>
+  private usersOn$: Observable<User[]>
 
   constructor(private chatlistservice: ChatListService, private store: Store<ApplicationState>) {
       // this.userName$ = store
       //   .map(this.mapStatetoUserName)
         
-     this.users$ = store
+     this.usersOn$ = store
         .map(mapStatetoUsers)
    
    
