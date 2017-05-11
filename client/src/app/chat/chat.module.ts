@@ -9,6 +9,7 @@ import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
 import { MessagesNavbarComponent } from './messages-navbar/messages-navbar.component';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageInputComponent } from './message-input/message-input.component';
+import { ChatMenuComponent } from './chat-menu/chat-menu.component';
 // import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 // import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 // import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
@@ -33,6 +34,7 @@ import { MessageInputComponent } from './message-input/message-input.component';
     MessagesNavbarComponent,
     MessagesListComponent,
     MessageInputComponent,
+    ChatMenuComponent,
     // UserSelectionComponent,
     // ThreadSectionComponent,
     // MessageSectionComponent,
