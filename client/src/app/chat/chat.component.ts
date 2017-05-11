@@ -10,7 +10,18 @@ import { ApplicationState } from "app/store/application-state";
 })
 export class ChatComponent implements OnInit {
 
+  public isChatListFolded: boolean;
+  public isChatMenuShown: boolean;
+
   constructor(private store: Store<ApplicationState>, private ws: WsService) {}
+
+  onNotifyChatListFold(message:boolean):void {
+    this.isChatListFolded = message;
+  }
+
+  onNotifyChatMenuShow(message:boolean):void {
+    this.isChatMenuShown = message;
+  }
 
   ngOnInit() {
     console.error('NGONINT')

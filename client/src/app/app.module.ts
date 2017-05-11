@@ -122,7 +122,7 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
       }
     })
  console.log('AFTER FOREACH', userData)
-userData.users = userData.users.filter(function(user) {
+  userData.users = userData.users.filter(function(user) {
     
       if(user.isLogged === true) {
         return true;
