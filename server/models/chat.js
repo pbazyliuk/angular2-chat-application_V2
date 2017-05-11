@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 // Define our model
 const chatSchema = new Schema({
-  id: number,
   name: String,
   messageIds: number[],
   usersIds: number[]

@@ -5,12 +5,20 @@ import { Http } from '@angular/http';
 
 @Injectable()
     export class ChatMenuService {
+
+        private counter;
     constructor(private http: Http, private router: Router) {}
 
        sendChatData(formAddChatData) {
-           console.log(formAddChatData)
+            console.log(formAddChatData)
            //this.router.navigate(['chat']);
-        //return this.http.post('http://localhost:8090/api/chat', usersData).map(res => res.json());
+           //formAddChatData.id = this.counter++;
+           
+        return this.http.post('http://localhost:8090/api/chats', formAddChatData).map(res => res.json())
+            .subscribe(userInfo => {
+                console.error(userInfo)
+            }
+        );
        }
     }
 

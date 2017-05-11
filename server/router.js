@@ -71,6 +71,9 @@ module.exports = function(app) {
       });
   })
 
-
+    app.post('/api/chats', function(req, res) {
+      console.log(req.body);
+      res.send({message: 'ok'});
+    })
 }   
 

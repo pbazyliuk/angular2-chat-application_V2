@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 // Define our model
 const messageSchema = new Schema({
-  id: number,
   chatId: number[],
   userId: number[],
   text: string,
@@ -11,7 +10,7 @@ const messageSchema = new Schema({
 });
 
 // Create the model class
-const ModelClass = mongoose.model('chat', chatSchema, 'CHATS');
+const ModelClass = mongoose.model('message', messageSchema, 'Messages');
 
 // Export the model
 module.exports = ModelClass;
