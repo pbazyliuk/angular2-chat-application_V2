@@ -74,6 +74,15 @@ module.exports = function(app) {
       });
   })
 
+    app.get('/api/chats', function(req, res) {
+      //res.send({message: 'get all chats ok'});
+      Chat.find({}, function(err, chats) {
+        if(err) return err;
+        console.log(chats)
+        res.send(chats);
+      })
+    })
+
     app.post('/api/chats', function(req, res) {
       console.log(req.body);
       var usersNames = [];

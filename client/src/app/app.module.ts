@@ -27,11 +27,12 @@ import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION, LOAD_CHATS_LIST_SUCCESS_ACTION } from "app/store/actions";
 import { ProfileService } from "app/profile/profile.service";
 import { WsService } from "app/ws.service";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
 import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { UsersListService } from "app/chat/users-list/users-list.service";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -58,8 +59,21 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
   
   case GET_ALL_MESSAGES_SUCCESS_ACTION:
     return handleGetAllMessagesSuccessAction(state, action);
+
+  case LOAD_CHATS_LIST_SUCCESS_ACTION:
+    return handleLoadChatsListActions(state, action);
   }
   return state;
+}
+
+function handleLoadChatsListActions(state, action) {
+  const chatsData = action.payload;
+  console.log('CHATS PAYLOAD', chatsData)
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData.chats = [...chatsData];
+
+  return newState;
 }
 
 function handleGetAllMessagesSuccessAction(state, action) {
@@ -205,7 +219,7 @@ console.log(state.storeData.users)
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService, ProfileService, WsService, ChatMenuService,
-  MessageInputService],
+  MessageInputService, UsersListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

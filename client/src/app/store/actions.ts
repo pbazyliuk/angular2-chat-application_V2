@@ -71,3 +71,13 @@ export class GetAllMessagesSuccessActions implements Action {
         console.log(payload)
     }
 }
+
+export const LOAD_CHATS_LIST_SUCCESS_ACTION = 'LOAD_CHATS_LIST_SUCCESS_ACTION';
+
+export class LoadChatsListActions implements Action {
+     type = LOAD_CHATS_LIST_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
