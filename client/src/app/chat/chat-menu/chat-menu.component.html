@@ -40,8 +40,8 @@
                                   <label for="selectUsersId"
                               
                               >Select Users</label>
-                                    <select required #selectedUsers="ngModel" [(ngModel)]="chat.users" name="selectedUsers" id="selectUsersId" multiple>
-                                        <option [ngValue]="user.firstname" *ngFor="let user of users$ | async">{{user.firstname}}</option>
+                                    <select required #users="ngModel" [(ngModel)]="chat.users" name="users" id="usersIds" multiple>
+                                        <option [ngValue]="user" *ngFor="let user of users$ | async">{{user.firstname}}</option>
                                         <!--<option disabled selected>Choose friend</option>
                                         <option value="sam">Sam</option>
                                         <option value="max">Max</option>

@@ -1,7 +1,8 @@
 
 export interface Chat {
-    id: number;
+    id?: string;
     name: string;
-    messageIds: number[];
-    usersIds: number[];
+    messageIds: string[];
+    usersIds: string[];
+    usersNames: string[];
 }

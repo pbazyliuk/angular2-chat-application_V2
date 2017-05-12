@@ -4,9 +4,11 @@ const passport = require('passport');
 const bcrypt = require('bcrypt-nodejs');
 const User = require('./models/user');
 const Message = require('./models/message');
-
+const Chat = require('./models/chat');
+const mongoose = require('mongoose');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+const _ = require('lodash');
 
 module.exports = function(app) {
   app.get('/', requireAuth, function(req, res) {
@@ -74,8 +76,47 @@ module.exports = function(app) {
 
     app.post('/api/chats', function(req, res) {
       console.log(req.body);
+      var usersNames = [];
+      var usersIds = [];
 
-      res.send({message: 'ok chat'});
+      Chat.find({name: req.body.chatName})
+        .then((chat) => {
+          if(chat.length) {
+            res.send({message: 'this chat name is already been taken'})
+          }
+          else {
+            req.body.users.forEach((user) => {
+              for(var key in user) {
+                if(key === '_id') {
+                  usersIds.push(user[key]);
+                }
+                if(key === 'firstname') {
+                  usersNames.push(user[key]);
+                }
+              }
+            })
+            Chat.find({usersNames: usersNames}, function(err, chats) {
+              if(err) return err;
+              console.log('CHAT FIND', chats);
+              if(!chats.length) {
+                var chatObj = {
+                  name: req.body.chatName,
+                  messageIds: [],
+                  usersIds: usersIds,
+                  usersNames: usersNames
+                }
+                Chat.create(chatObj, function(err, chat) {
+                  if (err) return err;
+                  console.log('CHAT CREATED', chat)
+                  res.send(chat);
+                })
+              }
+              else {
+                 res.send({message: 'these users have been already connected to private chat'})
+              }
+              })
+           }
+        })
     })
 
     app.post('/api/messages', function(req, res) {
