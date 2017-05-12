@@ -21,7 +21,16 @@ export class UsersListComponent implements OnInit {
 
    }
    mapStatetoChats(state: ApplicationState) {
-     return state.storeData.chats;
+     let allChats = state.storeData.chats;
+     let username = state.uiState.user.firstname;
+     allChats = allChats.filter(chat => {
+         if(chat["usersNames"].includes(username)) {
+           console.log(chat["usersNames"].includes(username))
+            return true;
+         }
+         return false;
+     })
+     return allChats;
    }
 
   ngOnInit() {
