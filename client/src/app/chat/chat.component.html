@@ -9,10 +9,6 @@
         <ct-chat-list></ct-chat-list>
     </aside>
     <div class="main-part" [class.expandWidth]="isChatListFolded">
-        <ct-messages-navbar></ct-messages-navbar>
-        <!--<ct-chat-details></ct-chat-details>-->
-        <ct-messages-list></ct-messages-list>
-        <ct-message-input (notify)="onNotify($event)"></ct-message-input>
-       
+    <router-outlet></router-outlet>
     </div>
 </div>

@@ -11,6 +11,9 @@ import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageInputComponent } from './message-input/message-input.component';
 import { ChatMenuComponent } from './chat-menu/chat-menu.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { MainPartChatComponent } from './main-part-chat/main-part-chat.component';
+import { PrivatePartChatComponent } from './private-part-chat/private-part-chat.component';
+import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 // import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 // import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 // import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
@@ -37,6 +40,8 @@ import { UsersListComponent } from './users-list/users-list.component';
     MessageInputComponent,
     ChatMenuComponent,
     UsersListComponent,
+    MainPartChatComponent,
+    PrivatePartChatComponent,
     // UserSelectionComponent,
     // ThreadSectionComponent,
     // MessageSectionComponent,
@@ -49,7 +54,8 @@ import { UsersListComponent } from './users-list/users-list.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ChatsRoutingModule
     // SharedModule,
     // MessagesSharedModule,
     // ChatRoutingModule

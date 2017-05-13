@@ -7,6 +7,7 @@ import { Observable } from "rxjs/Observable";
 import { Message } from "app/core/models/message";
 // import { Http } from "@angular/http";
 import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
   selector: 'ct-message-input',
@@ -26,7 +27,8 @@ export class MessageInputComponent implements OnInit, OnDestroy {
   @Output() notify: EventEmitter<object> = new EventEmitter<object>();
   
    constructor(private ws: WsService, private store: Store<ApplicationState>, 
-   private MessageInputService: MessageInputService) {
+   private MessageInputService: MessageInputService,
+   private MainPartChatService: MainPartChatService) {
       store.subscribe(
       state => {
         console.log("Message Input Component section received state", state);
@@ -67,7 +69,9 @@ export class MessageInputComponent implements OnInit, OnDestroy {
       .subscribe(message => {
             console.error('API', message)
         }) 
-        this.notify.emit(this.message);  
+    this.MainPartChatService.updateData(this.message);
+    // this.notify.emit(this.message);  
+
       this.messageText = '';
       
     }
