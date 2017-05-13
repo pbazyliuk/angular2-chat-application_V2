@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { WsService } from "app/ws.service";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
@@ -20,6 +20,10 @@ export class MessageInputComponent implements OnInit, OnDestroy {
   message: Message;
   author: string;
   authorId;
+
+  //@Input() model;
+
+  @Output() notify: EventEmitter<object> = new EventEmitter<object>();
   
    constructor(private ws: WsService, private store: Store<ApplicationState>, 
    private MessageInputService: MessageInputService) {
@@ -63,24 +67,26 @@ export class MessageInputComponent implements OnInit, OnDestroy {
       .subscribe(message => {
             console.error('API', message)
         }) 
-
+        this.notify.emit(this.message);  
       this.messageText = '';
       
     }
-
+    
    ngOnInit() {
      console.error('Message Input Oninit')
+     //console.log('model', this.model)
     //  console.log(this.just.length)
      
     //  if(this.just.length < 1) {
       console.error('MESSAGES INPUT INIT')
      
 
-      this.connection = this.ws.initWs()
-        .subscribe(message => {
-          console.log(message);
-          this.store.dispatch(new MessageAddSuccessActions(message))
-        })
+      //this.model
+      // this.connection
+      //   .subscribe(message => {
+      //     console.log(message);
+      //     this.store.dispatch(new MessageAddSuccessActions(message))
+      //   })
         this.MessageInputService.getAllMessages()
           .subscribe(messages => {
                 console.error(messages);
@@ -89,7 +95,7 @@ export class MessageInputComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.connection.unsubscribe();
+    //this.connection.unsubscribe();
   }
 
 }
