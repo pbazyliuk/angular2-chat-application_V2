@@ -47,8 +47,26 @@ export class ChatMenuComponent implements OnInit {
 
  addChat(event: Event, data) {
    event.preventDefault();
-   data.users.unshift(this.currentUser)
-   data.users = data.users.sort();
+   data.users.push(this.currentUser);
+   console.log('data.users', data.users);
+   data.users.sort(function(a, b){
+      var re = /\D/g;
+      return (parseInt(a.firstname.replace(re, ""), 10) - parseInt(b.firstname.replace(re, ""), 10)) 
+      //if(a.firstname > b.firstname) return 1;
+      //return 0;
+  })
+//    function sortByDigits(array) {
+//     var re = /\D/g;
+
+//     array.sort(function(a, b) {
+//         return(parseInt(a.replace(re, ""), 10) - parseInt(b.replace(re, ""), 10));
+//     });
+//     return(array);
+// }
+// sortByDigits(data.users);
+  //  data.users = data.users.sort(function(a, b) {
+  //       return(parseInt(a.replace(re, ""), 10) - parseInt(b.replace(re, ""), 10));
+  //   });
    this.ChatMenuService.sendChatData(data);
    this.chat.name = '';
    this.chat.users = '';
