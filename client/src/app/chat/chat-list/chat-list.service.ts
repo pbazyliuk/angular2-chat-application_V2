@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
     export class ChatListService {
     constructor(private router: Router, private http: Http) {}
 
-       getAllUsers() {
-        return this.http.get('http://localhost:8090/api/users').map(res => res.json());
+       getAllChats() {
+        return this.http.get('http://localhost:8090/api/chats').map(res => res.json());
        }
     }
 

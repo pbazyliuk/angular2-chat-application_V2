@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ChatListService } from "./chat-list.service";
+import { ChatListService } from "app/chat/chat-list/chat-list.service";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
-import { LoadChatListActions } from "app/store/actions";
+import { LoadChatsListActions } from "app/store/actions";
 import { Observable } from "rxjs/Observable";
-import { User } from "app/core/models/user";
-import { mapStatetoUsers } from "app/chat/chat-list/mapStateToUsers";
-
+import { Chat } from "app/core/models/chat";
+import { Http } from "@angular/http";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'ct-chat-list',
@@ -16,50 +15,58 @@ import { mapStatetoUsers } from "app/chat/chat-list/mapStateToUsers";
 })
 export class ChatListComponent implements OnInit {
 
- // private userName$: Observable<string>;
+  private chatsOn$: Observable<Chat[]>
 
-  private usersOn$: Observable<User[]>
+  constructor(private ChatListService: ChatListService, private store: Store<ApplicationState>,
+  private http: Http, 
+  private router: Router,) {
+    this.chatsOn$ = store
+        .map(this.mapStatetoChats)
 
-  constructor(private chatlistservice: ChatListService, private store: Store<ApplicationState>) {
-      // this.userName$ = store
-      //   .map(this.mapStatetoUserName)
-        
-     this.usersOn$ = store
-        .map(mapStatetoUsers)
-   
-   
+   }
+   mapStatetoChats(state: ApplicationState) {
+     let allChats = state.storeData.chats;
+     let username = state.uiState.user.firstname;
+     return allChats.filter(chat => {
+         if(chat["usersNames"].includes(username)) {
+           console.log(chat["usersNames"].includes(username))
+            return true;
+         }
+         return false;
+     })
    }
 
-  //  mapStatetoUsers(state: ApplicationState): User[] {
-  //    return state.storeData.users;
-  //  }
-
-    // mapStatetoUserName(state: ApplicationState): string {
-    //   return state.uiState.user.firstname;
-    // }
-  
-      //.map(mapStateToUsers)
-        
-  ngOnInit() {
-    this.chatlistservice.getAllUsers()
-      .subscribe(
-        allUserData => this.store.dispatch(
-          new LoadChatListActions(allUserData)
-        )
-    )
-      // .getAllUsers()
-      // .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
-
+   select(chat) {
+    //this.selectedId = chat.id;
+    var obj = {selected: true}
+    var name = chat.name;
+    // this.http.put(`http://localhost:8090/api/chats/${name}`, chat)
+    //  .subscribe(
+    //     chatUpdate => {
+    //     //   this.store.dispatch(
+          
+    //     //   new LoadChatsListActions(chatUpdata)
+    //     //  );
+    //      console.log('CHATS Update', chatUpdate);
+    //     }
+    //       )
+    // // Navigate with relative link
+    this.router.navigate(['chat', chat.name])
+    
   }
 
-  // onLoginError (err){
-  //   console.error(err);
-  //   alert('User not found')
-  // }
-
-  // onLoginSuccess (res: any): void {
-  //    console.log(res);
-  // }
-
+  ngOnInit() {
+    this.ChatListService.getAllChats()
+     .subscribe(
+        allChats => {
+          this.store.dispatch(
+          
+          new LoadChatsListActions(allChats)
+         );
+         console.log('ALL CHATS', allChats);
+        }
+          )
+        
+  }
 
 }

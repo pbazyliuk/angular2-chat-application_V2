@@ -23,7 +23,6 @@ import { AuthGuard } from './auth/';
 import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
 import { ProfileComponent } from './profile/profile.component';
-import { ChatListService } from "app/chat/chat-list";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
@@ -32,9 +31,10 @@ import { ProfileService } from "app/profile/profile.service";
 import { WsService } from "app/ws.service";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
 import { MessageInputService } from "app/chat/message-input/message-input.service";
-import { UsersListService } from "app/chat/users-list/users-list.service";
+import { ChatListService } from "app/chat/chat-list/chat-list.service";
 import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { UserListService } from "./chat/user-list/user-list.service";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -222,8 +222,8 @@ console.log(state.storeData.users)
     
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ChatListService, ProfileService, WsService, ChatMenuService,
-  MessageInputService, UsersListService, MainPartChatService],
+  providers: [LoginService, AuthGuard, ChatGuard, AuthService, UserListService, ProfileService, WsService, ChatMenuService,
+  MessageInputService, ChatListService, MainPartChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

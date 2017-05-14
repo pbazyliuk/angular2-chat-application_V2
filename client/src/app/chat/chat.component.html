@@ -5,8 +5,10 @@
         <ct-chat-menu
             *ngIf="isChatMenuShown"
         ></ct-chat-menu>
-        <ct-users-list></ct-users-list>
         <ct-chat-list></ct-chat-list>
+        <!--<ct-users-list></ct-users-list>-->
+        <!--<ct-chat-list></ct-chat-list>-->
+        <ct-user-list></ct-user-list>
     </aside>
     <div class="main-part" [class.expandWidth]="isChatListFolded">
     <router-outlet></router-outlet>

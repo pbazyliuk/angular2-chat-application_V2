@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
 import { LoadChatListActions } from "app/store/actions";
-import { ChatListService } from "./chat/chat-list";
+import { UserListService } from "./chat/user-list/";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
 import { Http } from '@angular/http';
@@ -11,7 +11,7 @@ import { Http } from '@angular/http';
 export class WsService {
   private url = 'http://localhost:8090';  
   private socket;
-  constructor(private chatlistservice: ChatListService, private store: Store<ApplicationState>, private http: Http) { 
+  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>, private http: Http) { 
     //   this.chatlistservice.getAllUsers.bind(this)
     
   }
@@ -22,9 +22,9 @@ export class WsService {
 
  initWs() {
     console.log(
-        this.chatlistservice.getAllUsers
+        this.userlistservice.getAllUsers
     )
-    var getAllUsers = this.chatlistservice.getAllUsers();
+    var getAllUsers = this.userlistservice.getAllUsers();
     var store = this.store;
 //  let observable = new Observable(observer => {
 //       this.socket = io(this.url);

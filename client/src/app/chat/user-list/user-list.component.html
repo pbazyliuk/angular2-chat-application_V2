@@ -1,11 +1,12 @@
-<!--<p *ngFor='let user of chatsOn$ | async'>
-  users-list works!
-</p>
 
-<div>{{chatsOn$}}</div>-->
-
+      <!--<ul>
+        <li *ngFor="let user of users$ | async">
+          <span>{{user.firstname}}</span>
+        </li>
+      </ul>-->
+ 
 <ul class="chat-list">
-  <li class="chat-list__item" *ngFor='let chat of chatsOn$ | async' 
+  <li class="chat-list__item" *ngFor='let user of usersOn$ | async' 
  
   >
     <div class="avatar" >
@@ -13,7 +14,7 @@
     </div>
 
     <div class="chat-info" >
-        <h4 class="chat-name__heading">{{chat.name}}</h4>
+        <h4 class="chat-name__heading">{{user.firstname}}</h4>
     </div>
 
     <div class="chat-last-activity"  >

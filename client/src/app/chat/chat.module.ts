@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { ChatComponent } from './chat.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatListComponent } from './chat-list';
+import { UserListComponent } from './user-list';
 import { ChatDetailsComponent } from './chat-details';
 import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
 import { MessagesNavbarComponent } from './messages-navbar/messages-navbar.component';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageInputComponent } from './message-input/message-input.component';
 import { ChatMenuComponent } from './chat-menu/chat-menu.component';
-import { UsersListComponent } from './users-list/users-list.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
 import { MainPartChatComponent } from './main-part-chat/main-part-chat.component';
 import { PrivatePartChatComponent } from './private-part-chat/private-part-chat.component';
 import { ChatsRoutingModule } from "app/chat/chat-routing.module";
@@ -32,14 +32,14 @@ import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 @NgModule({
   declarations: [
     ChatComponent,
-    ChatListComponent,
+    UserListComponent,
     ChatDetailsComponent,
     ChatNavbarComponent,
     MessagesNavbarComponent,
     MessagesListComponent,
     MessageInputComponent,
     ChatMenuComponent,
-    UsersListComponent,
+    ChatListComponent,
     MainPartChatComponent,
     PrivatePartChatComponent,
     // UserSelectionComponent,
