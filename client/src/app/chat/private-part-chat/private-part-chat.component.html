@@ -1,6 +1,5 @@
-  <a routerLink="/chat">Back</a>
+  <!--<a routerLink="/chat">Back</a>-->
   <h1>{{value}}</h1>
-
-<p>
-  private-part-chat works!
-</p>
+<ct-private-message-navbar></ct-private-message-navbar>
+<ct-private-message-list [chatname]="chatname"></ct-private-message-list>
+<ct-private-message-input></ct-private-message-input>

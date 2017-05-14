@@ -6,7 +6,7 @@ import { MessageAddSuccessActions, GetAllMessagesSuccessActions } from "app/stor
 import { Observable } from "rxjs/Observable";
 import { Message } from "app/core/models/message";
 // import { Http } from "@angular/http";
-import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({

@@ -30,7 +30,7 @@ import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOU
 import { ProfileService } from "app/profile/profile.service";
 import { WsService } from "app/ws.service";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
-import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
 import { ChatListService } from "app/chat/chat-list/chat-list.service";
 import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";

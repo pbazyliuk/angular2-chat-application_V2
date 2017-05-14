@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { ActivatedRoute } from "@angular/router";
 import { ApplicationState } from "app/store/application-state";
@@ -9,7 +9,7 @@ import { ApplicationState } from "app/store/application-state";
   styleUrls: ['./private-part-chat.component.css']
 })
 export class PrivatePartChatComponent implements OnInit {
-  private value;
+  private chatname;
   constructor(private route: ActivatedRoute,
 private store: Store<ApplicationState>) { }
 
@@ -17,10 +17,10 @@ private store: Store<ApplicationState>) { }
     this.route.params.subscribe(params => {
         // (+) converts string 'id' to a number
        console.log('params', params.id)
-      this.value = params.id;
+      this.chatname = params.id;
        // In a real app: dispatch action to load the details here.
     });
-    console.log('this.value', this.value)
+    console.log('this.value', this.chatname)
   }
 
 }

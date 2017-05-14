@@ -3,7 +3,7 @@ import { Store } from "@ngrx/store";
 import { WsService } from "app/ws.service";
 import { ApplicationState } from "app/store/application-state";
 import { MessageAddSuccessActions, GetAllMessagesSuccessActions } from "app/store/actions";
-import { MessageInputService } from "app/chat/message-input/message-input.service";
+import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
