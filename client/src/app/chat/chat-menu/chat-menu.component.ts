@@ -4,7 +4,7 @@ import { ApplicationState } from "app/store/application-state";
 import { Observable } from "rxjs/Observable";
 import { User } from "app/core/models/user";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
-import { UsersListService } from "app/chat/users-list/users-list.service";
+import { UserListService } from "../user-list/user-list.service";
 import { LoadChatsListActions } from "app/store/actions";
 import * as _ from "lodash" 
 

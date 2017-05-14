@@ -79,8 +79,42 @@ let observable = new Observable(observer => {
         };  
 })
  return observable;
- }
 }
+
+
+    initRoomWs() {
+         let observable = new Observable(observer => {
+            this.socket = io(this.url);
+            this.socket.on('connect', function () {
+        
+      this.socket
+        .on('authenticated', function () {
+            console.log('authenticated client')
+        })
+        
+        .emit('authenticate', {token: localStorage.getItem('token')});
+         var room = "abc123";
+        
+        this.socket
+        .emit('room', room)
+        .on('joinRoom', function(data) {
+            console.log('join room client:', data);
+               
+        })
+        .on('messageRoom', function(data) {
+            console.log('Incoming message:', data);
+            observer.next(data);    
+        })
+
+    }.bind(this))
+    return () => {
+            this.socket.disconnect();
+        };  
+})
+ return observable;
+    }
+}
+
 
 
 

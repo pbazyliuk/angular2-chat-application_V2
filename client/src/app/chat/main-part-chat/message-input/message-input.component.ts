@@ -16,7 +16,7 @@ import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.serv
 })
 export class MessageInputComponent implements OnInit, OnDestroy {
   //messages$: Observable<object>;
-  private connection;
+  private storeConnection;
   private messageText: string;
   message: Message;
   author: string;
@@ -29,7 +29,7 @@ export class MessageInputComponent implements OnInit, OnDestroy {
    constructor(private ws: WsService, private store: Store<ApplicationState>, 
    private MessageInputService: MessageInputService,
    private MainPartChatService: MainPartChatService) {
-      store.subscribe(
+      this.storeConnection = store.subscribe(
       state => {
         console.log("Message Input Component section received state", state);
         // this.just = state.storeData.messages;
@@ -99,7 +99,7 @@ export class MessageInputComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    //this.connection.unsubscribe();
+    this.storeConnection.unsubscribe();
   }
 
 }

@@ -10,6 +10,8 @@ export class PrivateMessageListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    
   }
 
 }

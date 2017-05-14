@@ -80,6 +80,12 @@ io.sockets
       //.on('unauthorized', unauthorizedHandler)
       .on('add-message', chatMessageHandler)
       .on('disconnect', disconnectHandler)
+      .on('room', function(room) {
+            socket.join(room);
+            console.log('join room', room)
+            //room = "abc123";
+            io.sockets.in(room).emit('messageRoom', 'what is going on, party people?');
+        });
 
     // function unauthorizedHandler(error) {
     //   if (error.data.type == 'UnauthorizedError' || error.data.code == 'invalid_token') {

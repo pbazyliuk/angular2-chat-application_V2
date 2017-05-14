@@ -45,6 +45,7 @@ import { PrivateMessageInputComponent } from './private-part-chat/private-messag
     ChatListComponent,
     MainPartChatComponent,
     PrivatePartChatComponent,
+    
     PrivateMessageListComponent,
     PrivateMessageNavbarComponent,
     PrivateMessageInputComponent,
