@@ -83,30 +83,20 @@ let observable = new Observable(observer => {
 
 
     initRoomWs() {
+        var room = "abc123";
          let observable = new Observable(observer => {
-            this.socket = io(this.url);
+            this.socket = io(`${this.url}/namespace`);
             this.socket.on('connect', function () {
-        
-      this.socket
-        .on('authenticated', function () {
-            console.log('authenticated client')
-        })
-        
-        .emit('authenticate', {token: localStorage.getItem('token')});
-         var room = "abc123";
-        
-        this.socket
-        .emit('room', room)
-        .on('joinRoom', function(data) {
-            console.log('join room client:', data);
-               
-        })
-        .on('messageRoom', function(data) {
-            console.log('Incoming message:', data);
-            observer.next(data);    
-        })
-
+                console.log('user connection to room', room)
+                console.log(this.socket.emit('room', room))
+                this.socket.emit('room', room);
+                
+                this.socket.on('message', function(data) {
+                    console.log('Incoming message:', data);
+                    });
+      
     }.bind(this))
+
     return () => {
             this.socket.disconnect();
         };  

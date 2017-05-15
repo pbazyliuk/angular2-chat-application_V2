@@ -39,7 +39,8 @@ router(app);
 //   });
 // });
 
-io.sockets
+
+io
   .on('connection', socketioJwt.authorize({
     secret: config.secret,
     callback: false
@@ -80,12 +81,12 @@ io.sockets
       //.on('unauthorized', unauthorizedHandler)
       .on('add-message', chatMessageHandler)
       .on('disconnect', disconnectHandler)
-      .on('room', function(room) {
-            socket.join(room);
-            console.log('join room', room)
-            //room = "abc123";
-            io.sockets.in(room).emit('messageRoom', 'what is going on, party people?');
-        });
+    //   .on('room', function(room) {
+    //         socket.join(room);
+    //         console.log('join room', room)
+    //         //room = "abc123";
+    //         io.sockets.in(room).emit('messageRoom', 'what is going on, party people?');
+    //     });
 
     // function unauthorizedHandler(error) {
     //   if (error.data.type == 'UnauthorizedError' || error.data.code == 'invalid_token') {
@@ -141,6 +142,28 @@ io.sockets
     }
   })
 
+
+
+io.of('/namespace')
+        io.sockets.on('connection', function(socket) {
+            console.log('ws room connection')
+            
+    // once a client has connected, we expect to get a ping from them saying what room they want to join
+    socket.on('room', function(room) {
+        console.log('user joined room', room)
+        socket.join(room);
+        //room = "abc123";
+        io.in(room).emit('messageRoom', 'what is going on, party people?');
+    });
+});
+
+// now, it's easy to send a message to just the clients in a given room
+
+
+// now, it's easy to send a message to just the clients in a given room
+
+        
+        
 
 
 //Server Setup

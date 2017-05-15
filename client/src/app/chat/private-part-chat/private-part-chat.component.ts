@@ -30,7 +30,7 @@ initWsRoom() {
        console.log('params', params.id);
       
       this.chatname = params.id;
-       if(this.connectionRoom) this.connectionRoom.unsubscribe();
+       //if(this.connectionRoom) this.connectionRoom.unsubscribe();
        this.initWsRoom();
        // In a real app: dispatch action to load the details here.
     });
@@ -40,7 +40,7 @@ initWsRoom() {
   }
 
   ngOnDestroy() {
-    this.connectionRoom.unsubscribe()
+    //this.connectionRoom.unsubscribe()
   }
 
 }
