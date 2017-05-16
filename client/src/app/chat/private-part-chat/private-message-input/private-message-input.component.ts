@@ -6,6 +6,7 @@ import { ApplicationState } from "app/store/application-state";
 import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 import { PrivateMessageInputService } from "app/chat/private-part-chat/private-message-input/private-message-input.service";
+import { GetAllPrivateMessagesSuccessActions } from "app/store/actions";
 
 @Component({
   selector: 'ct-private-message-input',
@@ -25,7 +26,8 @@ export class PrivateMessageInputComponent implements OnInit {
   constructor(
      private ws: WsService, 
      private store: Store<ApplicationState>, 
-     private PrivateMessageInputService: PrivateMessageInputService
+     private PrivateMessageInputService: PrivateMessageInputService,
+     private MainPartChatService: MainPartChatService
   ) {
     this.storeConnection = store.subscribe(
       state => {
@@ -50,15 +52,16 @@ export class PrivateMessageInputComponent implements OnInit {
         .subscribe(privateChatMessages => {
               console.error('API CHATNAME MESSAGES', privateChatMessages)
           }) 
+          this.MainPartChatService.updateData(this.privateMessage);
       this.messageText = '';
     }
 
   ngOnInit() {
 
       this.PrivateMessageInputService.getAllMessagesFromPrivateChat(this.chatname)
-          .subscribe(messages => {
-                console.error('Private Chat messages', messages);
-                //this.store.dispatch(new GetAllMessagesSuccessActions(messages))
+          .subscribe(privateMessages => {
+                console.error('Private Chat messages', privateMessages);
+                this.store.dispatch(new GetAllPrivateMessagesSuccessActions(privateMessages))
             })
   }
 

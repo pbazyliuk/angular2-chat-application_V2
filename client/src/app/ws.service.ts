@@ -101,13 +101,15 @@ let observable = new Observable(observer => {
                
                 console.log(this.socketPrivateChat)
 
-                this.socketPrivateChat.on('add-private-message', function(data) {
-                    console.log('Incoming message:', data); 
-                });
-
+                
                 this.socketPrivateChat.on('disconnect', function (val) {
                         console.log('leave', val);
                         //this.socket.disconnect();
+                });
+
+                this.socketPrivateChat.on('add-private-message', function(data) {
+                    console.log('Incoming message:', data); 
+                    observer.next(data); 
                 });
 
                 // this.socket.on('leave', function (val) {

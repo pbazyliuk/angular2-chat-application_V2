@@ -26,7 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION, LOAD_CHATS_LIST_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION, LOAD_CHATS_LIST_SUCCESS_ACTION, GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION, ADD_PRIVATE_MESSAGE_SUCCESS_ACTION } from "app/store/actions";
 import { ProfileService } from "app/profile/profile.service";
 import { WsService } from "app/ws.service";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
@@ -65,9 +65,51 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
 
   case LOAD_CHATS_LIST_SUCCESS_ACTION:
     return handleLoadChatsListActions(state, action);
+
+  case GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION:
+    return handleGetAllPrivateMessagesActions(state, action);
+
+  case ADD_PRIVATE_MESSAGE_SUCCESS_ACTION:
+    return handleAddPrivateMessageActions(state, action);
   }
+
+  
   return state;
 }
+
+function handleAddPrivateMessageActions(state, action) {
+  const privateMessage = action.payload;
+  const chatname = privateMessage.chatname;
+  delete privateMessage["chatname"];
+  console.log('PRIVATE MESSAGE PAYLOAD', privateMessage)
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData.chats.forEach((chat) => {
+    console.log('CHATS', chat)
+    if(chat["name"] === chatname) {
+      console.log('CHATS FINDED', chat)
+      chat.messageIds.push(privateMessage);
+      console.log('CHATS FINDED AFTER', chat)
+    }
+  });
+
+  return newState;
+}
+
+function handleGetAllPrivateMessagesActions(state, action) {
+  const privateChatData = action.payload;
+  console.log('PRIVATE CHATS PAYLOAD', privateChatData)
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.storeData.chats.forEach((chat) => {
+    if(chat["name"] === privateChatData.name) {
+      chat.messageIds = [...privateChatData.messageIds];
+    }
+  });
+
+  return newState;
+}
+
 
 function handleLoadChatsListActions(state, action) {
   const chatsData = action.payload;

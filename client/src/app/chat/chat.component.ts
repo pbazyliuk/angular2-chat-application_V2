@@ -47,7 +47,7 @@ export class ChatComponent implements OnInit {
       else {
          this.connection = this.ws.initWs()
         .subscribe(message => {
-          console.log(message);
+          console.log('999', message);
           this.store.dispatch(new MessageAddSuccessActions(message))
         })
       }

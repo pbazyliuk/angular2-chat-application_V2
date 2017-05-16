@@ -9,6 +9,8 @@ export class MainPartChatService {
 
     private connection$ = new Subject();
 
+    private chatname$ = new Subject();
+
     getData() {
         return this.messageObj$;
     }
@@ -23,5 +25,13 @@ export class MainPartChatService {
 
     getConnection() {
         return this.connection$;
+    }
+    
+    getChatname() {
+        return this.chatname$;
+    }
+
+    updateChatname(data: object) {
+        this.chatname$.next(data);
     }
 }

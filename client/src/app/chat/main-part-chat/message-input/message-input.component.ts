@@ -26,9 +26,11 @@ export class MessageInputComponent implements OnInit, OnDestroy {
 
   @Output() notify: EventEmitter<object> = new EventEmitter<object>();
   
-   constructor(private ws: WsService, private store: Store<ApplicationState>, 
-   private MessageInputService: MessageInputService,
-   private MainPartChatService: MainPartChatService) {
+   constructor(
+     private ws: WsService, 
+     private store: Store<ApplicationState>, 
+     private MessageInputService: MessageInputService,
+     private MainPartChatService: MainPartChatService) {
       this.storeConnection = store.subscribe(
       state => {
         console.log("Message Input Component section received state", state);

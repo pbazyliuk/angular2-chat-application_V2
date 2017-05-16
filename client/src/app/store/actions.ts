@@ -81,3 +81,24 @@ export class LoadChatsListActions implements Action {
         console.log(payload)
     }
 }
+
+export const GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION = 'GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION';
+
+export class GetAllPrivateMessagesSuccessActions implements Action {
+     type = GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
+
+export const ADD_PRIVATE_MESSAGE_SUCCESS_ACTION = 'ADD_PRIVATE_MESSAGE_SUCCESS_ACTION';
+
+export class PrivateMessageAddSuccessActions implements Action {
+     type = ADD_PRIVATE_MESSAGE_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
+

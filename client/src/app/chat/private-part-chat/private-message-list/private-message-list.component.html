@@ -3,14 +3,14 @@
 <ul class="message-list">
 
   Private messages goes here
-    <!--<li class="user-message" *ngFor='let message of messages$ | async'>
+    <li class="user-message" *ngFor='let privateMessage of privateMessages$ | async'>
         <div class="user-message-wrapper">
       
             <div class="avatar ">
                 <img class="avatar__img" src="http://placehold.it/60x60" alt="">
             </div>
-            <div class="user-message__text">
-                {{message.userName}}>>{{message.text}}
+            <div class="user-message__text" >
+                {{privateMessage.userName}}>>{{privateMessage.text}}
             </div>
               
         </div>
@@ -18,6 +18,6 @@
         <div class="user-message__publication-date">
            2h
         </div>
-    </li>-->
+    </li>
 </ul>
 

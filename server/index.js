@@ -102,8 +102,10 @@ io.of('/privatechat')
         
     });
     socket.on('add-private-message', function(message, room) {
-        //console.log('private message', message)
-        io.of('/privatechat').in(room).emit('add-private-message', message.text);
+       console.log('private message', message)
+       message.chatname = room;
+       console.log(message)
+        io.of('/privatechat').in(room).emit('add-private-message', message);
     });
     
      socket.on('disconnect', function(val) {
