@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Message } from "app/core/models/message";
+import { WsService } from "app/ws.service";
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "app/store/application-state";
+import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { PrivateMessageInputService } from "app/chat/private-part-chat/private-message-input/private-message-input.service";
 
 @Component({
   selector: 'ct-private-message-input',
@@ -7,9 +14,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateMessageInputComponent implements OnInit {
 
-  constructor() { }
+  private storeConnection;
+  private messageText: string;
+  private privateMessage: Message;
+  author: string;
+  authorId;
+
+  @Input() chatname: string;
+
+  constructor(
+     private ws: WsService, 
+     private store: Store<ApplicationState>, 
+     private PrivateMessageInputService: PrivateMessageInputService
+  ) {
+    this.storeConnection = store.subscribe(
+      state => {
+        console.log("Private Message Input Component received state", state);
+        this.authorId = state.uiState.user._id;
+        this.author = state.uiState.user.firstname;
+      }
+    )
+   }
+
+   sendPrivateMessage () {
+     this.privateMessage = {
+       userId: this.authorId,
+       userName: this.author,
+       timestamp: Date.now(),
+       text: this.messageText
+     };
+     console.log('Private message', this.privateMessage)
+     console.log(this.chatname)
+      this.ws.sendPrivateMessage(this.privateMessage, this.chatname);
+      this.PrivateMessageInputService.sendPrivateMessage(this.privateMessage, this.chatname)
+        .subscribe(privateChatMessages => {
+              console.error('API CHATNAME MESSAGES', privateChatMessages)
+          }) 
+      this.messageText = '';
+    }
 
   ngOnInit() {
+
+      this.PrivateMessageInputService.getAllMessagesFromPrivateChat(this.chatname)
+          .subscribe(messages => {
+                console.error('Private Chat messages', messages);
+                //this.store.dispatch(new GetAllMessagesSuccessActions(messages))
+            })
+  }
+
+  ngOnDestroy() {
+    this.storeConnection.unsubscribe();
   }
 
 }

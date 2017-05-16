@@ -128,6 +128,47 @@ module.exports = function(app) {
         })
     })
 
+
+    app.post('/api/chats/:id', function(req, res) {
+      console.log(req.body)
+      console.log(req.params.id)
+      var messagesObj = {};
+      messagesObj.messageIds = [];
+      messagesObj.messageIds.push(req.body)
+      Chat.findOneAndUpdate({name: req.params.id},  {$push: {messageIds: req.body}}, function(err, chat) {
+        if(err) return err;
+        //console.log('CHAT', chat)
+        res.send({message: `message added to chat: ${req.params.id}`});
+      })
+      //  Chat.findOne({name: req.params.id}, function(err, chat) {
+      //   if(err) return err;
+      //   //console.log('CHAT AFTER UPDATE', chat)
+      //   res.send(chat);
+      // })
+
+    })
+
+    
+    app.get('/api/chats/:id', function(req, res) {
+      console.log(req.body)
+      console.log(req.params.id)
+    
+      Chat.findOne({name: req.params.id}, function(err, chat) {
+        if(err) return err;
+        //console.log('CHAT', chat)
+        res.send(chat);
+      })
+    })
+
+    app.post('/api/messages', function(req, res) {
+      console.log(req.body);
+      Message.create(req.body, function(err, doc) {
+        if (err) return err;
+        res.send(doc);
+      })
+    })
+
+
     app.post('/api/messages', function(req, res) {
       console.log(req.body);
       Message.create(req.body, function(err, doc) {

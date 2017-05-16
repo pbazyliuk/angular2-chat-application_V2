@@ -99,8 +99,13 @@ io.of('/privatechat')
         console.log('user joined room', room)
         socket.join(room);
         //room = "abc123";
-        io.of('/privatechat').in(room).emit('message', 'what is going on, party people?');
+        
     });
+    socket.on('add-private-message', function(message, room) {
+        //console.log('private message', message)
+        io.of('/privatechat').in(room).emit('add-private-message', message.text);
+    });
+    
      socket.on('disconnect', function(val) {
         console.log(val)
         console.log('disconnect user from room')

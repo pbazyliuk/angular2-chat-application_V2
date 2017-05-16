@@ -35,6 +35,7 @@ import { ChatListService } from "app/chat/chat-list/chat-list.service";
 import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 import { UserListService } from "./chat/user-list/user-list.service";
+import { PrivateMessageInputService } from "app/chat/private-part-chat/private-message-input/private-message-input.service";
 
 // import { ChatListComponent } from './chat/chat-list/chat-list.component';
 // import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
@@ -223,7 +224,7 @@ console.log(state.storeData.users)
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
   providers: [LoginService, AuthGuard, ChatGuard, AuthService, UserListService, ProfileService, WsService, ChatMenuService,
-  MessageInputService, ChatListService, MainPartChatService],
+  MessageInputService, ChatListService, MainPartChatService, PrivateMessageInputService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

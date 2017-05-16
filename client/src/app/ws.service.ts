@@ -12,9 +12,14 @@ export class WsService {
   private url = 'http://localhost:8090';  
   private socketRoot;
   private socketPrivateChat;
+  private room;
+
   constructor(private userlistservice: UserListService, private store: Store<ApplicationState>, private http: Http) { 
     //   this.chatlistservice.getAllUsers.bind(this)
     
+  }
+  sendPrivateMessage(privateMessage, room) {
+     this.socketPrivateChat.emit('add-private-message', privateMessage, room);    
   }
 
   sendMessage(message){
@@ -84,17 +89,19 @@ let observable = new Observable(observer => {
 }
 
 
-    initRoomWs() {
-        var room = "abc123";
+    initRoomWs(room) {
+        this.room = room
+        console.log('initRoomWs', room)
+        //var room = "abc123";
          let observable = new Observable(observer => {
             this.socketPrivateChat = io(`${this.url}/privatechat`);
             this.socketPrivateChat.on('connect', function () {
                 console.log('user connection to room', room)
                this.socketPrivateChat.emit('room', room);
                
-                console.log(this.socket)
+                console.log(this.socketPrivateChat)
 
-                this.socketPrivateChat.on('message', function(data) {
+                this.socketPrivateChat.on('add-private-message', function(data) {
                     console.log('Incoming message:', data); 
                 });
 
