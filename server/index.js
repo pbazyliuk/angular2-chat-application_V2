@@ -39,48 +39,29 @@ router(app);
 //   });
 // });
 
-
 io
+  .of('/root')
   .on('connection', socketioJwt.authorize({
     secret: config.secret,
     callback: false
   }))
   .on('authenticated', socket => {
        console.log('connect')
-       //console.log(socket.decoded_token.sub);
-       
-    //    User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
-    //        if (err) { return err; }
-    //         if(user) {
-    //             console.log(user)
-    //          io.emit('join', {
-    //             user: user.firstname,
-    //             time: Date.now()
-    //         })
-    //          return;
-    //         }
-    //    })
+
        var obj = {isLogged: true};
        User.findOneAndUpdate({_id: socket.decoded_token.sub}, obj , function(err, user) {
-        return   io.emit('join', {
+        io.of('/root').emit('join', {
                     user: user.firstname,
                     time: Date.now()
-                }, console.log('join', user.firstname))      
-                
+                }, console.log('join', user.firstname))    
        })
-       
- 
-
-          
-             
-            
-    
-    
-
     socket
       //.on('unauthorized', unauthorizedHandler)
       .on('add-message', chatMessageHandler)
-      .on('disconnect', disconnectHandler)
+      .on('disconnect', disconnectHandler);
+
+     
+
     //   .on('room', function(room) {
     //         socket.join(room);
     //         console.log('join room', room)
@@ -88,82 +69,56 @@ io
     //         io.sockets.in(room).emit('messageRoom', 'what is going on, party people?');
     //     });
 
-    // function unauthorizedHandler(error) {
-    //   if (error.data.type == 'UnauthorizedError' || error.data.code == 'invalid_token') {
-    //     // redirect user to login page perhaps?
-    //     console.log("User's token has expired");
-    //   }
-    // }
-
     function chatMessageHandler(message) {
-        io.emit('message', {userId: message.userId, text: message.text, timestamp: message.timestamp, userName: message.userName});
-    //   console.log('message received')
-    //   const msgObj = {
-    //     msg,
-    //     user: socket.decoded_token.sub,
-    //     time: Date.now()
-    //   }
 
-    //   io.emit('message', msgObj)
-
-    //   mongoConnected.then(db => {
-    //     db
-    //       .collection('messages')
-    //       .insert(msgObj, err => {
-    //         if (err) io.emit('error', err)
-    //       })
-    //   })
+        // if(rootSocket) { console.log('room disconnect'); rootSocket.disconnect() }
+        io.of('/root').emit('message', {userId: message.userId, text: message.text, timestamp: message.timestamp, userName: message.userName});
     }
 
-    function disconnectHandler() {
+    function disconnectHandler(val) {
       console.log('disconnect')
+        console.log(val)
        var obj = {isLogged: false};
        User.findOneAndUpdate({_id: socket.decoded_token.sub}, obj , function(err, user) {
-        return   io.emit('leave', {
+        return   io.of('/root').emit('leave', {
                     user: user.firstname,
                     time: Date.now()
                 }, console.log('leave', user.firstname))      
        })
-        // User.findOne({_id: socket.decoded_token.sub}, function(err, user) {
-        //     if (err) { return err; }
-        //     if(user) {
-        //         console.log(user.firstname)
-        //         io.emit('leave', {
-        //             user: user.firstname,
-        //             time: Date.now()
-        //         })
-        //         return;
-        //     }
-        // })
-    //   io.emit('leave', {
-    //     user: socket.decoded_token.sub,
-    //     time: Date.now()
-    //   })
     }
-  })
+})
 
 
 
-io.of('/namespace')
-        io.sockets.on('connection', function(socket) {
+io.of('/privatechat')
+       .on('connection', function(socket) {
             console.log('ws room connection')
-            
+                   //rootSocket = socket;
     // once a client has connected, we expect to get a ping from them saying what room they want to join
     socket.on('room', function(room) {
         console.log('user joined room', room)
         socket.join(room);
         //room = "abc123";
-        io.in(room).emit('messageRoom', 'what is going on, party people?');
+        io.of('/privatechat').in(room).emit('message', 'what is going on, party people?');
     });
-});
-
-// now, it's easy to send a message to just the clients in a given room
-
-
-// now, it's easy to send a message to just the clients in a given room
-
+     socket.on('disconnect', function(val) {
+        console.log(val)
+        console.log('disconnect user from room')
+        //room = "abc123";
+        socket.disconnect() 
+        // io.of('/namespace').emit('leave', 'user leave room')     
+        //socket.leave(room);
+        // socket.packet({type: 'disconnect'});
+       })
+        // io.of('/namespace').emit('message', 'user disconnected from room');
+        // socket.leave(room);
         
+        //room = "abc123";
+        //io.of('/namespace').emit('leave', 'leave user from room')      
         
+    });
+
+      
 
 
 //Server Setup

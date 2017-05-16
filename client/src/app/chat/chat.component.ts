@@ -36,17 +36,24 @@ export class ChatComponent implements OnInit {
   // }
 
   ngOnInit() {
-    console.error('NGONINT')
+    console.error('NGONINT CHAT MODULE')
     this.MainPartChatService.getData().subscribe(data => {
       console.log('MESSAGE on CHAT COMP', data);
         this.message = data;
       })
-    
-    this.connection = this.ws.initWs()
+      if(this.connection) {
+        this.connection = this.MainPartChatService.getConnection();
+      }
+      else {
+         this.connection = this.ws.initWs()
         .subscribe(message => {
           console.log(message);
           this.store.dispatch(new MessageAddSuccessActions(message))
         })
+      }
+   
+
+         this.MainPartChatService.updateConnection(this.connection)
         // this.MessageInputService.getAllMessages()
         //   .subscribe(messages => {
         //         console.error(messages);
