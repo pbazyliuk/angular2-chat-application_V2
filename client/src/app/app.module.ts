@@ -203,27 +203,26 @@ function handleLoadChatListsAction(state: ApplicationState, action: LoadChatList
   console.log(userData)
 
   let usersOn = [...userData.users];
-
-  usersOn
+  
+  if(state.uiState.user) {
+    usersOn
     .forEach(function(user, index) {
       for(var key in user) {
-        if(key === 'email' && user[key] === state.uiState.user.email) {
+        if(key === 'email' && user['email'] === state.uiState.user.email) {
           user.isLogged = true;
-          // console.log(user);
-          // console.log(index)
         }
       }
     })
- console.log('AFTER FOREACH', userData)
-  usersOn = usersOn.filter(function(user) {
-    
-      if(user.isLogged === true) {
-        return true;
-      }
-      return false;
-    
-  })
-  console.log('AFTER FILTER', userData)
+    usersOn = usersOn.filter(function(user) {
+        if(user.isLogged === true) {
+          return true;
+        }
+        return false;
+      
+    })
+    console.log('AFTER FILTER', userData)
+  }
+  
   const newState: ApplicationState = Object.assign({}, state);
 
 
