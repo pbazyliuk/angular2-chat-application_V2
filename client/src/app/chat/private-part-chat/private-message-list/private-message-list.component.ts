@@ -10,37 +10,42 @@ import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.serv
 })
 export class PrivateMessageListComponent implements OnInit {
   @Input() chatname: string;
-  private chatname2;
+
+  //private chatname;
   private privateMessages$;
-  // private chatname;
+  private storeConnection;
    constructor(private store: Store<ApplicationState>, private MainPartChatService: MainPartChatService) { 
-    this.chatname2 = localStorage.getItem('chatname')
-    store.subscribe(state => {
-      console.log(this.chatname2)
+    this.storeConnection = store.subscribe(state => {
       console.log('PRIVATE MESSAGE COMPONENT STATE', state)
+      //this.chatname = state.uiState.currentChat
     })
 
-    console.log('123', this.chatname2)
     this.privateMessages$ = store
       .map(this.mapStatetoPrivateMessages)
   }
 
   mapStatetoPrivateMessages(state: ApplicationState) {
      console.log('PRIVATEEEE');
+     var indexChat;
     //  this.chatname = this.MainPartChatService.getChatname() || '';
      console.log(state.storeData.chats[1].messageIds)
-     console.log(this.chatname)
-     console.log(this.chatname2)
-    // state.storeData.chats.forEach((chat, index) => {
-    //   if(chat["name"] === this.variables) {
-    //     console.log('PRIVATEEEE', state.storeData.chats[index].messageIds)
-        return state.storeData.chats[1].messageIds;
+     console.log(state.uiState.currentChat)
+
+    state.storeData.chats.forEach((chat, index) => {
+      if(chat["name"] === state.uiState.currentChat) {
+        //console.log('PRIVATEEEE CHAT FIND', state.storeData.chats[index].messageIds)
+       indexChat = index;
+       console.log(indexChat)
       }
+    })
+    console.log(state.storeData.chats[indexChat].messageIds);
+   return state.storeData.chats[indexChat].messageIds;
+  }
     // })
   
 
   ngOnInit() {
-    
+    this.storeConnection.unsubscribe();
     
   }
 

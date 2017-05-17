@@ -26,7 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION, LOAD_CHATS_LIST_SUCCESS_ACTION, GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION, ADD_PRIVATE_MESSAGE_SUCCESS_ACTION } from "app/store/actions";
+import { LOAD_CHAT_LIST_ACTION, LoadChatListActions, LOGIN_SUCCESS_ACTION, LOGOUT_SUCCESS_ACTION, REGISTER_SUCCESS_ACTION, UPDATE_PROFILE_SUCCESS_ACTION, MESSAGE_ADD_SUCCESS_ACTION, GET_ALL_MESSAGES_SUCCESS_ACTION, LOAD_CHATS_LIST_SUCCESS_ACTION, GET_ALL_PRIVATES_MESSAGES_SUCCESS_ACTION, ADD_PRIVATE_MESSAGE_SUCCESS_ACTION, UPDATE_CURRENT_CHAT_SUCCESS_ACTION } from "app/store/actions";
 import { ProfileService } from "app/profile/profile.service";
 import { WsService } from "app/ws.service";
 import { ChatMenuService } from "app/chat/chat-menu/chat-menu.service";
@@ -71,10 +71,23 @@ function storeReducer(state: ApplicationState, action: Action): ApplicationState
 
   case ADD_PRIVATE_MESSAGE_SUCCESS_ACTION:
     return handleAddPrivateMessageActions(state, action);
+
+  case UPDATE_CURRENT_CHAT_SUCCESS_ACTION:
+    return handleUpdateCurrentChatActions(state, action);
   }
 
   
   return state;
+}
+
+function handleUpdateCurrentChatActions(state, action) {
+  const currentChat = action.payload;
+
+  const newState: ApplicationState = Object.assign({}, state);
+
+  newState.uiState.currentChat = currentChat;
+
+  return newState;
 }
 
 function handleAddPrivateMessageActions(state, action) {
@@ -156,7 +169,8 @@ function handleRegisterSuccessAction(state, action) {
   newState.uiState = {
     user: action.payload.user,
     authenticated: true,
-    usersOn: [action.payload.user]
+    usersOn: [action.payload.user],
+    currentChat: ''
   }
 
   return newState;
@@ -176,7 +190,8 @@ function handleLogoutSuccessAction(state: ApplicationState, action: LoadChatList
   newState.uiState = {
     authenticated: undefined,
     user: undefined,
-    usersOn: []
+    usersOn: [],
+    currentChat: ''
   }
 
   return newState;
@@ -232,7 +247,8 @@ console.log(state.storeData.users)
   newState.uiState = {
     user: action.payload.user,
     authenticated: true,
-    usersOn: [action.payload.user]
+    usersOn: [action.payload.user],
+    currentChat: ''
   }
 
   return newState;

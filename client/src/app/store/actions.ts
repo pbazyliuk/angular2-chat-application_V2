@@ -102,3 +102,13 @@ export class PrivateMessageAddSuccessActions implements Action {
     }
 }
 
+export const UPDATE_CURRENT_CHAT_SUCCESS_ACTION = 'UPDATE_CURRENT_CHAT_SUCCESS_ACTION';
+
+export class UpdateCurrentChatSuccessActions implements Action {
+     type = UPDATE_CURRENT_CHAT_SUCCESS_ACTION;
+     
+     constructor(public payload) {
+        console.log(payload)
+    }
+}
+
