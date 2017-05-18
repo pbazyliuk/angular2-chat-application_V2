@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { UserListService } from "./user-list.service";
 import { Store } from "@ngrx/store";
@@ -7,6 +7,8 @@ import { LoadChatListActions } from "app/store/actions";
 import { Observable } from "rxjs/Observable";
 import { User } from "app/core/models/user";
 import { mapStatetoUsers } from "app/chat/user-list/mapStateToUsers";
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { Subscription } from "rxjs/Subscription";
 
 
 @Component({
@@ -14,13 +16,18 @@ import { mapStatetoUsers } from "app/chat/user-list/mapStateToUsers";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
 
  // private userName$: Observable<string>;
+  private searchValue: string = '';
+  private subscriptions: Subscription[] = [];
 
-  private usersOn$: Observable<User[]>
 
-  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>) {
+  private usersOn$: Observable<User[]>;
+
+
+  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>,
+  private MainPartChatService: MainPartChatService) {
       // this.userName$ = store
       //   .map(this.mapStatetoUserName)
         
@@ -45,21 +52,18 @@ export class UserListComponent implements OnInit {
       .subscribe(
         allUserData => this.store.dispatch(
           new LoadChatListActions(allUserData)
+        ))
+        this.subscriptions.push(this.MainPartChatService
+          .getSearchValue()
+          .subscribe(value => {
+            this.searchValue = value;
+            console.log('SEARCH', this.searchValue);
+            return this.searchValue;
+          })
         )
-    )
-      // .getAllUsers()
-      // .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
-
   }
 
-  // onLoginError (err){
-  //   console.error(err);
-  //   alert('User not found')
-  // }
-
-  // onLoginSuccess (res: any): void {
-  //    console.log(res);
-  // }
-
-
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
+  }
 }

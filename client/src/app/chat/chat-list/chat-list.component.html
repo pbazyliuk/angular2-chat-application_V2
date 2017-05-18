@@ -5,7 +5,7 @@
 <div>{{chatsOn$}}</div>-->
 
 <ul class="chat-list">
-  <li class="chat-list__item" *ngFor='let chat of chatsOn$ | async' 
+  <li class="chat-list__item" *ngFor='let chat of chatsOn$ | async | filterChatByName: searchValue; let i = index' 
  (click)="select(chat)" 
   >
     <div class="avatar" >

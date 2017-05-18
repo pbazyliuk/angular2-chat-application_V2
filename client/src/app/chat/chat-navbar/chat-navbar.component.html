@@ -8,10 +8,14 @@
         ></span>
     
   
-        <form action="" class="search-form"
+        <form action="" class="search-form" autocomplete="off"
             *ngIf="!isChatListFolded"
             >
-             <input class="search-form__input" type="text" placeholder="Search" name="search-field">
+             <input class="search-form__input" type="text" placeholder="Search" name="search-field"
+                 [(ngModel)]="searchValue"
+                (blur)="onBlur()"
+                (ngModelChange)="onSearchValueChange($event)"
+             >
               <span class="search-form__btn-search"></span>
         </form>
 

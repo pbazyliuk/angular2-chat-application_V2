@@ -17,6 +17,8 @@ import { ChatsRoutingModule } from "app/chat/chat-routing.module";
 import { PrivateMessageListComponent } from './private-part-chat/private-message-list/private-message-list.component';
 import { PrivateMessageNavbarComponent } from './private-part-chat/private-message-navbar/private-message-navbar.component';
 import { PrivateMessageInputComponent } from './private-part-chat/private-message-input/private-message-input.component';
+import { FilterUserByNamePipe } from "app/chat/user-list/user-list-filter.pipe";
+import { FilterChatByNamePipe } from "app/chat/chat-list/chat-list-filter.pipe";
 // import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 // import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 // import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
@@ -49,6 +51,8 @@ import { PrivateMessageInputComponent } from './private-part-chat/private-messag
     PrivateMessageListComponent,
     PrivateMessageNavbarComponent,
     PrivateMessageInputComponent,
+    FilterUserByNamePipe,
+    FilterChatByNamePipe
     // UserSelectionComponent,
     // ThreadSectionComponent,
     // MessageSectionComponent,

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
   selector: 'ct-chat-navbar',
@@ -10,11 +11,21 @@ export class ChatNavbarComponent implements OnInit {
   public isChatListFolded: boolean;
   public isChatMenuShown: boolean;
 
-  constructor() { }
+   private searchValue: string = '';
+
+  constructor(private MainPartChatService: MainPartChatService) { }
 
   @Output() notifyChatListFold: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() notifyChatMenuShow: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  onBlur(): void {
+    this.searchValue = '';
+    this.MainPartChatService.setSearchValue('');
+  }
+
+  onSearchValueChange(value: string): void {
+    this.MainPartChatService.setSearchValue(value);
+  }
 
   foldChatList() {
     this.isChatListFolded = !this.isChatListFolded;

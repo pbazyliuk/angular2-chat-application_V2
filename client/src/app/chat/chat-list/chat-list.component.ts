@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatListService } from "app/chat/chat-list/chat-list.service";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
@@ -7,18 +7,23 @@ import { Observable } from "rxjs/Observable";
 import { Chat } from "app/core/models/chat";
 import { Http } from "@angular/http";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs/Subscription";
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
   selector: 'ct-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
-
+export class ChatListComponent implements OnInit, OnDestroy {
+  private searchValue: string = '';
+  private subscriptions: Subscription[] = [];
+  
   private chatsOn$: Observable<Chat[]>
 
   constructor(private ChatListService: ChatListService, private store: Store<ApplicationState>,
-  private http: Http, 
+  private http: Http,
+  private MainPartChatService: MainPartChatService,
   private router: Router,) {
     this.chatsOn$ = store
         .map(this.mapStatetoChats)
@@ -66,7 +71,18 @@ export class ChatListComponent implements OnInit {
          console.log('ALL CHATS', allChats);
         }
           )
-        
+  this.subscriptions.push(this.MainPartChatService
+          .getSearchValue()
+          .subscribe(value => {
+            this.searchValue = value;
+            console.log('SEARCH', this.searchValue);
+            return this.searchValue;
+          })
+        )
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
 }
