@@ -17,8 +17,8 @@
         <h4 class="chat-name__heading">{{user.firstname}}</h4>
     </div>
 
-    <div class="chat-last-activity"  >
-        2 h
+    <div class="chat-last-activity" [class.isLogged]="user.isLogged" >
+        {{user.isLogged === true ? 'on' : 'off'}}
     </div>
     
    

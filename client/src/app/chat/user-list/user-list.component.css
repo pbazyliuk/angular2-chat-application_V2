@@ -42,3 +42,8 @@
 .activeLink {
     background-color: purple;
 }
+
+.isLogged {
+    background-color: green;
+    color: white;
+}
