@@ -7,6 +7,7 @@ import { RegisterComponent } from './register';
 // import { AltLoginComponent } from './alt-login';
 import { AuthRoutingModule} from './auth-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AltLoginGoogleComponent } from "app/auth/alt-login-google/alt-login-google.component";
 // import { AuthService } from '../core/auth.service';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthComponent,
     LoginComponent,
     RegisterComponent,
+    AltLoginGoogleComponent,
     // AltLoginComponent
   ],
   
