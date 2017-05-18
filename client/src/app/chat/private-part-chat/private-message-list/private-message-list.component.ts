@@ -28,8 +28,8 @@ export class PrivateMessageListComponent implements OnInit {
      console.log('PRIVATEEEE');
      var indexChat;
     //  this.chatname = this.MainPartChatService.getChatname() || '';
-     console.log(state.storeData.chats[1].messageIds)
-     console.log(state.uiState.currentChat)
+    //  console.log(state.storeData.chats[1].messageIds)
+    //  console.log(state.uiState.currentChat)
 
     state.storeData.chats.forEach((chat, index) => {
       if(chat["name"] === state.uiState.currentChat) {

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
-import { LoadChatListActions } from "app/store/actions";
+import { LoadChatListActions, LoadChatsListActions } from "app/store/actions";
 import { UserListService } from "./chat/user-list/";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
 import { Http } from '@angular/http';
+import { ChatListService } from "app/chat/chat-list/chat-list.service";
 
 @Injectable()
 export class WsService {
@@ -14,7 +15,9 @@ export class WsService {
   private socketPrivateChat;
   private room;
 
-  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>, private http: Http) { 
+  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>, 
+  private http: Http,
+  private ChatListService: ChatListService) { 
     //   this.chatlistservice.getAllUsers.bind(this)
     
   }
@@ -25,6 +28,12 @@ export class WsService {
   sendMessage(message){
     console.log('SEND MESSAGE', this.socketRoot)
     this.socketRoot.emit('add-message', message);   
+  }
+
+  addChat(chat) {
+     console.log('Add Chat', this.socketRoot)
+     console.log(chat)
+     this.socketRoot.emit('add-chat', chat);  
   }
 
  initWs() {
@@ -78,6 +87,20 @@ let observable = new Observable(observer => {
         .on('message', (data) => {
             console.log('message', data);
             observer.next(data);    
+        })
+
+         .on('chat', (data) => {
+            console.log('chat123456', data);
+              this.ChatListService.getAllChats()
+                    .subscribe(
+                        allChats => {
+                        this.store.dispatch(
+                        
+                        new LoadChatsListActions(allChats)
+                        );
+                        console.log('ALL CHATS MENU', allChats);
+                        }
+                )
         })
 
     }.bind(this))

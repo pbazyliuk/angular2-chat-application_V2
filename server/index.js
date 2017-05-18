@@ -58,6 +58,7 @@ io
     socket
       //.on('unauthorized', unauthorizedHandler)
       .on('add-message', chatMessageHandler)
+      .on('add-chat', chatHandler)
       .on('disconnect', disconnectHandler);
 
      
@@ -68,6 +69,11 @@ io
     //         //room = "abc123";
     //         io.sockets.in(room).emit('messageRoom', 'what is going on, party people?');
     //     });
+
+    function chatHandler(chat) {
+        console.log('chat recieved from client - ', chat);
+         io.of('/root').emit('chat', chat);
+    }
 
     function chatMessageHandler(message) {
 
