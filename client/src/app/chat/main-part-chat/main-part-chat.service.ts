@@ -14,6 +14,8 @@ export class MainPartChatService {
 
     private search$: BehaviorSubject<string> = new BehaviorSubject('');
 
+   private searchMessage$: BehaviorSubject<string> = new BehaviorSubject('');
+
     getData() {
         return this.messageObj$;
     }
@@ -45,5 +47,14 @@ export class MainPartChatService {
 
   getSearchValue(): BehaviorSubject<string> {
     return this.search$;
+  }
+   
+  setSearchMessage(value: string): void {
+      console.log('SET MESSAGE VALUE');
+      this.searchMessage$.next(value);
+  }
+
+  getSearchMessage(): BehaviorSubject<string> {
+    return this.searchMessage$;
   }
 }

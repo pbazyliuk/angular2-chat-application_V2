@@ -1,7 +1,7 @@
 <!--<h3>MESSAGES LIST</h3>-->
 
 <ul class="message-list">
-    <li class="user-message" *ngFor='let message of messages$ | async'>
+    <li class="user-message" *ngFor='let message of messages$ | async | filterMessageByText: searchMessage; let i = index'>
         <div class="user-message-wrapper">
       
             <div class="avatar ">

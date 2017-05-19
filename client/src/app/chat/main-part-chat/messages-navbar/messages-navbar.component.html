@@ -5,8 +5,11 @@
         </a>
     </div>
 
-     <form action="" class="search-form">
+     <form action="" class="search-form" autocomplete="off">
              <input class="search-form__input" type="text" placeholder="Search message" name="search-message"
+             [(ngModel)]="searchMessage"
+             (blur)="onBlur()"
+             (ngModelChange)="onSearchMessageChange($event)"
              >
             <span class="search-form__btn-search"></span>
         </form>
