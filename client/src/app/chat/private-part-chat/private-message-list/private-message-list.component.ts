@@ -1,19 +1,26 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
 import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'ct-private-message-list',
   templateUrl: './private-message-list.component.html',
   styleUrls: ['./private-message-list.component.css']
 })
-export class PrivateMessageListComponent implements OnInit {
+export class PrivateMessageListComponent implements OnInit, OnDestroy {
   @Input() chatname: string;
 
   //private chatname;
   private privateMessages$;
   private storeConnection;
+
+  private searchPrivateMessage: string = '';
+
+  private subscriptions: Subscription[] = [];
+
+
    constructor(private store: Store<ApplicationState>, private MainPartChatService: MainPartChatService) { 
     this.storeConnection = store.subscribe(state => {
       console.log('PRIVATE MESSAGE COMPONENT STATE', state)
@@ -46,7 +53,13 @@ export class PrivateMessageListComponent implements OnInit {
 
   ngOnInit() {
     this.storeConnection.unsubscribe();
-    
+     this.subscriptions.push(this.MainPartChatService
+      .getSearchMessage()
+      .subscribe(value => this.searchPrivateMessage = value)
+     )
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
+  }
 }

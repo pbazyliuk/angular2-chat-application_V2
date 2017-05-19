@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
   selector: 'ct-private-message-navbar',
@@ -7,7 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateMessageNavbarComponent implements OnInit {
 
-  constructor() { }
+   private searchPrivateMessage: string = '';
+  
+  constructor(private MainPartChatService: MainPartChatService) { }
+
+  onBlur(): void {
+    this.searchPrivateMessage = '';
+    this.MainPartChatService.setSearchMessage('');
+    console.log(this.MainPartChatService.setSearchMessage(''))
+  }
+
+  onSearchPrivateMessageChange(value: string): void {
+    //this.service.setSearchValue(value);
+    this.MainPartChatService.setSearchMessage(value);
+    console.log('onSearchPrivateMessageChange', value)
+  }
 
   ngOnInit() {
   }

@@ -20,6 +20,7 @@ import { PrivateMessageInputComponent } from './private-part-chat/private-messag
 import { FilterUserByNamePipe } from "app/chat/user-list/user-list-filter.pipe";
 import { FilterChatByNamePipe } from "app/chat/chat-list/chat-list-filter.pipe";
 import { FilterMessageByTextPipe } from "app/chat/main-part-chat/messages-list/messages-list-filter.pipe";
+import { FilterPrivateMessageByTextPipe } from "app/chat/private-part-chat/private-message-list/private-message-filter.pipe";
 // import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
 // import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
 // import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
@@ -54,7 +55,8 @@ import { FilterMessageByTextPipe } from "app/chat/main-part-chat/messages-list/m
     PrivateMessageInputComponent,
     FilterUserByNamePipe,
     FilterChatByNamePipe,
-    FilterMessageByTextPipe
+    FilterMessageByTextPipe,
+    FilterPrivateMessageByTextPipe
     // UserSelectionComponent,
     // ThreadSectionComponent,
     // MessageSectionComponent,

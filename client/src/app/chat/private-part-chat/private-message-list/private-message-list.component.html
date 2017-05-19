@@ -2,7 +2,7 @@
 <h2>{{chatname}}</h2>
 <ul class="message-list">
   Private messages goes here
-    <li class="user-message" *ngFor='let privateMessage of privateMessages$ | async'>
+    <li class="user-message" *ngFor='let privateMessage of privateMessages$ | async | filterPrivateMessageByText: searchPrivateMessage; let i = index'>
         <div class="user-message-wrapper">
       
             <div class="avatar ">
