@@ -4,7 +4,7 @@ import { LoginService } from "app/auth/shared";
 import { Store } from "@ngrx/store";
 import { ApplicationState } from "app/store/application-state";
 import { RegisterSuccessActions, LoginSuccessActions } from "app/store/actions";
-//import { UserService } from '../users';
+
 declare let gapi: any;
 
 @Component({
@@ -17,14 +17,14 @@ export class AltLoginGoogleComponent implements OnInit {
   private profile;
   private userData;
 
-  constructor(private zone: NgZone,
-              private router: Router,
-             private loginservice: LoginService,
-              private store: Store<ApplicationState>) { }
+  constructor (
+    private zone: NgZone,
+    private router: Router,
+    private loginservice: LoginService,
+    private store: Store<ApplicationState>
+  ) { }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
   submitBy() {
      gapi.load('auth2', () => {
@@ -41,13 +41,12 @@ export class AltLoginGoogleComponent implements OnInit {
   }
 
   onFailure() {
-
+    alert('Something goes wrong with Social Authorization')
   }
 
   onSuccess(user): void {
     this.zone.run(() => {
       this.profile = user.getBasicProfile();
-      console.log(this.profile);
       this.userData = {
         firstname: this.profile.ofa,
         lastname: this.profile.wea,
@@ -55,58 +54,40 @@ export class AltLoginGoogleComponent implements OnInit {
         password: this.profile.Eea
       };
 
-      console.log(this.userData)
-      this.loginservice.register(this.userData)
-      .subscribe(userInfo => {
-           console.error(userInfo)
-                this.store.dispatch(
-                new RegisterSuccessActions(userInfo)
-              )
-              this.router.navigate(['chat']);}, 
-              this.onRegisterError.bind(this));
-
-      this.router.navigate(['chat']);
+      this.loginservice.register (this.userData)
+      .subscribe (userInfo => {
+        this.store.dispatch (
+        new RegisterSuccessActions(userInfo)
+      )
+      
+      this.router.navigate(['chat']);}, 
+      this.onRegisterError.bind(this));
     });
-
-   
   }
+  onRegisterError (err) {
+    if(err.status == 422) {
+      const loginData = {
+        email: this.userData.email,
+        password: this.userData.password
+      }
 
-  
-     onRegisterError (err){
-            console.error(err);
-            if(err.status == 422) {
-              console.log('hello')
-              const loginData = {
-                email: this.userData.email,
-                password: this.userData.password
-              }
-
-              console.log(loginData);
-              this.loginservice
-                .login(loginData)
-                  .subscribe(
-                      userInfo => {
-                        this.store.dispatch(
-                        new LoginSuccessActions(userInfo)
-                      )
-                      this.router.navigate(['chat']);
-                    },
-                    this.onLoginError
-                  )
-            }
-          }
+    console.log(loginData);
+    this.loginservice
+      .login(loginData)
+        .subscribe(
+            userInfo => {
+              this.store.dispatch(
+              new LoginSuccessActions(userInfo)
+            )
+            this.router.navigate(['chat']);
+          },
+          this.onLoginError
+        )
+  }
+}
 
   onLoginError (err){
     console.error(err);
     alert('User not found')
   }
-  // onLoginSuccess (): void {
-  //    console.log('aaaa');
-  //   }
-
-  // onLoginError (err){
-  //   console.error(err);
-  //   alert('Something goes wrong')
-  // }
-
 }

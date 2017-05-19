@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from "rxjs/Subject";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // import { Observable } from 'rxjs';
 
@@ -31,7 +31,7 @@ export class MainPartChatService {
     getConnection() {
         return this.connection$;
     }
-    
+
     getChatname() {
         return this.chatname$;
     }
@@ -48,7 +48,7 @@ export class MainPartChatService {
   getSearchValue(): BehaviorSubject<string> {
     return this.search$;
   }
-   
+  
   setSearchMessage(value: string): void {
       console.log('SET MESSAGE VALUE');
       this.searchMessage$.next(value);

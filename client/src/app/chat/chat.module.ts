@@ -13,29 +13,15 @@ import { ChatMenuComponent } from './chat-menu/chat-menu.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { MainPartChatComponent } from './main-part-chat/main-part-chat.component';
 import { PrivatePartChatComponent } from './private-part-chat/private-part-chat.component';
-import { ChatsRoutingModule } from "app/chat/chat-routing.module";
+import { ChatsRoutingModule } from 'app/chat/chat-routing.module';
 import { PrivateMessageListComponent } from './private-part-chat/private-message-list/private-message-list.component';
 import { PrivateMessageNavbarComponent } from './private-part-chat/private-message-navbar/private-message-navbar.component';
 import { PrivateMessageInputComponent } from './private-part-chat/private-message-input/private-message-input.component';
-import { FilterUserByNamePipe } from "app/chat/user-list/user-list-filter.pipe";
-import { FilterChatByNamePipe } from "app/chat/chat-list/chat-list-filter.pipe";
-import { FilterMessageByTextPipe } from "app/chat/main-part-chat/messages-list/messages-list-filter.pipe";
-import { FilterPrivateMessageByTextPipe } from "app/chat/private-part-chat/private-message-list/private-message-filter.pipe";
-import { FilterUserOnByNamePipe } from "app/chat/user-list/user-list-filterOn.pipe";
-// import { UserSelectionComponent } from './chat-list/user-selection/user-selection.component';
-// import { ThreadSectionComponent } from './chat-list/thread-section/thread-section.component';
-// import { MessageSectionComponent } from './chat-details/message-section/message-section.component';
-// import { ChatNewComponent } from './chat-new';
-// import { ChatHolderComponent } from './chat-holder';
-// import { ChatRoutingModule } from './chat-routing.module';
-// import { MessagesSharedModule } from '../messages';
-// import { ChatService } from './shared/chats.service';
-// import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
-// import { ChatDetailsNavbarComponent } from './chat-details-navbar/chat-details-navbar.component';
-// import { ChatMenuComponent } from './chat-menu/chat-menu.component';
-
-// import { FilterChatByNamePipe } from './shared/chat-filter.pipe';
-
+import { FilterUserByNamePipe } from 'app/chat/user-list/user-list-filter.pipe';
+import { FilterChatByNamePipe } from 'app/chat/chat-list/chat-list-filter.pipe';
+import { FilterMessageByTextPipe } from 'app/chat/main-part-chat/messages-list/messages-list-filter.pipe';
+import { FilterPrivateMessageByTextPipe } from 'app/chat/private-part-chat/private-message-list/private-message-filter.pipe';
+import { FilterUserOnByNamePipe } from 'app/chat/user-list/user-list-filterOn.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +36,6 @@ import { FilterUserOnByNamePipe } from "app/chat/user-list/user-list-filterOn.pi
     ChatListComponent,
     MainPartChatComponent,
     PrivatePartChatComponent,
-    
     PrivateMessageListComponent,
     PrivateMessageNavbarComponent,
     PrivateMessageInputComponent,
@@ -59,25 +44,14 @@ import { FilterUserOnByNamePipe } from "app/chat/user-list/user-list-filterOn.pi
     FilterChatByNamePipe,
     FilterMessageByTextPipe,
     FilterPrivateMessageByTextPipe
-    // UserSelectionComponent,
-    // ThreadSectionComponent,
-    // MessageSectionComponent,
-    // ChatNewComponent,
-    // ChatHolderComponent,
-    // ChatNavbarComponent,
-    // ChatDetailsNavbarComponent,
-    // ChatMenuComponent,
-    // FilterChatByNamePipe
   ],
   imports: [
     CommonModule,
     FormsModule,
     ChatsRoutingModule
-    // SharedModule,
-    // MessagesSharedModule,
-    // ChatRoutingModule
   ],
-  providers: [] //ChatService
+  providers: []
 })
 
 export class ChatModule {}
+

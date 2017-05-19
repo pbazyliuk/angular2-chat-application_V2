@@ -17,151 +17,102 @@ export class WsService {
 
   constructor(private userlistservice: UserListService, private store: Store<ApplicationState>, 
   private http: Http,
-  private ChatListService: ChatListService) { 
-    //   this.chatlistservice.getAllUsers.bind(this)
-    
-  }
+  private ChatListService: ChatListService) {}
+  
   sendPrivateMessage(privateMessage, room) {
-     this.socketPrivateChat.emit('add-private-message', privateMessage, room);    
+    this.socketPrivateChat.emit('add-private-message', privateMessage, room);    
   }
 
   sendMessage(message){
-    console.log('SEND MESSAGE', this.socketRoot)
     this.socketRoot.emit('add-message', message);   
   }
 
   addChat(chat) {
-     console.log('Add Chat', this.socketRoot)
-     console.log(chat)
      this.socketRoot.emit('add-chat', chat);  
   }
 
  initWs() {
-    console.log(
-        this.userlistservice.getAllUsers
-    )
-    var getAllUsers = this.userlistservice.getAllUsers();
-    var store = this.store;
-//  let observable = new Observable(observer => {
-//       this.socket = io(this.url);
-//       this.socket.on('message', (data) => {
-//         observer.next(data);    
-//       });
-//       return () => {
-//         this.socket.disconnect();
-//       };  
-//     })     
-//     return observable;
-// }
-
-let observable = new Observable(observer => {
+    let getAllUsers = this.userlistservice.getAllUsers();
+    let store = this.store;
+    
+    let observable = new Observable(observer => {
     
     this.socketRoot = io(`${this.url}/root`);
     this.socketRoot.on('connect', function () {
         
-      this.socketRoot
-        .on('authenticated', function () {
-            console.log('authenticated client')
-        })
-        
-        .emit('authenticate', {token: localStorage.getItem('token')})
-        .on('join', function (val) {
-            console.log('join', val.user)
-            //console.log(getAllUsers)
-            getAllUsers
+    this.socketRoot
+      .on('authenticated', function () {
+          console.log('authenticated client')
+      })
+      
+      .emit('authenticate', {token: localStorage.getItem('token')})
+      .on('join', function (val) {
+          console.log('join', val.user)
+          getAllUsers
             .subscribe(
                 allUserData => store.dispatch(
                 new LoadChatListActions(allUserData)
                 )
             )
-        })
-        .on('leave', function (val) {
-            console.log('leave', val.user);
-            getAllUsers
+      })
+      .on('leave', function (val) {
+          console.log('leave', val.user);
+          getAllUsers
             .subscribe(
                 allUserData => store.dispatch(
                     new LoadChatListActions(allUserData)
                 )
             )
-        })
-        .on('message', (data) => {
-            console.log('message', data);
-            observer.next(data);    
-        })
+      })
+      .on('message', (data) => {
+          console.log('message', data);
+          observer.next(data);    
+      })
 
-         .on('chat', (data) => {
-            console.log('chat123456', data);
-              this.ChatListService.getAllChats()
-                    .subscribe(
-                        allChats => {
-                        this.store.dispatch(
-                        
-                        new LoadChatsListActions(allChats)
-                        );
-                        console.log('ALL CHATS MENU', allChats);
-                        }
-                )
-        })
+      .on('chat', (data) => {
+        console.log('chat123456', data);
+        this.ChatListService.getAllChats()
+        .subscribe(
+          allChats => {
+          this.store.dispatch(
+            new LoadChatsListActions(allChats)
+          );
+            console.log('ALL CHATS MENU', allChats);
+          }
+        )
+      });
 
-    }.bind(this))
-    return () => {
-            this.socketRoot.disconnect();
-        };  
-})
- return observable;
-}
-
+  }.bind(this))
+      return () => {
+        this.socketRoot.disconnect();
+      };  
+      })
+    return observable;
+  }
 
     initRoomWs(room) {
-        this.room = room
-        console.log('initRoomWs', room)
-        //var room = "abc123";
-         let observable = new Observable(observer => {
-            this.socketPrivateChat = io(`${this.url}/privatechat`);
-            this.socketPrivateChat.on('connect', function () {
-                console.log('user connection to room', room)
-               this.socketPrivateChat.emit('room', room);
-               
-                console.log(this.socketPrivateChat)
+      this.room = room;
 
-                
-                this.socketPrivateChat.on('disconnect', function (val) {
-                        console.log('leave', val);
-                        //this.socket.disconnect();
-                });
+      let observable = new Observable(observer => {
+        this.socketPrivateChat = io(`${this.url}/privatechat`);
+        this.socketPrivateChat.on('connect', function () {
+          console.log('user connection to room', room);
+        this.socketPrivateChat.emit('room', room);
 
-                this.socketPrivateChat.on('add-private-message', function(data) {
-                    console.log('Incoming message:', data); 
-                    observer.next(data); 
-                });
+        this.socketPrivateChat.on('disconnect', function (val) {
+          console.log('leave', val);
+        });
 
-                // this.socket.on('leave', function (val) {
-                //             console.log('leave', val);
-                // })
+        this.socketPrivateChat.on('add-private-message', function(data) {
+          console.log('Incoming message:', data); 
+          observer.next(data); 
+        });
+      }.bind(this))
 
-        //         this.socket
-        // .on('authenticated', function () {
-        //     console.log('authenticated client')
-        // })
-        
-        // .emit('authenticate', {token: localStorage.getItem('token')})
-        // this.socket.emit("add-message", 'message from clinet')
-        // .on('add-message', (data) => {
-        //     console.log('message', data);
-        //     observer.next(data);    
-        // })
-      
-    }.bind(this))
-
-    return () => {
-            this.socketPrivateChat.disconnect();
-        };  
-})
- return observable;
-    }
+      return () => {
+        this.socketPrivateChat.disconnect();
+      };  
+      })
+    return observable;
+  }
 }
-
-
-
-
-
