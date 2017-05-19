@@ -6,7 +6,7 @@
       </ul>-->
  
 <ul class="chat-list">
-  <li class="chat-list__item" *ngFor='let user of usersOn$ | async | filterUserByName: searchValue; let i = index' 
+  <li class="chat-list__item" *ngFor='let user of usersOn$ | async | filterUserOnByName | filterUserByName: searchValue; let i = index' 
  
   >
     <div class="avatar" >
