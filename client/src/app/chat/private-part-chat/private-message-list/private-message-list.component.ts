@@ -13,6 +13,7 @@ export class PrivateMessageListComponent implements OnInit, OnDestroy {
   @Input() chatname: string;
 
   //private chatname;
+  private author: string;
   private privateMessages$;
   private storeConnection;
 
@@ -23,7 +24,8 @@ export class PrivateMessageListComponent implements OnInit, OnDestroy {
 
    constructor(private store: Store<ApplicationState>, private MainPartChatService: MainPartChatService) { 
     this.storeConnection = store.subscribe(state => {
-      console.log('PRIVATE MESSAGE COMPONENT STATE', state)
+      console.log('PRIVATE MESSAGE COMPONENT STATE', state);
+      this.author = state.uiState.user.firstname;
       //this.chatname = state.uiState.currentChat
     })
 

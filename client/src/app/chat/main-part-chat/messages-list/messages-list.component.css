@@ -13,11 +13,11 @@
     margin-bottom: 24px;
 }
 
-.user-message:nth-child(odd) {
+.user-message-author {
     align-self: flex-start;
 }
 
-.user-message:nth-child(even) {
+.user-message-friend {
     align-self: flex-end;
 }
 
@@ -45,12 +45,12 @@
     
 }
 
-.user-message:nth-child(even) .user-message__text {
+.user-message-friend .user-message__text {
     order: -1;
     background: lightgrey;
 }
 
-.user-message:nth-child(even) .avatar__img {
+.user-message-friend .avatar__img {
     margin-right: 0;
     margin-left: 24px;
 }
@@ -60,6 +60,6 @@
     text-align: right;
 }
 
-.user-message:nth-child(even) .user-message__publication-date {
+.user-message-friend .user-message__publication-date {
     text-align: left;
 }
