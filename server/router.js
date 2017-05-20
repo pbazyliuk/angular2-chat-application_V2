@@ -1,13 +1,21 @@
 const Authentication = require('./controllers/authentication');
+const Profile = require('./controllers/profile');
 const passportService = require('./services/passport');
 const passport = require('passport');
-const bcrypt = require('bcrypt-nodejs');
+// const bcrypt = require('bcrypt-nodejs');
 const User = require('./models/user');
 const Message = require('./models/message');
 const Chat = require('./models/chat');
 const mongoose = require('mongoose');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+const config = require('./config.js');
+// const jwt = require('jwt-simple');
+// function tokenForUser(user) {
+//   const timestamp = new Date().getTime();
+//   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+// }
+
 
 module.exports = function(app) {
 
@@ -22,56 +30,10 @@ module.exports = function(app) {
   app.post('/signup', Authentication.signup);
 
   //Get all registered users route
-  app.get('/api/users', function(req, res) {
-    const userModel = {
-      _id: null,
-      firstname: null,
-      lastname: null,
-      email: null,
-      isLogged: false
-    }
-
-    User.find({}, function(err, users) {
-      let userMap = {};
-      userMap.users = [];
-      users.forEach(function(user) {
-        let result = Object.keys(userModel).reduce(function(obj, key) {
-          obj[key] = user[key];
-          return obj;
-        }, {});
-         
-          userMap.users.push(result);
-      })
-      res.send(userMap);  
-      });
-  });
+  app.get('/api/users', Authentication.getAllUsers);
 
   //Update user profile route
-  app.put('/api/users/:id', function(req, res) {
-      return User.findOne({_id: req.body._id})
-      .then(user => {
-          User.findOne({email: req.body.email, _id: { $ne: req.body._id }}, function(err, user1) {
-            if (err) { return next(err); }
-            if(user1) {
-             return res.status(500).send({ message : 'Email in use' });
-            }
-            var isPasswordValid = bcrypt.compareSync(req.body.currentpassword, user.password);
-            if(isPasswordValid) {
-
-              var hash = bcrypt.hashSync(req.body.newpassword);
-              const obj = Object.assign(user, req.body);
-              obj.password = hash;
-              Authentication.updateProfile(obj, res);
-            }
-            else {
-              return res.status(500).send({ message : 'Bad password' });
-            }
-          })
-      })
-      .catch(err => {
-        res.status(500).json({ message : 'Error' });
-      });
-  })
+  app.put('/api/users/:id', Profile.updateProfile )
 
   //Get all saved chats route
   app.get('/api/chats', function(req, res) {

@@ -83,8 +83,33 @@ exports.signup = function(req, res, next) {
 
 exports.updateProfile = function(req, res, next) {
 
-  User.update({_id: req._id}, req, function(err, user) {
-    if (err) { return err; }
-    res.json({ token: tokenForUser(req), user: user});
-  })
+  // User.update({_id: req._id}, req, function(err, user) {
+  //   if (err) { return err; }
+  //   res.json({ token: tokenForUser(req), user: user});
+  // })
 }
+
+
+exports.getAllUsers = function(req, res, next) {
+    const userModel = {
+      _id: null,
+      firstname: null,
+      lastname: null,
+      email: null,
+      isLogged: false
+    }
+
+    User.find({}, function(err, users) {
+      let userMap = {};
+      userMap.users = [];
+      users.forEach(function(user) {
+        let result = Object.keys(userModel).reduce(function(obj, key) {
+          obj[key] = user[key];
+          return obj;
+        }, {});
+         
+          userMap.users.push(result);
+      })
+      res.send(userMap);  
+      });
+  }
