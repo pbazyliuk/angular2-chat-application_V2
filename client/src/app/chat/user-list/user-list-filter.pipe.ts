@@ -11,8 +11,7 @@ export class FilterUserByNamePipe implements PipeTransform {
       return users.filter(user => {
           return user.firstname.match(new RegExp(filterValue, 'i'));
       });
-    } 
-    else {
+    } else {
       return users;
     }
   }

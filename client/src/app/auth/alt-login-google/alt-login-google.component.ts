@@ -1,13 +1,13 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from "app/auth/shared";
-import { Store } from "@ngrx/store";
-import { ApplicationState } from "app/store/application-state";
-import { RegisterSuccessActions, LoginSuccessActions } from "app/store/actions";
+import { LoginService } from 'app/auth/shared';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
+import { RegisterSuccessActions, LoginSuccessActions } from 'app/store/actions';
 
-declare let gapi: any;
+declare const gapi: any;
 
-@Component({
+@Component ({
   selector: 'app-alt-login-google',
   templateUrl: './alt-login-google.component.html',
   styleUrls: ['./alt-login-google.component.css']
@@ -24,11 +24,9 @@ export class AltLoginGoogleComponent implements OnInit {
     private store: Store<ApplicationState>
   ) { }
 
-  ngOnInit() {}
-
   submitBy() {
      gapi.load('auth2', () => {
-      let auth2 = gapi.auth2.init({
+      const auth2 = gapi.auth2.init({
         client_id: '691780650143-enoue9ml105j5vq536t8tp0og195sas5.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin'
       });
@@ -41,11 +39,11 @@ export class AltLoginGoogleComponent implements OnInit {
   }
 
   onFailure() {
-    alert('Something goes wrong with Social Authorization')
+    alert('Something goes wrong with Social Authorization');
   }
 
   onSuccess(user): void {
-    this.zone.run(() => {
+    this.zone.run (() => {
       this.profile = user.getBasicProfile();
       this.userData = {
         firstname: this.profile.ofa,
@@ -55,39 +53,41 @@ export class AltLoginGoogleComponent implements OnInit {
       };
 
       this.loginservice.register (this.userData)
-      .subscribe (userInfo => {
+      .subscribe(userInfo => {
         this.store.dispatch (
         new RegisterSuccessActions(userInfo)
-      )
-      
-      this.router.navigate(['chat']);}, 
-      this.onRegisterError.bind(this));
+      );
+
+      this.router.navigate(['chat']);
+    },
+    this.onRegisterError.bind(this));
     });
   }
-  onRegisterError (err) {
-    if(err.status == 422) {
+  onRegisterError(err) {
+    if (err.status === 422) {
       const loginData = {
         email: this.userData.email,
         password: this.userData.password
-      }
+      };
 
-    console.log(loginData);
     this.loginservice
       .login(loginData)
-        .subscribe(
-            userInfo => {
-              this.store.dispatch(
+        .subscribe (
+          userInfo => {
+            this.store.dispatch (
               new LoginSuccessActions(userInfo)
-            )
-            this.router.navigate(['chat']);
+          );
+          this.router.navigate(['chat']);
           },
           this.onLoginError
-        )
-  }
+        );
+    }
 }
 
-  onLoginError (err){
+  onLoginError(err) {
     console.error(err);
-    alert('User not found')
+    alert('User not found');
   }
+
+  ngOnInit () {}
 }

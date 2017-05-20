@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Login } from './login.model';
-import { Subscription } from "rxjs";
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoginService } from '../shared/login.service'
-import { Store } from "@ngrx/store";
-import { ApplicationState } from "app/store/application-state";
-import { LoginSuccessActions } from "app/store/actions";
+import { LoginService } from '../shared/login.service';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
+import { LoginSuccessActions } from 'app/store/actions';
 
 @Component({
   selector: 'app-login',
@@ -13,28 +13,28 @@ import { LoginSuccessActions } from "app/store/actions";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  
+
   private user: Login = {
     email: '',
     password: ''
   };
 
   private storeConnection;
-  
+
   constructor (
-    private LoginService: LoginService, 
-    private router: Router, 
+    private LoginService: LoginService,
+    private router: Router,
     private zone: NgZone,
     private store: Store<ApplicationState>
   ) {
       this.storeConnection = store.subscribe (
         (state) => {
-          console.log ("LoginComponent section received state", state);
+          console.log ('LoginComponent section received state', state);
         }
-      )
+      );
   }
 
-  signInSubmit (form: any) {     
+  signInSubmit (form: any) {
     this.user = {
       email: form.email,
       password: form.password,
@@ -48,14 +48,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           (userInfo) => {
             this.store.dispatch(
             new LoginSuccessActions(userInfo)
-          )
+          );
           this.router.navigate(['chat']);
         },
         this.onLoginError
-      )
+      );
    }
 
-  onLoginError (err){
+  onLoginError (err) {
     console.error(err);
     alert('User not found');
   }

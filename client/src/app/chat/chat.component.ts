@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from "@ngrx/store";
-import { WsService } from "app/ws.service";
-import { ApplicationState } from "app/store/application-state";
-import { MessageAddSuccessActions, GetAllMessagesSuccessActions } from "app/store/actions";
-import { MessageInputService } from "app/chat/main-part-chat/message-input/message-input.service";
-import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { WsService } from 'app/ws.service';
+import { ApplicationState } from 'app/store/application-state';
+import { MessageAddSuccessActions, GetAllMessagesSuccessActions } from 'app/store/actions';
+import { MessageInputService } from 'app/chat/main-part-chat/message-input/message-input.service';
+import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.service';
 
 @Component({
   selector: 'ct-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+
+export class ChatComponent implements OnInit, OnDestroy {
 
   public message;
   private connection;
@@ -22,51 +23,32 @@ export class ChatComponent implements OnInit {
   private MessageInputService: MessageInputService,
   private MainPartChatService: MainPartChatService) {}
 
-  onNotifyChatListFold(message:boolean):void {
+  onNotifyChatListFold(message: boolean): void {
     this.isChatListFolded = message;
   }
 
-  onNotifyChatMenuShow(message:boolean):void {
+  onNotifyChatMenuShow(message: boolean): void {
     this.isChatMenuShown = message;
   }
 
-  // onNotify(message:object):void {
-  //   this.message = message;
-  //   console.log('MESSAGE IN CHAT COMP', this.message)
-  // }
-
   ngOnInit() {
-    console.error('NGONINT CHAT MODULE')
+    console.error('NGONINT CHAT MODULE');
     this.MainPartChatService.getData().subscribe(data => {
       console.log('MESSAGE on CHAT COMP', data);
         this.message = data;
-      })
-      if(this.connection) {
+      });
+      if (this.connection) {
         this.connection = this.MainPartChatService.getConnection();
-      }
-      else {
-         this.connection = this.ws.initWs()
+      } else {
+        this.connection = this.ws.initWs()
         .subscribe(message => {
-          console.log('999', message);
-          this.store.dispatch(new MessageAddSuccessActions(message))
+          this.store.dispatch(new MessageAddSuccessActions(message));
         })
-      }
-   
+      };
+      this.MainPartChatService.updateConnection(this.connection);
+    }
 
-         this.MainPartChatService.updateConnection(this.connection)
-        // this.MessageInputService.getAllMessages()
-        //   .subscribe(messages => {
-        //         console.error(messages);
-        //         this.store.dispatch(new GetAllMessagesSuccessActions(messages))
-        //     })
-     //this.connection = this.ws.initWs()
-  //  this.ws.initWs()
-  //   .subscribe(val => {
-  //     console.log(val)
-  //   })
-}
-ngOnDestroy() {
-  this.connection.unsubscribe()
-}
-
+  ngOnDestroy() {
+    this.connection.unsubscribe();
+  }
 }

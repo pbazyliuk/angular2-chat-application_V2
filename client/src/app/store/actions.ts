@@ -59,7 +59,6 @@ export const GET_ALL_MESSAGES_SUCCESS_ACTION = 'GET_ALL_MESSAGES_SUCCESS_ACTION'
 
 export class GetAllMessagesSuccessActions implements Action {
   type = GET_ALL_MESSAGES_SUCCESS_ACTION;
-  
   constructor(public payload) {
     console.log(payload);
   }

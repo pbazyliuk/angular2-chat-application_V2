@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class UserListComponent implements OnInit, OnDestroy {
 
-  private searchValue: string = '';
+  private searchValue = '';
   private subscriptions: Subscription[] = [];
 
   private usersOn$: Observable<User[]>;
@@ -27,23 +27,23 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private userlistservice: UserListService, private store: Store<ApplicationState>,
   private MainPartChatService: MainPartChatService) {
      this.usersOn$ = store
-        .map(mapStatetoUsers)
-  }
-        
+        .map(mapStatetoUsers);
+  };
+
   ngOnInit() {
     this.userlistservice.getAllUsers()
       .subscribe(
         allUserData => this.store.dispatch(
           new LoadChatListActions(allUserData)
-        ))
-        this.subscriptions.push(this.MainPartChatService
-          .getSearchValue()
-          .subscribe(value => {
-            this.searchValue = value;
-            console.log('SEARCH', this.searchValue);
-            return this.searchValue;
-          })
-        )
+        ));
+    this.subscriptions.push(this.MainPartChatService
+      .getSearchValue()
+      .subscribe(value => {
+        this.searchValue = value;
+        console.log('SEARCH', this.searchValue);
+        return this.searchValue;
+      })
+    );
   }
 
   ngOnDestroy(): void {

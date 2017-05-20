@@ -26,22 +26,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (state.uiState.user) {
           this.email = state.uiState.user.email;
           this.authenticated = state.uiState.authenticated;
-        }
-        else {
-          this.authenticated = false;
-          return;
-        }
+        } else {
+            this.authenticated = false;
+            return;
+          }
       }
     );
   }
 
-  ngOnInit() {}
-
-  ngOnDestroy() {}
-  
   logoutAction() {
     this.loginService.logout();
     this.store.dispatch(
       new LogoutSuccessActions());
   }
+
+  ngOnInit() {}
+
+  ngOnDestroy() {}
 }

@@ -11,9 +11,8 @@ export class FilterChatByNamePipe implements PipeTransform {
         return chats.filter(chat => {
           return chat.name.match(new RegExp(filterValue, 'i'));
         });
-    } 
-    else {
-      return chats;
-    }
+    } else {
+        return chats;
+      }
   }
 }
