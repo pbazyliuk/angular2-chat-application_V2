@@ -1,5 +1,7 @@
 const Authentication = require('./controllers/authentication');
 const Profile = require('./controllers/profile');
+const Chats = require('./controllers/chats');
+
 const passportService = require('./services/passport');
 const passport = require('passport');
 // const bcrypt = require('bcrypt-nodejs');
@@ -35,57 +37,11 @@ module.exports = function(app) {
   //Update user profile route
   app.put('/api/users/:id', Profile.updateProfile )
 
-  //Get all saved chats route
-  app.get('/api/chats', function(req, res) {
-    Chat.find({}, function(err, chats) {
-      if(err) return err;
-      console.log(chats)
-      res.send(chats);
-    })
-  })
+  //Get all private chats route
+  app.get('/api/chats', Chats.getAllChats)
 
   //Create private chat route
-  app.post('/api/chats', function(req, res) {
-    var usersNames = [];
-    var usersIds = [];
-
-    Chat.find({name: req.body.chatName})
-      .then((chat) => {
-        if(chat.length) {
-          res.send({message: 'this chat name is already been taken'})
-        }
-        else {
-          req.body.users.forEach((user) => {
-            for(var key in user) {
-              if(key === '_id') {
-                usersIds.push(user[key]);
-              }
-              if(key === 'firstname') {
-                usersNames.push(user[key]);
-              }
-            }
-          })
-          Chat.find({usersNames: usersNames}, function(err, chats) {
-            if(err) return err;
-            if(!chats.length) {
-              var chatObj = {
-                name: req.body.chatName,
-                messageIds: [],
-                usersIds: usersIds,
-                usersNames: usersNames
-              }
-              Chat.create(chatObj, function(err, chat) {
-                if (err) return err;
-                res.send(chat);
-              })
-            }
-            else {
-                res.send({message: 'these users have been already connected to private chat'})
-            }
-            })
-          }
-      })
-  })
+  app.post('/api/chats', Chats.createChat)
 
   //Save message to private chat route
   app.post('/api/chats/:id', function(req, res) {
