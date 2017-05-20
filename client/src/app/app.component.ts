@@ -11,7 +11,7 @@ import { WsService } from 'app/ws.service';
 
 export class AppComponent implements OnInit {
   title = 'app works!';
-  private authenticated;
+  public authenticated;
 
   constructor(
     private store: Store<ApplicationState>,

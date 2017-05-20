@@ -13,8 +13,8 @@ export class ChatNavbarComponent implements OnInit {
 
   public isChatListFolded: boolean;
   public isChatMenuShown: boolean;
-  private searchValue = '';
-  somevar;
+  public searchValue = '';
+  public somevar;
 
   constructor(private MainPartChatService: MainPartChatService) {}
 

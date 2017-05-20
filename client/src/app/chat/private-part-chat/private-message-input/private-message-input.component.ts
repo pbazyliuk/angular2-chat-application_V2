@@ -15,11 +15,11 @@ import { GetAllPrivateMessagesSuccessActions } from 'app/store/actions';
 })
 export class PrivateMessageInputComponent implements OnInit, OnDestroy {
 
-  private storeConnection;
-  private messageText;
-  private privateMessage: Message;
-  private author;
-  private authorId;
+  public storeConnection;
+  public messageText;
+  public privateMessage: Message;
+  public author;
+  public authorId;
 
   @Input() chatname: string;
 

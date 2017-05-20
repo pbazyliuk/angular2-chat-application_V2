@@ -15,14 +15,14 @@ import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.serv
 })
 
 export class ChatMenuComponent implements OnInit {
-  private users$: Observable<User[]>;
-  private currentUser;
-  private chat = {
+  public users$: Observable<User[]>;
+  public currentUser;
+  public chat = {
     name: '',
     users: ''
   };
 
-  somevar;
+  public somevar;
 
   constructor(private store: Store<ApplicationState>, private ChatMenuService: ChatMenuService, private MainPartChatService: MainPartChatService
   ) {
@@ -60,7 +60,7 @@ export class ChatMenuComponent implements OnInit {
 
     this.MainPartChatService.updateIsMenuShown(false);
   }
-  
+
   ngOnInit() {
     if(this.somevar) this.somevar.unsubscribe();
   }

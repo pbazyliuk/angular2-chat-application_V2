@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginService {
-  private _authenticated = false;
-  private _state: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public _authenticated = false;
+  public _state: BehaviorSubject<any> = new BehaviorSubject<any>({});
   constructor(
     private http: Http,
     private router: Router

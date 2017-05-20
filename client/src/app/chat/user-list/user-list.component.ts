@@ -19,13 +19,16 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class UserListComponent implements OnInit, OnDestroy {
 
-  private searchValue = '';
-  private subscriptions: Subscription[] = [];
+  public searchValue = '';
+  public subscriptions: Subscription[] = [];
 
-  private usersOn$: Observable<User[]>;
+  public usersOn$: Observable<User[]>;
 
-  constructor(private userlistservice: UserListService, private store: Store<ApplicationState>,
-  private MainPartChatService: MainPartChatService) {
+  constructor(
+    private userlistservice: UserListService,
+    private store: Store<ApplicationState>,
+    private MainPartChatService: MainPartChatService
+  ) {
      this.usersOn$ = store
         .map(mapStatetoUsers);
   };

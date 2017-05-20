@@ -12,11 +12,11 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 })
 
 export class MessagesListComponent implements OnInit, OnDestroy {
-  private messages$: Observable<object>;
-  private author;
+  public messages$: Observable<object>;
+  public author;
 
-  private searchMessage = '';
-  private subscriptions: Subscription[] = [];
+  public searchMessage = '';
+  public subscriptions: Subscription[] = [];
 
   constructor(
     private store: Store<ApplicationState>,

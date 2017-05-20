@@ -16,10 +16,10 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
   styleUrls: ['./chat-list.component.css']
 })
 export class ChatListComponent implements OnInit, OnDestroy {
-  private searchValue = '';
-  private subscriptions: Subscription[] = [];
+  public searchValue = '';
+  public subscriptions: Subscription[] = [];
 
-  private chatsOn$: Observable<Chat[]>;
+  public chatsOn$: Observable<Chat[]>;
 
   constructor(
     private ChatListService: ChatListService,

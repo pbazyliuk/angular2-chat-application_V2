@@ -13,13 +13,13 @@ import { Subscription } from 'rxjs/Subscription';
 export class PrivateMessageListComponent implements OnInit, OnDestroy {
   @Input() chatname: string;
 
-  private author;
-  private privateMessages$;
-  private storeConnection;
+  public author;
+  public privateMessages$;
+  public storeConnection;
 
-  private searchPrivateMessage = '';
+  public searchPrivateMessage = '';
 
-  private subscriptions: Subscription[] = [];
+  public subscriptions: Subscription[] = [];
 
   constructor(
      private store: Store<ApplicationState>,

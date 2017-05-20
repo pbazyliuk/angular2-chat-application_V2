@@ -23,11 +23,11 @@ function dateCompare(c: AbstractControl): {[key: string]: boolean} | null {
 })
 
 export class ProfileComponent implements OnInit {
-  private profileForm: FormGroup;
-  private userInfo$: Observable<object>;
-  private userInfoCurrent;
-  private userInfoNew;
-  private storeConnection;
+  public profileForm: FormGroup;
+  public userInfo$: Observable<object>;
+  public userInfoCurrent;
+  public userInfoNew;
+  public storeConnection;
 
   constructor(
     private store: Store<ApplicationState>,

@@ -15,8 +15,8 @@ import { WsService } from 'app/ws.service';
 
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  private email = '';
-  private authenticated = false;
+  public email = '';
+  public authenticated = false;
 
   constructor( private loginService: LoginService, private router: Router, private store: Store<ApplicationState>,
   private ws: WsService ) {

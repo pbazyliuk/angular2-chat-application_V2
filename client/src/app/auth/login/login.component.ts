@@ -14,12 +14,12 @@ import { LoginSuccessActions } from 'app/store/actions';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  private user: Login = {
+  public user: Login = {
     email: '',
     password: ''
   };
 
-  private storeConnection;
+  public storeConnection;
 
   constructor (
     private LoginService: LoginService,

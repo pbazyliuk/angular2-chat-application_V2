@@ -14,8 +14,8 @@ declare const gapi: any;
 })
 export class AltLoginGoogleComponent implements OnInit {
 
-  private profile;
-  private userData;
+  public profile;
+  public userData;
 
   constructor (
     private zone: NgZone,

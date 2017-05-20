@@ -9,8 +9,8 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 
 export class PrivateMessageNavbarComponent implements OnInit {
 
-  private searchPrivateMessage = '';
-  
+  public searchPrivateMessage = '';
+
   constructor(private MainPartChatService: MainPartChatService) { }
 
   onBlur(): void {

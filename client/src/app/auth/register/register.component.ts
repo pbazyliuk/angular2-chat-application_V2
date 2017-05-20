@@ -28,7 +28,7 @@ function dateCompare(c: AbstractControl):
 
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  private signUpForm: FormGroup;
+  public signUpForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,

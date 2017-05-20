@@ -9,7 +9,7 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 
 export class MessagesNavbarComponent implements OnInit {
 
-  private searchMessage: string = '';
+  public searchMessage: string = '';
 
   constructor(private MainPartChatService: MainPartChatService) {}
 

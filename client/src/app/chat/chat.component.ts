@@ -15,7 +15,7 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 export class ChatComponent implements OnInit, OnDestroy {
 
   public message;
-  private connection;
+  public connection;
   public isChatListFolded: boolean;
   public isChatMenuShown: boolean;
 

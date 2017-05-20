@@ -7,7 +7,7 @@ import { ApplicationState } from 'app/store/application-state';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  private authenticated: boolean;
+  public authenticated: boolean;
 
   constructor(private  loginService: LoginService,
     private router: Router, private store: Store<ApplicationState>) {

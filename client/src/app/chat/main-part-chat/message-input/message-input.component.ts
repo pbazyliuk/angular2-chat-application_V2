@@ -15,11 +15,11 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 })
 
 export class MessageInputComponent implements OnInit, OnDestroy {
-  private storeConnection;
-  private messageText: string;
-  message: Message;
-  author: string;
-  authorId;
+  public storeConnection;
+  public messageText: string;
+  public message: Message;
+  public author: string;
+  public authorId;
 
   @Output() notify: EventEmitter<object> = new EventEmitter<object>();
 

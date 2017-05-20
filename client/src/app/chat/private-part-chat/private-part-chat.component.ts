@@ -14,10 +14,10 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 
 export class PrivatePartChatComponent implements OnInit, OnDestroy {
 
-  private chatname;
-  private connectionRoom;
-  private connection;
-  private storeConnection;
+  public chatname;
+  public connectionRoom;
+  public connection;
+  public storeConnection;
 
   constructor(
     private route: ActivatedRoute,
