@@ -6,6 +6,7 @@ import { User } from 'app/core/models/user';
 import { ChatMenuService } from 'app/chat/chat-menu/chat-menu.service';
 import { LoadChatsListActions } from 'app/store/actions';
 import * as _ from 'lodash';
+import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
 
 @Component({
   selector: 'ct-chat-menu',
@@ -21,7 +22,9 @@ export class ChatMenuComponent implements OnInit {
     users: ''
   };
 
-  constructor(private store: Store<ApplicationState>, private ChatMenuService: ChatMenuService,
+  somevar;
+
+  constructor(private store: Store<ApplicationState>, private ChatMenuService: ChatMenuService, private MainPartChatService: MainPartChatService
   ) {
     store.subscribe(state => {
       return this.currentUser = state.uiState.user;
@@ -54,6 +57,11 @@ export class ChatMenuComponent implements OnInit {
     this.ChatMenuService.sendChatData(data);
     this.chat.name = '';
     this.chat.users = '';
- }
-  ngOnInit() {}
+
+    this.MainPartChatService.updateIsMenuShown(false);
+  }
+  
+  ngOnInit() {
+    if(this.somevar) this.somevar.unsubscribe();
+  }
 }

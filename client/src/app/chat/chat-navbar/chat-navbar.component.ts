@@ -14,6 +14,7 @@ export class ChatNavbarComponent implements OnInit {
   public isChatListFolded: boolean;
   public isChatMenuShown: boolean;
   private searchValue = '';
+  somevar;
 
   constructor(private MainPartChatService: MainPartChatService) {}
 
@@ -36,5 +37,10 @@ export class ChatNavbarComponent implements OnInit {
     this.notifyChatMenuShow.emit(this.isChatMenuShown);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.somevar = this.MainPartChatService.getIsMenuShown().subscribe(val => {
+        if (val === false)  this.showChatMenu();
+        console.log(val);
+    })
+  }
 }

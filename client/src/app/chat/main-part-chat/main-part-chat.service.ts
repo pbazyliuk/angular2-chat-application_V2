@@ -14,7 +14,9 @@ export class MainPartChatService {
 
     private search$: BehaviorSubject<string> = new BehaviorSubject('');
 
-   private searchMessage$: BehaviorSubject<string> = new BehaviorSubject('');
+    private searchMessage$: BehaviorSubject<string> = new BehaviorSubject('');
+
+    private isMenuShown$ =  new Subject();
 
     getData() {
         return this.messageObj$;
@@ -56,5 +58,14 @@ export class MainPartChatService {
 
   getSearchMessage(): BehaviorSubject<string> {
     return this.searchMessage$;
+  }
+
+  getIsMenuShown() {
+    return this.isMenuShown$;
+  }
+
+  updateIsMenuShown(data) {
+    console.log('isChatMenuShown', data);
+    this.isMenuShown$.next(data);
   }
 }
