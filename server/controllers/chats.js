@@ -49,3 +49,20 @@ exports.createChat = function(req, res) {
           }
       })
   }
+
+  exports.createPrivateMessage = function(req, res) {
+    var messagesObj = {};
+    messagesObj.messageIds = [];
+    messagesObj.messageIds.push(req.body)
+    Chat.findOneAndUpdate({name: req.params.id},  {$push: {messageIds: req.body}}, function(err, chat) {
+      if(err) return err;
+      res.send({message: `message added to chat: ${req.params.id}`});
+    })
+  }
+
+   exports.getPrivateMessages = function(req, res) {
+    Chat.findOne({name: req.params.id}, function(err, chat) {
+      if(err) return err;
+      res.send(chat);
+    })
+  }

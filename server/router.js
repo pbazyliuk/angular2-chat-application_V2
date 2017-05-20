@@ -1,17 +1,18 @@
 const Authentication = require('./controllers/authentication');
 const Profile = require('./controllers/profile');
 const Chats = require('./controllers/chats');
+const Messages = require('./controllers/messages');
 
 const passportService = require('./services/passport');
 const passport = require('passport');
 // const bcrypt = require('bcrypt-nodejs');
-const User = require('./models/user');
-const Message = require('./models/message');
-const Chat = require('./models/chat');
-const mongoose = require('mongoose');
+// const User = require('./models/user');
+// const Message = require('./models/message');
+// const Chat = require('./models/chat');
+// const mongoose = require('mongoose');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-const config = require('./config.js');
+// const config = require('./config.js');
 // const jwt = require('jwt-simple');
 // function tokenForUser(user) {
 //   const timestamp = new Date().getTime();
@@ -35,47 +36,24 @@ module.exports = function(app) {
   app.get('/api/users', Authentication.getAllUsers);
 
   //Update user profile route
-  app.put('/api/users/:id', Profile.updateProfile )
+  app.put('/api/users/:id', Profile.updateProfile);
 
   //Get all private chats route
-  app.get('/api/chats', Chats.getAllChats)
+  app.get('/api/chats', Chats.getAllChats);
 
   //Create private chat route
-  app.post('/api/chats', Chats.createChat)
+  app.post('/api/chats', Chats.createChat);
 
   //Save message to private chat route
-  app.post('/api/chats/:id', function(req, res) {
-    var messagesObj = {};
-    messagesObj.messageIds = [];
-    messagesObj.messageIds.push(req.body)
-    Chat.findOneAndUpdate({name: req.params.id},  {$push: {messageIds: req.body}}, function(err, chat) {
-      if(err) return err;
-      res.send({message: `message added to chat: ${req.params.id}`});
-    })
-  })
+  app.post('/api/chats/:id', Chats.createPrivateMessage);
 
   //Get all messages from private chat route
-  app.get('/api/chats/:id', function(req, res) {
-    Chat.findOne({name: req.params.id}, function(err, chat) {
-      if(err) return err;
-      res.send(chat);
-    })
-  })
+  app.get('/api/chats/:id', Chats.getPrivateMessages);
 
   //Create message in main chat route
-  app.post('/api/messages', function(req, res) {
-    Message.create(req.body, function(err, message) {
-      if (err) return err;
-      res.send(message);
-    })
-  })
+  app.post('/api/messages', Messages.createMessage);
 
   //Get all messages from main chat route
-  app.get('/api/messages', function(req, res) {
-    Message.find({}, function(err, messages) {
-      if (err) return err;
-      res.send(messages);
-    })
-  })
+  app.get('/api/messages', Messages.getAllMessages);
 }   
 
