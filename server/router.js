@@ -5,19 +5,9 @@ const Messages = require('./controllers/messages');
 
 const passportService = require('./services/passport');
 const passport = require('passport');
-// const bcrypt = require('bcrypt-nodejs');
-// const User = require('./models/user');
-// const Message = require('./models/message');
-// const Chat = require('./models/chat');
-// const mongoose = require('mongoose');
+
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-// const config = require('./config.js');
-// const jwt = require('jwt-simple');
-// function tokenForUser(user) {
-//   const timestamp = new Date().getTime();
-//   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
-// }
 
 
 module.exports = function(app) {

@@ -1,31 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { API_CONFIG } from '../../app.constants';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginService {
-  public _authenticated = false;
-  public _state: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
   constructor(
     private http: Http,
     private router: Router
   ) {}
-  setUserState(state: any): void {
-    this._authenticated = true;
-    localStorage.setItem('token', state.token);
-    this._state.next(state);
-  }
-
-  getUserState(): BehaviorSubject<any> {
-    return this._state;
-  }
-
-  get authenticated(): boolean {
-    return this._authenticated;
-  }
-
+  
   login(user: any): Observable<any> {
     return this.http.post('http://localhost:8090/signin', user).map(res => res.json());
   }

@@ -8,20 +8,5 @@ import { Router } from '@angular/router';
         get isLoggedIn() {
             return localStorage.getItem('token') == null ? false : true;
         };
-
-        // login(user) {
-        //     if(user) {
-        //         localStorage.setItem('token', 'youlogged');
-        //          this.router.navigate(['chat/']);
-        //     }
-        // };
-
-        // register() {
-
-        // };
-
-        // logout() {
-        //     localStorage.removeItem('token');
-        // }
-    }
+}
 

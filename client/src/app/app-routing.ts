@@ -29,7 +29,6 @@ const appRoutes: Routes = [
   {
     path: 'auth',
     loadChildren: 'app/auth/auth.module#AuthModule',
-    // canActivate: [ChatGuard]
   },
   {
     path: '**',

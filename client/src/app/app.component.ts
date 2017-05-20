@@ -10,7 +10,6 @@ import { WsService } from 'app/ws.service';
 })
 
 export class AppComponent implements OnInit {
-  title = 'app works!';
   public authenticated;
 
   constructor(
