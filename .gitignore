@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/config.js
 /tmp
 /out-tsc
 
