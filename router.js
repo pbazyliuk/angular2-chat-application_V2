@@ -13,6 +13,7 @@ const path = require('path');
 
 module.exports = function(app) {
 
+  //Start route
   app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
@@ -47,5 +48,9 @@ module.exports = function(app) {
   //Get all messages from main chat route
   app.get('/api/messages', Messages.getAllMessages);
 
+  //Redirect for bad route
+  app.get('/*', (req, res) => {
+    res.redirect('/home');
+  });
 }   
 
