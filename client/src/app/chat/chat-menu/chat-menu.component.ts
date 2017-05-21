@@ -54,7 +54,8 @@ export class ChatMenuComponent implements OnInit {
     console.log('data.users', data.users);
     data.users.sort(function(a, b) {
       const re = /\D/g;
-      return (parseInt(a.firstname.replace(re, ''), 10) - parseInt(b.firstname.replace(re, ''), 10));});
+      return (parseInt(a.firstname.replace(re, ''), 10) - parseInt(b.firstname.replace(re, ''), 10)); 
+    });
     this.ChatMenuService.sendChatData(data);
     this.chat.name = '';
     this.chat.users = '';

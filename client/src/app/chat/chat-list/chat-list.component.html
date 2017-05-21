@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-<ct-thread-section></ct-thread-section>
-<p>
-  chat-list works!
-=======
-<!--<p *ngFor='let user of chatsOn$ | async'>
-  users-list works!
->>>>>>> development
-</p>
-
-<div>{{chatsOn$}}</div>-->
 
 <ul class="chat-list">
   <li class="chat-list__item" *ngFor='let chat of chatsOn$ | async | filterChatByName: searchValue; let i = index' 

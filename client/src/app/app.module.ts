@@ -13,27 +13,6 @@ import { AppRoutingModule } from './app-routing';
 import { AuthGuard } from './auth/';
 import { ChatGuard } from './chat/';
 import { AuthService } from './core/';
-<<<<<<< HEAD
-import { ThreadsService } from './core/';
-
-import { StoreModule } from '@ngrx/store';
-import { INITIAL_APPLICATION_STATE, ApplicationState } from "app/store/application-state";
-import { Action } from "@ngrx/store";
-import { LOAD_USER_THREADS_ACTION, LoadUserThreadsAction } from "app/store/actions";
-
-import * as _ from 'lodash';
-// import { ChatListComponent } from './chat/chat-list/chat-list.component';
-// import { ChatDetailsComponent } from './chat/chat-details/chat-details.component';
-
-function storeReducer(state: ApplicationState = INITIAL_APPLICATION_STATE, action: Action): ApplicationState {
-  switch(action.type) {
-    case LOAD_USER_THREADS_ACTION:
-      return handleLoadUserThreadsAction(state, action);
-    default: 
-      return state;
-  }
-}
-=======
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
@@ -48,21 +27,7 @@ import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.serv
 import { UserListService } from './chat/user-list/user-list.service';
 import { PrivateMessageInputService } from 'app/chat/private-part-chat/private-message-input/private-message-input.service';
 import storeReducer from 'app/store/storeReducer';
->>>>>>> development
 
-function handleLoadUserThreadsAction(state: ApplicationState, action: LoadUserThreadsAction): ApplicationState {
-  const userData = action.payload;
-
-  const newState: ApplicationState = Object.assign({}, state);
-
-  newState.storeData = {
-    participants: _.keyBy(action.payload.participants, 'id'),
-    threads: _.keyBy(action.payload.threads, 'id'),
-    messages: _.keyBy(action.payload.messages, 'id')
-  }
-
-  return newState;
-}
 
 @NgModule({
   declarations: [
@@ -80,11 +45,6 @@ function handleLoadUserThreadsAction(state: ApplicationState, action: LoadUserTh
     AppRoutingModule,
     CoreModule,
     ChatModule,
-<<<<<<< HEAD
-      StoreModule.provideStore(storeReducer)
-  ],
-  providers: [LoginService, AuthGuard, ChatGuard, AuthService, ThreadsService],
-=======
       StoreModule.provideStore(storeReducer, INITIAL_APPLICATION_STATE)
   ],
   providers: [
@@ -101,7 +61,6 @@ function handleLoadUserThreadsAction(state: ApplicationState, action: LoadUserTh
     MainPartChatService,
     PrivateMessageInputService
   ],
->>>>>>> development
   bootstrap: [AppComponent]
 })
 export class AppModule { }
