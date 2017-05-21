@@ -1,13 +1,16 @@
 
   <div class="wrapper">
-    <aside class="aside-part">
-        <ct-chat-navbar></ct-chat-navbar>
+    <aside class="aside-part" [class.collapseWidth]="isChatListFolded">
+        <ct-chat-navbar (notifyChatListFold)='onNotifyChatListFold($event)' (notifyChatMenuShow)='onNotifyChatMenuShow($event)'></ct-chat-navbar>
+        <ct-chat-menu
+            *ngIf="isChatMenuShown"
+        ></ct-chat-menu>
         <ct-chat-list></ct-chat-list>
+        <!--<ct-users-list></ct-users-list>-->
+        <!--<ct-chat-list></ct-chat-list>-->
+        <ct-user-list></ct-user-list>
     </aside>
-    <div class="main-part">
-        <ct-messages-navbar></ct-messages-navbar>
-        <!--<ct-chat-details></ct-chat-details>-->
-        <ct-messages-list></ct-messages-list>
-        <ct-message-input></ct-message-input>
+    <div class="main-part" [class.expandWidth]="isChatListFolded">
+    <router-outlet></router-outlet>
     </div>
 </div>

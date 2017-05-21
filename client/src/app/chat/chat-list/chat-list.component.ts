@@ -1,65 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-
-import { ChatListService } from "./chat-list.service";
-import { Store } from "@ngrx/store";
-import { ApplicationState } from "app/store/application-state";
-import { LoadChatListActions } from "app/store/actions";
-import { Observable } from "rxjs/Observable";
-import { User } from "app/core/models/user";
-import { mapStatetoUsers } from "app/chat/chat-list/mapStateToUsers";
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ChatListService } from 'app/chat/chat-list/chat-list.service';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
+import { LoadChatsListActions } from 'app/store/actions';
+import { Observable } from 'rxjs/Observable';
+import { Chat } from 'app/core/models/chat';
+import { Http } from '@angular/http';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.service';
 
 @Component({
   selector: 'ct-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnInit, OnDestroy {
+  public searchValue = '';
+  public subscriptions: Subscription[] = [];
 
- // private userName$: Observable<string>;
+  public chatsOn$: Observable<Chat[]>;
 
-  private users$: Observable<User[]>
+  constructor(
+    private ChatListService: ChatListService,
+    private store: Store<ApplicationState>,
+    private http: Http,
+    private MainPartChatService: MainPartChatService,
+    private router: Router
+  ) {
+    this.chatsOn$ = store
+      .map(this.mapStatetoChats);
+   };
 
-  constructor(private chatlistservice: ChatListService, private store: Store<ApplicationState>) {
-      // this.userName$ = store
-      //   .map(this.mapStatetoUserName)
-        
-     this.users$ = store
-        .map(mapStatetoUsers)
-   
-   
+  mapStatetoChats(state: ApplicationState) {
+    const allChats = state.storeData.chats;
+    const username = state.uiState.user.firstname;
+    return allChats.filter(chat => {
+      if (chat['usersNames'].includes(username)) {
+        console.log(chat['usersNames'].includes(username));
+        return true;
+      }
+      return false;
+     });
    }
 
-  //  mapStatetoUsers(state: ApplicationState): User[] {
-  //    return state.storeData.users;
-  //  }
-
-    // mapStatetoUserName(state: ApplicationState): string {
-    //   return state.uiState.user.firstname;
-    // }
-  
-      //.map(mapStateToUsers)
-        
-  ngOnInit() {
-    this.chatlistservice.getAllUsers()
-      .subscribe(
-        allUserData => this.store.dispatch(
-          new LoadChatListActions(allUserData)
-        )
-    )
-      // .getAllUsers()
-      // .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
-
+   select(chat) {
+    const obj = {selected: true};
+    const name = chat.name;
+    this.router.navigate(['chat', chat.name]);
   }
 
-  // onLoginError (err){
-  //   console.error(err);
-  //   alert('User not found')
-  // }
+  ngOnInit() {
+    this.ChatListService.getAllChats()
+     .subscribe(
+        allChats => {
+          this.store.dispatch(
+          new LoadChatsListActions(allChats)
+         );
+         console.log('ALL CHATS', allChats);
+        });
+  this.subscriptions.push(this.MainPartChatService
+    .getSearchValue()
+      .subscribe(value => {
+        this.searchValue = value;
+        console.log('SEARCH', this.searchValue);
+        return this.searchValue;
+      })
+    );
+  };
 
-  // onLoginSuccess (res: any): void {
-  //    console.log(res);
-  // }
-
-
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
+  }
 }

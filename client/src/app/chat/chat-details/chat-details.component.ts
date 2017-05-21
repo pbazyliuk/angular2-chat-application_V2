@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from "@ngrx/store";
-import { ApplicationState } from "app/store/application-state";
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
 
 @Component({
   selector: 'ct-chat-details',
@@ -11,11 +11,9 @@ export class ChatDetailsComponent implements OnInit {
 
   constructor(private store: Store<ApplicationState>) {
     store.subscribe(
-      state => console.log("message section received state", state)
-    )
+      state => console.log('message section received state', state)
+    );
    }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,11 +1,33 @@
-<div class="chat-navbar" >
-    <span class="chat-navbar__btn-left-arrow"></span>
-
+<div class="chat-navbar" 
+    [class.centered]="isChatListFolded"
+    >
+    <span class="chat-navbar__btn-left-arrow" 
+        (click)="foldChatList()"
+        [class.rotated]="isChatListFolded"
+        [class.disabled]="isChatMenuShown"
+        ></span>
+    
   
-        <form action="" class="search-form">
-             <input class="search-form__input" type="text" placeholder="Search" name="search-field">
+        <form action="" class="search-form" autocomplete="off"
+            *ngIf="!isChatListFolded"
+            >
+             <input class="search-form__input" type="text" placeholder="Search" name="search-field"
+                 [(ngModel)]="searchValue"
+                (blur)="onBlur()"
+                (ngModelChange)="onSearchValueChange($event)"
+             >
               <span class="search-form__btn-search"></span>
         </form>
 
-    <span class="chat-navbar__btn-bars"></span>
+    <span class="chat-navbar__btn-bars"
+            *ngIf="!isChatListFolded"
+            (click)='showChatMenu()'
+            [class.isVisible]="isChatMenuShown"
+        ></span>
+
+        <span class="chat-navbar__btn-close"
+           *ngIf="!isChatListFolded"
+           (click)='showChatMenu()'
+           [class.isVisible]="!isChatMenuShown"
+        ></span>
 </div>

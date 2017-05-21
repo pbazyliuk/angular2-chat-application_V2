@@ -1,8 +1,7 @@
-
 export interface User {
-    id: number;
-    firstname: string;
-    lastname: string;
-    email: string;
-    friendsIds?: number[];
-}
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  isLogged: boolean;
+};

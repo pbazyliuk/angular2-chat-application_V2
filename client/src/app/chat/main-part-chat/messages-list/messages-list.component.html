@@ -1,0 +1,24 @@
+<!--<h3>MESSAGES LIST</h3>-->
+
+<ul class="message-list">
+    <li 
+    [class.user-message-author]="message.userName === author"
+    [class.user-message-friend]="message.userName !== author"
+    *ngFor='let message of messages$ | async | filterMessageByText: searchMessage; let i = index'>
+        <div class="user-message-wrapper">
+      
+            <div class="avatar ">
+                <img class="avatar__img" src="http://placehold.it/60x60" alt="">
+            </div>
+            <div class="user-message__text">
+                {{message.userName}}>>{{message.text}}
+            </div>
+              
+        </div>
+
+        <div class="user-message__publication-date">
+           2h
+        </div>
+    </li>
+</ul>
+

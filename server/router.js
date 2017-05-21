@@ -1,75 +1,55 @@
 const Authentication = require('./controllers/authentication');
+const Profile = require('./controllers/profile');
+const Chats = require('./controllers/chats');
+const Messages = require('./controllers/messages');
+
 const passportService = require('./services/passport');
 const passport = require('passport');
-const bcrypt = require('bcrypt-nodejs');
-const User = require('./models/user');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
+const path = require('path');
+
 module.exports = function(app) {
-  app.get('/', requireAuth, function(req, res) {
-    res.send({ message: 'Super secret code is ABC123' });
+
+  // app.get('*', requireAuth, function(req, res) {
+  //   res.send({ message: 'Super secret code is ABC123' });
+  // });
+
+  app.get('/home', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
+
+  //Signin route
   app.post('/signin', requireSignin, Authentication.signin);
+
+  //Signup route
   app.post('/signup', Authentication.signup);
 
-  app.get('/api/users', function(req, res) {
-    const userModel = {
-      _id: null,
-      firstname: null,
-      lastname: null,
-      email: null
-    }
-    User.find({}, function(err, users) {
-      let userMap = {};
-      userMap.users = [];
-      users.forEach(function(user) {
-        let result = Object.keys(userModel).reduce(function(obj, key) {
-          obj[key] = user[key];
-          return obj;
-        }, {});
-        // console.log(result);
-          
-          userMap.users.push(result);
-      })
-      res.send(userMap);  
-    });
-  });
+  //Get all registered users route
+  app.get('/api/users', Authentication.getAllUsers);
 
-  app.put('/api/users/:id', function(req, res) {
-    // console.log('req.body', req.body);
-      return User.findOne({_id: req.body._id})
-      .then(user => {
-          User.findOne({email: req.body.email, _id: { $ne: req.body._id }}, function(err, user1) {
-            if (err) { return next(err); }
-            if(user1) {
-             return res.status(500).send({ message : 'Email in use' });
-            }
-            // console.log('User', user)
-            // console.log('User1', user1)
-            var isPasswordValid = bcrypt.compareSync(req.body.currentpassword, user.password);
-            console.log('isPasswordValid', isPasswordValid)
-            if(isPasswordValid) {
+  //Update user profile route
+  app.put('/api/users/:id', Profile.updateProfile);
 
-              var hash = bcrypt.hashSync(req.body.newpassword);
-              const obj = Object.assign(user, req.body);
-              // console.log('HASH', hash)
-              // console.log('Object', obj)
-              obj.password = hash;
-              // console.log('Object NEW', obj)
-              Authentication.updateProfile(obj, res);
-            }
-            else {
-              return res.status(500).send({ message : 'Bad password' });
-            }
-          })
-      })
-      .catch(err => {
-        res.status(500).json({ message : 'Error' });
-      });
-  })
+  //Get all private chats route
+  app.get('/api/chats', Chats.getAllChats);
 
+  //Create private chat route
+  app.post('/api/chats', Chats.createChat);
+
+  //Save message to private chat route
+  app.post('/api/chats/:id', Chats.createPrivateMessage);
+
+  //Get all messages from private chat route
+  app.get('/api/chats/:id', Chats.getPrivateMessages);
+
+  //Create message in main chat route
+  app.post('/api/messages', Messages.createMessage);
+
+  //Get all messages from main chat route
+  app.get('/api/messages', Messages.getAllMessages);
 
 }   
 
