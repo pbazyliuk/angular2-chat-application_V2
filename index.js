@@ -12,10 +12,10 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server);
 const socketioJwt = require('socketio-jwt');
-const config = require('./config');
 const User = require('./models/user');
 const path = require('path');
 
+const secret = process.env.secret || '';
 
 //DB Setup
 mongoose.connect('mongodb://admin:123456@ds149481.mlab.com:49481/chatappeleks'); //mongodb://localhost:auth/auth
@@ -25,7 +25,7 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }))
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 router(app);
 
@@ -33,7 +33,7 @@ router(app);
 io
   .of('/root')
   .on('connection', socketioJwt.authorize({
-    secret: config.secret,
+    secret: secret,
     callback: false
   }))
 

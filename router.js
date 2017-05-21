@@ -13,12 +13,8 @@ const path = require('path');
 
 module.exports = function(app) {
 
-  // app.get('*', requireAuth, function(req, res) {
-  //   res.send({ message: 'Super secret code is ABC123' });
-  // });
-
   app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 
   //Signin route
