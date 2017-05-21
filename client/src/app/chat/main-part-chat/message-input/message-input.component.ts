@@ -53,7 +53,7 @@ export class MessageInputComponent implements OnInit, OnDestroy {
     this.MainPartChatService.updateData(this.message);
     this.messageText = '';
   }
-  
+
   ngOnInit() {
     this.MessageInputService.getAllMessages()
       .subscribe(messages => {
@@ -61,7 +61,7 @@ export class MessageInputComponent implements OnInit, OnDestroy {
         this.store.dispatch(new GetAllMessagesSuccessActions(messages));
       });
   }
-  
+
   ngOnDestroy() {
     this.storeConnection.unsubscribe();
   }

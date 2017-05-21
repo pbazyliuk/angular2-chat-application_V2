@@ -4,7 +4,7 @@ import { ApplicationState } from 'app/store/application-state';
 import { WsService } from 'app/ws.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ct-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

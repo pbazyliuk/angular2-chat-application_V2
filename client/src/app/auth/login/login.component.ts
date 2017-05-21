@@ -8,7 +8,7 @@ import { ApplicationState } from 'app/store/application-state';
 import { LoginSuccessActions } from 'app/store/actions';
 
 @Component({
-  selector: 'app-login',
+  selector: 'ct-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

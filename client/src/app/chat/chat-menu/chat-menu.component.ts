@@ -6,7 +6,7 @@ import { User } from 'app/core/models/user';
 import { ChatMenuService } from 'app/chat/chat-menu/chat-menu.service';
 import { LoadChatsListActions } from 'app/store/actions';
 import * as _ from 'lodash';
-import { MainPartChatService } from "app/chat/main-part-chat/main-part-chat.service";
+import { MainPartChatService } from 'app/chat/main-part-chat/main-part-chat.service';
 
 @Component({
   selector: 'ct-chat-menu',
@@ -24,8 +24,10 @@ export class ChatMenuComponent implements OnInit {
 
   public somevar;
 
-  constructor(private store: Store<ApplicationState>, private ChatMenuService: ChatMenuService, private MainPartChatService: MainPartChatService
-  ) {
+  constructor(
+    private store: Store<ApplicationState>,
+    private ChatMenuService: ChatMenuService,
+    private MainPartChatService: MainPartChatService) {
     store.subscribe(state => {
       return this.currentUser = state.uiState.user;
     });
@@ -52,8 +54,7 @@ export class ChatMenuComponent implements OnInit {
     console.log('data.users', data.users);
     data.users.sort(function(a, b) {
       const re = /\D/g;
-      return (parseInt(a.firstname.replace(re, ''), 10) - parseInt(b.firstname.replace(re, ''), 10)); 
-    });
+      return (parseInt(a.firstname.replace(re, ''), 10) - parseInt(b.firstname.replace(re, ''), 10));});
     this.ChatMenuService.sendChatData(data);
     this.chat.name = '';
     this.chat.users = '';
@@ -62,6 +63,8 @@ export class ChatMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.somevar) this.somevar.unsubscribe();
+    if (this.somevar) {
+      this.somevar.unsubscribe();
+    }
   }
 }

@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.connection = this.ws.initWs()
         .subscribe(message => {
           this.store.dispatch(new MessageAddSuccessActions(message));
-        })
+        });
       };
       this.MainPartChatService.updateConnection(this.connection);
     }

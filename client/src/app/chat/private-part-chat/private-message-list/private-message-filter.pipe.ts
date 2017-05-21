@@ -12,8 +12,7 @@ export class FilterPrivateMessageByTextPipe implements PipeTransform {
       return messages.filter(message => {
           return message.text.match(new RegExp(filterValue, 'i'));
         });
-    } 
-    else {
+    } else {
         return messages;
     }
   }

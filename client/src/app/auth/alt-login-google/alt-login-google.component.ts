@@ -8,7 +8,7 @@ import { RegisterSuccessActions, LoginSuccessActions } from 'app/store/actions';
 declare const gapi: any;
 
 @Component ({
-  selector: 'app-alt-login-google',
+  selector: 'ct-alt-login-google',
   templateUrl: './alt-login-google.component.html',
   styleUrls: ['./alt-login-google.component.css']
 })

@@ -20,7 +20,7 @@ function dateCompare(c: AbstractControl):
           }
 
 @Component({
-  selector: 'register',
+  selector: 'ct-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })

@@ -11,26 +11,26 @@ import { WsService } from 'app/ws.service';
 @Injectable()
 export class ChatMenuService {
 
-	constructor(
-		private http: Http,
-		private router: Router,
-		private ChatListService: ChatListService,
-		private store: Store<ApplicationState>,  private ws: WsService
-	) {}
+constructor(
+private http: Http,
+private router: Router,
+private ChatListService: ChatListService,
+private store: Store<ApplicationState>,  private ws: WsService
+) {}
 
-	sendChatData(formAddChatData) {
-		this.http.post('http://localhost:8090/api/chats', formAddChatData).map(res => res.json())
-			.subscribe(userInfo => {
-				console.error('userInfo', userInfo);
-				this.ChatListService.getAllChats()
-				.subscribe(
-					allChats => {
-						this.store.dispatch(
-							new LoadChatsListActions(allChats)
-						);
-						console.log('ALL CHATS MENU', allChats);
-						this.ws.addChat(formAddChatData);
-					});
-			});
-	}
+sendChatData(formAddChatData) {
+this.http.post('http://localhost:8090/api/chats', formAddChatData).map(res => res.json())
+.subscribe(userInfo => {
+console.error('userInfo', userInfo);
+this.ChatListService.getAllChats()
+.subscribe(
+allChats => {
+this.store.dispatch(
+new LoadChatsListActions(allChats)
+);
+console.log('ALL CHATS MENU', allChats);
+this.ws.addChat(formAddChatData);
+});
+});
+}
 }

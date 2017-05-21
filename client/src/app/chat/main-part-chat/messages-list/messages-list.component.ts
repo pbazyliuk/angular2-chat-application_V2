@@ -21,7 +21,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<ApplicationState>,
     private MainPartChatService: MainPartChatService
-  ) { 
+  ) {
     store.subscribe(state => {
       return this.author = state.uiState.user.firstname;
     });

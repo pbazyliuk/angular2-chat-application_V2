@@ -39,8 +39,10 @@ export class ChatNavbarComponent implements OnInit {
 
   ngOnInit() {
     this.somevar = this.MainPartChatService.getIsMenuShown().subscribe(val => {
-        if (val === false)  this.showChatMenu();
+        if (val === false)  {
+          this.showChatMenu();
+        }
         console.log(val);
-    })
+    });
   }
 }
