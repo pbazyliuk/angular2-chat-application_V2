@@ -10,7 +10,7 @@ import { ChatListService } from 'app/chat/chat-list/chat-list.service';
 
 @Injectable()
 export class WsService {
-  private url = 'http://localhost:8090';
+  private url = 'https://chatappeleks.herokuapp.com';
   private socketRoot;
   private socketPrivateChat;
   private room;

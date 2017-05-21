@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
     constructor(private router: Router, private http: Http) {}
 
        getAllUsers() {
-        return this.http.get('http://localhost:8090/api/users').map(res => res.json());
+        return this.http.get('https://chatappeleks.herokuapp.com/api/users').map(res => res.json());
        }
     }
 

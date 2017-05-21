@@ -8,10 +8,10 @@ import { Http } from '@angular/http';
     constructor(private http: Http) {}
 
     sendMessage(message) {
-      return this.http.post('http://localhost:8090/api/messages', message).map(res => res.json());
+      return this.http.post('https://chatappeleks.herokuapp.com/api/messages', message).map(res => res.json());
     }
 
     getAllMessages() {
-      return this.http.get('http://localhost:8090/api/messages').map(res => res.json());
+      return this.http.get('https://chatappeleks.herokuapp.com/api/messages').map(res => res.json());
     }
 }

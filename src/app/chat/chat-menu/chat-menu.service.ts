@@ -19,7 +19,7 @@ private store: Store<ApplicationState>,  private ws: WsService
 ) {}
 
 sendChatData(formAddChatData) {
-this.http.post('http://localhost:8090/api/chats', formAddChatData).map(res => res.json())
+this.http.post('https://chatappeleks.herokuapp.com/api/chats', formAddChatData).map(res => res.json())
 .subscribe(userInfo => {
 console.error('userInfo', userInfo);
 this.ChatListService.getAllChats()

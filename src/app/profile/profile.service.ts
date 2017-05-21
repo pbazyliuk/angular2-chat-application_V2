@@ -9,7 +9,7 @@ export class ProfileService {
   constructor(private http: Http) { }
 
   public updateProfile(user: any): Observable<any> {
-    return this.http.put(`http://localhost:8090/api/users/${user._id}`, user).map(res => res.json());
+    return this.http.put(`https://chatappeleks.herokuapp.com/api/users/${user._id}`, user).map(res => res.json());
   }
 }
 

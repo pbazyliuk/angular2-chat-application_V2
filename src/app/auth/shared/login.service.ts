@@ -11,11 +11,11 @@ export class LoginService {
     private router: Router
   ) {}
   login(user: any): Observable<any> {
-    return this.http.post('http://localhost:8090/signin', user).map(res => res.json());
+    return this.http.post('https://chatappeleks.herokuapp.com/signin', user).map(res => res.json());
   }
 
   register(user: any): Observable<any> {
-    return this.http.post('http://localhost:8090/signup', user).map(res => res.json());
+    return this.http.post('https://chatappeleks.herokuapp.com/signup', user).map(res => res.json());
   }
 
   logout(): any {

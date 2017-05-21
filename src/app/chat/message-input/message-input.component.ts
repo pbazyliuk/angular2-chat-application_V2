@@ -17,7 +17,7 @@ export class MessageInputComponent implements OnInit {
   message;
   author;
   private socket;
-  private url = 'http://localhost:8090'; 
+  private url = 'https://chatappeleks.herokuapp.com'; 
   private observable; 
   isInit = false;
 

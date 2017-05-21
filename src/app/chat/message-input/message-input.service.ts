@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 
 export class MessageInputService {
-  private url = 'http://localhost:8090';  
+  private url = 'https://chatappeleks.herokuapp.com';  
   private socket;
   
 //   sendMessage(message, author){
