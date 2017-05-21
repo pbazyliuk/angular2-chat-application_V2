@@ -13,6 +13,7 @@ const io = require('socket.io')(server);
 const socketioJwt = require('socketio-jwt');
 const config = require('./config');
 const User = require('./models/user');
+const path = require('path');
 
 //DB Setup
 mongoose.connect('mongodb://localhost:auth/auth');
@@ -21,6 +22,9 @@ mongoose.connect('mongodb://localhost:auth/auth');
 app.use(cors());
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }))
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 router(app);
 
 //Root namespaces for socket.io

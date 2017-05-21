@@ -30,7 +30,7 @@
 
         <li class="navbar__menu-item">
             <a href="" class="navbar__menu-link" routerLink="/profile" [hidden]="!authenticated">Profile</a>
-            <a href="" class="navbar__menu-link" routerLink="/home" [hidden]="!authenticated" (click)="logoutAction()">{{email}} Logout</a>
+            <a href="" class="navbar__menu-link" routerLink="/" [hidden]="!authenticated" (click)="logoutAction()">{{email}} Logout</a>
         </li>
     </ul>
 
