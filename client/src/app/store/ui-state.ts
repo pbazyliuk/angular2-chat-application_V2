@@ -1,11 +1,15 @@
-
+import { User } from 'app/core/models/user';
 
 export interface UiState {
-     userId: number;
-     currentThreadId: number;
-}
+    user: User;
+    authenticated: boolean;
+    usersOn: Array<object>;
+    currentChat: string;
+};
 
 export const INITIAL_UI_STATE: UiState = {
-    userId: 1,
-    currentThreadId: undefined
-}
+    user: undefined,
+    authenticated: undefined,
+    currentChat: undefined,
+    usersOn: []
+};

@@ -1,38 +1,46 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../auth/shared';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
+import { LogoutSuccessActions } from 'app/store/actions';
+import * as io from 'socket.io-client';
+import { WsService } from 'app/ws.service';
 
 @Component({
   selector: 'ct-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  private email: string = '';
-  private subscriptions: Subscription[] = [];
+  public email = '';
+  public authenticated = false;
 
-  constructor( private loginService: LoginService, private router: Router ) {}
-
-  ngOnInit() {
-     this.subscriptions.push(
-       this.loginService
-         .getUserState()
-         .subscribe(state => { this.email = state.email; console.log(state.email) })
-     )
+  constructor( private loginService: LoginService, private router: Router, private store: Store<ApplicationState>,
+  private ws: WsService ) {
+    this.store.subscribe(
+      state => {
+        console.log('Navbar Component section received state', state);
+        if (state.uiState.user) {
+          this.email = state.uiState.user.email;
+          this.authenticated = state.uiState.authenticated;
+        } else {
+            this.authenticated = false;
+            return;
+          }
+      }
+    );
   }
 
-  ngOnDestroy() {
-     this.subscriptions.map(subscription => subscription.unsubscribe());
-   }
-
-  isLogged() {
-    return this.loginService.authenticated;
-  };
-  
   logoutAction() {
     this.loginService.logout();
-    //this.router.navigate(['auth/login']);
+    this.store.dispatch(
+      new LogoutSuccessActions());
   }
+
+  ngOnInit() {}
+
+  ngOnDestroy() {}
 }

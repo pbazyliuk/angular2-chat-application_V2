@@ -1,16 +1,15 @@
-
-import { Participant } from "app/shared/model/participant";
-import { Thread } from "app/shared/model/thread";
-import { Message } from "app/shared/model/message";
+import { User } from 'app/core/models/user';
+import { Message } from 'app/core/models/message';
+import { Chat } from 'app/core/models/chat';
 
 export interface StoreData {
-    participants: {[key: number]: Participant};
-    threads: {[key: number]: Thread};
-    messages: {[key: number]: Message}
-}
+    users: User[];
+    messages: Message[];
+    chats: Chat[];
+};
 
 export const INITIAL_STORE_DATA: StoreData = {
-    participants: {},
-    threads: {},
-    messages: {}
-}
+    users: [],
+    messages: [],
+    chats: []
+};

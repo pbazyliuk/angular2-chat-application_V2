@@ -1,0 +1,100 @@
+<div class="form__wrapper">
+
+  <form action="" class="form-profile" [formGroup]="profileForm" novalidate (ngSubmit)="profileSubmit(profileForm.value)">
+
+    <h3 class="form-profile__header">Profile</h3>
+
+    <div class="form-profile__container">
+      <div class="form-profile__container--narrow">
+        <label for="firstnameId" class="form-profile__label" [class.header-has-error]="profileForm.get('firstname').invalid && profileForm.get('firstname').touched">Firstname</label>
+        <input id="firstnameId" class="form-profile__input-field" type="text" placeholder="First Name (required)" value="{{(userInfo$ | async)?.firstname}}"
+          formControlName="firstname" [class.input-has-error]="profileForm.get('firstname').invalid && profileForm.get('firstname').touched">
+        <span *ngIf="profileForm.get('firstname').invalid && profileForm.get('firstname').touched" [class.text-has-error]="(profileForm.get('firstname').dirty || profileForm.get('firstname').touched) && profileForm.get('firstname').errors">
+				<span 
+					*ngIf="profileForm.get('firstname').errors.required"
+				>
+					Firstname is required</span>
+        <span *ngIf="!!profileForm.get('firstname').errors.minlength">
+					Minimum 3 characters
+				</span>
+        </span>
+      </div>
+
+      <div class="form-profile__container--narrow">
+        <label for="lastnameId" class="form-profile__label" [class.header-has-error]="profileForm.get('lastname').invalid && profileForm.get('lastname').touched">
+				Lastname
+			</label>
+        <input id="lastnameId" class="form-profile__input-field" type="text" placeholder="Last Name (required)" value="{{(userInfo$ | async)?.lastname}}"
+          formControlName="lastname" [class.input-has-error]="profileForm.get('lastname').invalid && profileForm.get('lastname').touched">
+        <span *ngIf="(profileForm.get('lastname').dirty || profileForm.get('lastname').touched) && profileForm.get('lastname').errors"
+          [class.text-has-error]="profileForm.get('lastname').invalid && profileForm.get('lastname').touched">
+				<span 
+					*ngIf="profileForm.get('lastname').errors.required"
+				>
+					Lastname is required
+				</span>
+        <span *ngIf="!!profileForm.get('lastname').errors.minlength">
+					Minimum 3 characters
+				</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-profile__container">
+      <label for="emailId" class="form-profile__label" [class.header-has-error]="profileForm.get('email').invalid && profileForm.get('email').touched">
+			Email
+		</label>
+      <input id="emailId" class="form-profile__input-field" type="text" placeholder="Email Address (required)" value="{{(userInfo$ | async)?.email}}"
+        formControlName="email" [class.input-has-error]="profileForm.get('email').invalid && profileForm.get('email').touched">
+      <span *ngIf="(profileForm.get('email').dirty || profileForm.get('email').touched) && profileForm.get('email').errors" [class.text-has-error]="profileForm.get('email').invalid && profileForm.get('email').touched">
+			Email is required and should be valid
+		</span>
+    </div>
+
+    <div formGroupName="passwords">
+      <div class="form-profile__container">
+        <label for="currentpasswordId" class="form-profile__label" [class.header-has-error]="
+(profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+profileForm.get('passwords.currentpassword').errors">Current Password</label>
+        <input id="currentpasswordId" class="form-profile__input-field" type="password" placeholder="Current Password" formControlName="currentpassword"
+          [class.input-has-error]="
+(profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+(profileForm.get('passwords.currentpassword').errors || profileForm.get('passwords').errors) && !profileForm.get('passwords.currentpassword').errors?.required">
+        <span *ngIf="
+(profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+profileForm.get('passwords.currentpassword').errors" [class.text-has-error]="
+(profileForm.get('passwords.currentpassword').dirty || profileForm.get('passwords.currentpassword').touched) && 
+profileForm.get('passwords.currentpassword').errors
+">   
+<span *ngIf="profileForm.get('passwords.currentpassword').errors.required">Password is required</span>
+        <span *ngIf="!!profileForm.get('passwords.currentpassword').errors.minlength || !!profileForm.get('passwords.currentpassword').errors.maxlength">Password should contain from 6 to 14 characters</span>
+        </span>
+      </div>
+
+      <div class="form-profile__container">
+        <label for="newpasswordId" class="form-profile__label" [class.header-has-error]="
+(profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+profileForm.get('passwords.newpassword').errors
+">New Password</label>
+        <input id="newpasswordId" class="form-profile__input-field" type="password" placeholder="New Password" formControlName="newpassword"
+          [class.input-has-error]="
+(profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+profileForm.get('passwords').errors
+">
+
+        <span *ngIf="
+(profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+(profileForm.get('passwords.newpassword').invalid || profileForm.get('passwords').errors)" [class.text-has-error]="
+(profileForm.get('passwords.newpassword').dirty || profileForm.get('passwords.newpassword').touched) && 
+(profileForm.get('passwords.newpassword').invalid || profileForm.get('passwords').errors)
+">   
+<span *ngIf="profileForm.get('passwords.newpassword').errors?.required">New password is required</span>
+        <span *ngIf="!!profileForm.get('passwords.newpassword').errors?.minlength || !!profileForm.get('passwords.newpassword').errors?.maxlength">Password should contain from 6 to 14 characters</span>
+        <span *ngIf="(profileForm.get('passwords').errors?.match && !profileForm.get('passwords.newpassword').errors?.required)">Password mustn't match</span>
+        </span>
+      </div>
+    </div>
+    <button class="form-profile__btn-register" type="submit" [disabled]="profileForm.invalid">SAVE</button> {{profileForm.value
+    | json}} {{profileForm.invalid}}
+  </form>
+</div>

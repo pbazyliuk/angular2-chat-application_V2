@@ -1,60 +1,69 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { User } from './login.model';
-import { Subscription } from "rxjs";
+import { Login } from './login.model';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoginService } from '../shared/login.service'
+import { LoginService } from '../shared/login.service';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store/application-state';
+import { LoginSuccessActions } from 'app/store/actions';
 
 @Component({
-  selector: 'app-login',
+  selector: 'ct-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  
-  private user: User = {
+
+  public user: Login = {
     email: '',
     password: ''
   };
 
+  public storeConnection;
 
-  private subscriptions: Subscription[] = [];
-  
-  constructor(private LoginService: LoginService, private router: Router, private zone: NgZone) {
+  constructor (
+    private LoginService: LoginService,
+    private router: Router,
+    private zone: NgZone,
+    private store: Store<ApplicationState>
+  ) {
+      this.storeConnection = store.subscribe (
+        (state) => {
+          console.log ('LoginComponent section received state', state);
+        }
+      );
   }
 
-  private signInSubmit(form: any) {
-     
-     const data = {
+  signInSubmit (form: any) {
+    this.user = {
       email: form.email,
       password: form.password,
-     };
+    };
 
-     console.log(data);
+    console.log (this.user);
 
-     this.subscriptions.push(
-       this.LoginService
-         .login(data)
-         .subscribe(this.onLoginSuccess.bind(this), this.onLoginError)
-      )
+    this.LoginService
+      .login (this.user)
+        .subscribe (
+          (userInfo) => {
+            this.store.dispatch(
+            new LoginSuccessActions(userInfo)
+          );
+          this.router.navigate(['chat']);
+        },
+        this.onLoginError
+      );
    }
 
-   onLoginError (err){
+  onLoginError (err) {
     console.error(err);
-    alert('User not found')
-  }
-
-  onLoginSuccess (res: any): void {
-     console.log(res);
-     
-     this.LoginService.setUserState(res);
-     this.router.navigate(['chat']);
+    alert('User not found');
   }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(subscription => subscription.unsubscribe());
+    this.storeConnection.unsubscribe();
   }
-
 }
