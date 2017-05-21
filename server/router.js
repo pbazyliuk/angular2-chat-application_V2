@@ -17,7 +17,7 @@ module.exports = function(app) {
   //   res.send({ message: 'Super secret code is ABC123' });
   // });
 
-  app.get('/', (req, res) => {
+  app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 
@@ -50,5 +50,9 @@ module.exports = function(app) {
 
   //Get all messages from main chat route
   app.get('/api/messages', Messages.getAllMessages);
+
+  // app.get('/*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  // });
 }   
 
