@@ -51,8 +51,5 @@ module.exports = function(app) {
   //Get all messages from main chat route
   app.get('/api/messages', Messages.getAllMessages);
 
-  // app.get('/*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  // });
 }   
 

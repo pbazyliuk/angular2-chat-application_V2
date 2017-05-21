@@ -16,7 +16,7 @@ const User = require('./models/user');
 const path = require('path');
 
 //DB Setup
-mongoose.connect('mongodb://localhost:auth/auth');
+mongoose.connect('mongodb://admin:123456@ds149481.mlab.com:49481/chatappeleks'); //mongodb://localhost:auth/auth
 
 //App Setup
 app.use(cors());
