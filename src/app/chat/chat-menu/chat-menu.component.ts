@@ -22,7 +22,7 @@ export class ChatMenuComponent implements OnInit {
     users: ''
   };
 
-  public somevar;
+  public showMenu;
 
   constructor(
     private store: Store<ApplicationState>,
@@ -64,8 +64,8 @@ export class ChatMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.somevar) {
-      this.somevar.unsubscribe();
+    if (this.showMenu) {
+      this.showMenu.unsubscribe();
     }
   }
 }
