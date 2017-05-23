@@ -32,7 +32,6 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
-    "express": "^4.15.2",
     "jsonwebtoken": "^7.4.0",
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.9.6",
@@ -62,6 +61,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
+    "node-sass": "^4.5.3",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
   }

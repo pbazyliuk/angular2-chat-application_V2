@@ -9,7 +9,7 @@ import { MessageAddSuccessActions } from "app/store/actions";
 @Component({
   selector: 'ct-message-input',
   templateUrl: './message-input.component.html',
-  styleUrls: ['./message-input.component.css']
+  styleUrls: ['./message-input.component.scss']
 })
 export class MessageInputComponent implements OnInit {
   messages = [];

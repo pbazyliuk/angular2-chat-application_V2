@@ -3,7 +3,6 @@ import { ChatComponent } from './chat.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserListComponent } from './user-list';
-import { ChatDetailsComponent } from './chat-details';
 import { ChatNavbarComponent } from './chat-navbar/chat-navbar.component';
 import { MessagesNavbarComponent } from './main-part-chat/messages-navbar/messages-navbar.component';
 import { MessagesListComponent } from './main-part-chat/messages-list/messages-list.component';
@@ -27,7 +26,6 @@ import { FilterUserOnByNamePipe } from 'app/chat/user-list/user-list-filterOn.pi
   declarations: [
     ChatComponent,
     UserListComponent,
-    ChatDetailsComponent,
     ChatNavbarComponent,
     MessagesNavbarComponent,
     MessagesListComponent,

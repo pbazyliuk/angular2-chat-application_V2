@@ -1,5 +1,5 @@
 export * from './user-list';
-export * from './chat-details';
+// export * from './chat-details';
 // export * from './chat-new';
 export * from './chat.component';
 export * from './chat.module';
