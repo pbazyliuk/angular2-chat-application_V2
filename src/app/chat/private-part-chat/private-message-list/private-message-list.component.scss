@@ -1,4 +1,13 @@
 
+.private-chat-header {
+    text-align: center;
+    color: #3b3e99;
+    font-size: 25px;
+    font-weight: 400;
+    margin-top: 0;
+}
+
+
 .message-list {
     display: flex;
     flex-direction: column;
@@ -15,10 +24,16 @@
 
 .user-message-author {
     align-self: flex-start;
+    margin-bottom: 24px;
+    max-width: 75%;
+    min-width: 15%;
 }
 
 .user-message-friend {
     align-self: flex-end;
+    margin-bottom: 24px;
+    max-width: 75%;
+    min-width: 15%;
 }
 
 .user-message-wrapper {
@@ -34,20 +49,36 @@
 }
 
 
-.user-message__text {
-    background: grey;
+.user-message__text-cotainer {
+    background: #989ad7;
+    color: #fff;
     padding: 20px 24px;
     min-height: 60px;
     flex-grow: 1;
-    text-align: center;
+    // text-align: center;
     border-radius: 10px;
     box-sizing: border-box;
     
 }
 
-.user-message-friend .user-message__text {
+.user-message-friend .user-message__text-cotainer {
     order: -1;
-    background: lightgrey;
+    background: #cccccc;
+}
+
+.user-message__text-author {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    // color: #3b3e99;
+}
+
+.user-message__text-message {
+    // font-size: 14px;
+    // font-weight: 300;
+    font-weight: 500;
+    color: #3b3e99;
+    line-height: 130%;
 }
 
 .user-message-friend .avatar__img {
@@ -55,11 +86,20 @@
     margin-left: 24px;
 }
 
-.user-message__publication-date {
+.user-message__date-container {
     margin-top: 10px;
     text-align: right;
+    font-size: 12px;
 }
 
-.user-message-friend .user-message__publication-date {
+.user-message-friend .user-message__date-container {
     text-align: left;
+}
+
+.user-message__time {
+    color: #989ad7;
+}
+
+.user-message__date {
+    color: #3b3e99;
 }
