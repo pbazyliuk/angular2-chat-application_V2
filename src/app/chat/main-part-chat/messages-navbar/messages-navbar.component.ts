@@ -13,12 +13,6 @@ export class MessagesNavbarComponent implements OnInit {
 
   constructor(private MainPartChatService: MainPartChatService) {}
 
-  onBlur(): void {
-    this.searchMessage = '';
-    this.MainPartChatService.setSearchMessage('');
-    console.log(this.MainPartChatService.setSearchMessage(''));
-  }
-
   onSearchMessageChange(value: string): void {
     this.MainPartChatService.setSearchMessage(value);
     console.log('onSearchMessageChange', value);

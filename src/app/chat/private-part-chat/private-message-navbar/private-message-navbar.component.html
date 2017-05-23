@@ -8,8 +8,7 @@
 
      <form action="" class="search-form" autocomplete="off">
              <input class="search-form__input" type="text" placeholder="Search message" name="search-message"
-               [(ngModel)]="searchPrivateMessage"
-             (blur)="onBlur()"
+             [(ngModel)]="searchPrivateMessage"
              (ngModelChange)="onSearchPrivateMessageChange($event)"
              >
             <span class="search-form__btn-search"></span>

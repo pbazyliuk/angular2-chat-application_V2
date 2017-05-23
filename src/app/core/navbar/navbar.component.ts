@@ -38,8 +38,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logoutAction() {
     this.loginService.logout();
-    this.store.dispatch(
-      new LogoutSuccessActions());
+    // this.store.dispatch(
+    //   new LogoutSuccessActions());
   }
 
   ngOnInit() {}

@@ -18,10 +18,10 @@ export class ChatNavbarComponent implements OnInit {
 
   constructor(private MainPartChatService: MainPartChatService) {}
 
-  onBlur(): void {
-    this.searchValue = '';
-    this.MainPartChatService.setSearchValue('');
-  }
+  // onBlur(): void {
+  //   this.searchValue = '';
+  //   this.MainPartChatService.setSearchValue('');
+  // }
 
   onSearchValueChange(value: string): void {
     this.MainPartChatService.setSearchValue(value);

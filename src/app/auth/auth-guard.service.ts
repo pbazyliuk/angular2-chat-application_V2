@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private router: Router, private store: Store<ApplicationState>) {
       this.store
         .subscribe(state => {
-          console.error('state', state);
+          // console.error('state', state);
           this.authenticated = state.uiState.authenticated;
         });
   }
